@@ -1,3 +1,3 @@
 <?php
 
-// define('PATH', )
+define('ROOT', __DIR__ );
