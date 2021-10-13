@@ -1,8 +1,8 @@
 <?php 
 
-namespace Controller;
+namespace Controllers;
 
-class Footer extends \Core\Controller
+class Footer extends \Core\Controllers
 {
     private $data = [];
     private $model;

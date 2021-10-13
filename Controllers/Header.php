@@ -2,7 +2,7 @@
 
 namespace Controller;
 
-class Header extends \Core\Controller
+class Header extends \Core\Controllers
 {
     private $data = [];
     private $model;

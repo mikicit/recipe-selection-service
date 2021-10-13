@@ -8,6 +8,13 @@ class View
     {
         $html = '';
 
+        $path = 'Views/' . $template_name . '.php';
+
+        if (!file_exists($path))
+        {
+            return $html;
+        }
+
         ob_start();
 
         if (!empty($data))
@@ -15,7 +22,7 @@ class View
             extract($data);
         }
 
-        include 'view/' . $template_name . '.php';
+        include($path);
 
         $html = ob_get_clean();
 

@@ -4,41 +4,30 @@ namespace Core;
 
 class Router
 {
+    private static $routes = [];
+
     public static function start()
     {
-        $controller_name = 'Home';
-        $action_name = 'index';
+        $uri = trim($_SERVER['REQUEST_URI'], '/');
 
-        $routes = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-
-        if (!empty($routes[0]))
-        {
-            $controller_name = $routes[0];
-        }
-
-        if (!empty($routes[1]))
-        {
-            $action_name = $routes[1];
-        }
-
-        $controller_path = '\controller\\' . $controller_name;
-
-        if (class_exists($controller_path))
-        {
-            $controller = new $controller_path;
-            $controller->$action_name();
-        }
-        else
-        {
-            self::error404();
-        }
+        self::resolveRoute($uri);
     }
 
-    private static function error404()
+    public static function addRoute($template, $controller)
+    {
+        $routes[$template] = $controller;
+    }
+
+    private static function resolveRoute($uri)
+    {
+        
+    }
+
+    private static function redirect404()
 	{
         $host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
         header('HTTP/1.1 404 Not Found');
 		header("Status: 404 Not Found");
-		header('Location:' . $host . 'NotFound');
+		header('Location:' . $host . '404');
     }
 }
