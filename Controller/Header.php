@@ -2,9 +2,7 @@
 
 namespace Controller;
 
-use App\Controller;
-
-class Header extends Controller
+class Header extends \Core\Controller
 {
     private $data = [];
     private $model;
@@ -12,7 +10,12 @@ class Header extends Controller
 
     public function __construct()
     {
-        $this->view = new \App\View();
+        if (class_exists('\Model\Header'))
+        {
+            $this->model = new \Model\Header;
+        }
+
+        $this->view = new \Core\View();
     }
 
     public function index()

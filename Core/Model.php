@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Core;
 
 abstract class Model {
     abstract public function getData();

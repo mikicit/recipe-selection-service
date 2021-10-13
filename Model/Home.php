@@ -2,9 +2,7 @@
 
 namespace Model;
 
-use App\Model;
-
-class Home extends Model
+class Home extends \Core\Model
 {
     public function getData()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Core;
 
 class Router
 {
@@ -13,7 +13,7 @@ class Router
 
         if (!empty($routes[0]))
         {
-            $conrtoller_name = $routes[0];
+            $controller_name = $routes[0];
         }
 
         if (!empty($routes[1]))
@@ -39,6 +39,6 @@ class Router
         $host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
         header('HTTP/1.1 404 Not Found');
 		header("Status: 404 Not Found");
-		header('Location:' . $host . '404');
+		header('Location:' . $host . 'NotFound');
     }
 }

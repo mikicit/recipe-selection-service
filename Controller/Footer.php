@@ -2,9 +2,7 @@
 
 namespace Controller;
 
-use App\Controller;
-
-class Footer extends Controller
+class Footer extends \Core\Controller
 {
     private $data = [];
     private $model;
@@ -12,12 +10,17 @@ class Footer extends Controller
 
     public function __construct()
     {
-        $this->view = new \App\View();
+        if (class_exists('\Model\Footer'))
+        {
+            $this->model = new \Model\Footer;
+        }
+
+        $this->view = new \Core\View();
     }
 
     private function view()
     {
-       
+        
     }
 
     public function index()
