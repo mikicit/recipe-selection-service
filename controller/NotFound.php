@@ -1,8 +1,8 @@
 <?php 
 
-namespace Controller;
+namespace controller;
 
-class Home extends \Core\Controllers
+class NotFound extends \core\Controller
 {
     private $data = [];
     private $model;
@@ -10,12 +10,12 @@ class Home extends \Core\Controllers
 
     public function __construct()
     {
-        if (class_exists('\Model\Home'))
+        if (class_exists('\model\NotFound'))
         {
-            $this->model = new \Model\Home;
+            $this->model = new \model\NotFound;
         }
 
-        $this->view = new \Core\View();
+        $this->view = new \core\View();
 
         $header = new Header();
         $footer = new Footer();
@@ -26,6 +26,6 @@ class Home extends \Core\Controllers
 
     public function index()
     {
-        echo $this->view->get('home', $this->data);
+        echo $this->view->get('404', $this->data);
     }
 }

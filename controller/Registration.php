@@ -1,8 +1,8 @@
 <?php 
 
-namespace Controller;
+namespace controller;
 
-class NotFound extends \Core\Controllers
+class Registration extends \core\Controller
 {
     private $data = [];
     private $model;
@@ -10,12 +10,12 @@ class NotFound extends \Core\Controllers
 
     public function __construct()
     {
-        if (class_exists('\Model\NotFound'))
+        if (class_exists('\model\Registration'))
         {
-            $this->model = new \Model\NotFound;
+            $this->model = new \model\Registration;
         }
 
-        $this->view = new \Core\View();
+        $this->view = new \core\View();
 
         $header = new Header();
         $footer = new Footer();
@@ -26,6 +26,6 @@ class NotFound extends \Core\Controllers
 
     public function index()
     {
-        echo $this->view->get('404', $this->data);
+        echo $this->view->get('auth/registration', $this->data);
     }
 }

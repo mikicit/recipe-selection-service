@@ -1,8 +1,8 @@
 <?php 
 
-namespace Controller;
+namespace controller;
 
-class Profile extends \Core\Controller
+class Login extends \core\Controller
 {
     private $data = [];
     private $model;
@@ -10,12 +10,12 @@ class Profile extends \Core\Controller
 
     public function __construct()
     {
-        if (class_exists('\Model\Profile'))
+        if (class_exists('\model\Login'))
         {
-            $this->model = new \Model\Profile;
+            $this->model = new \model\Login;
         }
 
-        $this->view = new \Core\View();
+        $this->view = new \core\View();
 
         $header = new Header();
         $footer = new Footer();
@@ -26,6 +26,6 @@ class Profile extends \Core\Controller
 
     public function index()
     {
-        echo $this->view->get('profile', $this->data);
+        echo $this->view->get('auth/login', $this->data);
     }
 }

@@ -1,14 +1,13 @@
 <?php
 
-namespace Core;
+namespace core;
 
 class View
 {
     public function get($template_name, $data = [])
     {
         $html = '';
-
-        $path = 'Views/' . $template_name . '.php';
+        $path = 'view/' . $template_name . '.php';
 
         if (!file_exists($path))
         {
@@ -16,11 +15,7 @@ class View
         }
 
         ob_start();
-
-        if (!empty($data))
-        {
-            extract($data);
-        }
+        extract($data);
 
         include($path);
 

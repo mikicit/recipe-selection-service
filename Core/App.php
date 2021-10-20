@@ -5,31 +5,19 @@ namespace Core;
 class App 
 {
     private static $DB;
+    private static $router;
 
     public static function init()
     {
-        Router::start();
-    }
+        self::$DB = new DB();
+        self::$router = new Router();
 
-    private static function initRoutes()
-    {
-        ob_start();
-
-        include('Configs/routes.php');
-
-        self::$routes = $routes;
-
-        ob_end_clean();
+        self::initDbConnection();
+        self::$router->run();
     }
 
     private static function initDbConnection()
     {
 
     }
-
-    public static function getRoutes()
-    {
-        return self::$routes;
-    }
-
 }

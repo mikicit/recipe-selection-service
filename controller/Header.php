@@ -1,8 +1,8 @@
 <?php 
 
-namespace Controller;
+namespace controller;
 
-class Header extends \Core\Controllers
+class Header extends \core\Controller
 {
     private $data = [];
     private $model;
@@ -10,9 +10,9 @@ class Header extends \Core\Controllers
 
     public function __construct()
     {
-        if (class_exists('\Model\Header'))
+        if (class_exists('\model\Header'))
         {
-            $this->model = new \Model\Header;
+            $this->model = new \model\Header;
         }
 
         $this->view = new \Core\View();
@@ -20,6 +20,6 @@ class Header extends \Core\Controllers
 
     public function index()
     {
-        return $this->view->get('header', $this->data);
+        return $this->view->get('layout/header', $this->data);
     }
 }
