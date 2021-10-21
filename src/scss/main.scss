@@ -1,7 +1,6 @@
-@import "normalize";
-@import "vars";
-@import "functions";
-
-body {
-    background-color: get-color("gray-light");
-}
+@import "./abstract/_load";
+@import "./base/_load";
+@import "./layout/_load";
+@import "./component/_load";
+@import "./page/_load";
+@import "./utility/_load";
