@@ -1,0 +1,30 @@
+.page-header {
+    background-color: white;
+    padding-top: get-space('s');
+    padding-bottom: get-space('s');
+}
+
+.header-nav {
+    &__list {
+        @include list-unstyled();
+        display: flex;
+    }
+    &__item {
+
+    }
+    &__link {
+        @include typo('preset6');
+        color: get-color('black-dark');
+        display: block;
+        padding: get-space('xs');
+        &:hover {
+            color: get-color('green-normal');
+        }
+    }
+}
+
+
+.page-footer {
+    background-color: white;
+    height: 300px;
+}

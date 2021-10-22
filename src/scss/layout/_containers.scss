@@ -1,0 +1,23 @@
+/**
+ * Containers
+ *
+ * Base containers for blocks, content and so on.
+ */
+
+
+ /**
+ * Base Container
+ */
+
+%container-base {
+    @include make-container();
+}
+
+.container {
+    @extend %container-base;
+    @include make-container-width();
+}
+
+.container-fluid {
+    @extend %container-base;
+}

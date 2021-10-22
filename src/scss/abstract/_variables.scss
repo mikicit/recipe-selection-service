@@ -1,7 +1,7 @@
 // Colors
 
 $colors: (
-    "black-light": #474D52,
+    "black-normal": #474D52,
     "black-dark": #181A1B,
 
     "gray-ligher": #F1F2F4,
@@ -9,4 +9,127 @@ $colors: (
     "gray-normal": #F1F2F4,
 
     "green-normal": #27AE60
+);
+
+// Typography
+$typography: (
+    "preset1": (
+        "font-size": 32px,
+        "line-height": 32px,
+        "font-weight": bold
+    ),
+    "preset2": (
+        "font-size": 24px,
+        "line-height": 28px,
+        "font-weight": bold
+    ),
+    "preset3": (
+        "font-size": 18px,
+        "line-height": 24px,
+        "font-weight": bold
+    ),
+    "preset4": (
+        "font-size": 16px,
+        "line-height": 20px,
+        "font-weight": bold
+    ),
+    "preset5": (
+        "font-size": 16px,
+        "line-height": 24px,
+        "font-weight": normal
+    ),
+    "preset6": (
+        "font-size": 14px,
+        "line-height": 20px,
+        "font-weight": bold,
+        "letter-spacing": 0.05em,
+        "text-transform": uppercase
+    ),
+    "preset7": (
+        "font-size": 14px,
+        "line-height": 20px,
+        "font-weight": normal
+    ),
+    "preset8": (
+        "font-size": 12px,
+        "line-height": 16px,
+        "font-weight": bold,
+        "letter-spacing": 0.05em,
+        "text-transform": uppercase
+    )
+);
+
+
+// Breakpoints
+$grid-breakpoints: (
+  "xs": 0,
+//   "sm": 576px,
+//   "md": 768px,
+//   "lg": 992px,
+//   "xl": 1200px,
+//   "xxl": 1400px
+);
+
+
+// Spaces
+$spaces : (
+    "xxs": 4,
+    "xs": 8,
+    "s": 16,
+    "m": 24,
+    "l": 32,
+    "xl": 48,
+    "xxl": 64,
+    "xxxl": 96
+);
+
+// Space Prefixes
+$space-prefixes : (
+    "p"  : padding,
+    "pt" : padding-top,
+    "pr" : padding-right,
+    "pb" : padding-bottom,
+    "pl" : padding-left,
+    "m"  : margin,
+    "mt" : margin-top,
+    "mr" : margin-right,
+    "mb" : margin-bottom,
+    "ml" : margin-left,
+);
+
+
+// Grid
+$grid-columns : 12;
+$grid-gutter-width: 32px;
+
+
+// Vertical Gutter Spaces
+$vertical-gutters : (
+    "m": 24px,
+    "xl": 48px
+);
+
+
+// Container Padding
+$max-container-padding: 64px;
+$container-padding: (
+    "xs": $max-container-padding
+);
+
+
+// Container Width
+$container-width: (
+    "small": 752px,
+    "medium": 976px,
+    "normal": 1120px
+);
+
+
+// Z-Layers
+$z-layers: (
+    "bottomless-pit": -9999,
+    "default": 1,
+    "dropdown": 3000,
+    "overlay": 4000,
+    "modal": 4001
 );

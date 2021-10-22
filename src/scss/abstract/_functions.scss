@@ -1,3 +1,41 @@
-@function get-color($name) {
-    @return map-get($colors, $name);
+/**
+ * Color
+ */
+ 
+ @function get-color($color) {
+    @if (map-has-key($colors, $color)) {
+        @return map-get($colors,  $color)
+    }
+        @warn("Warning! Color doesn't exist!");
+    @return null;
+};
+  
+
+/**
+ * Space
+ */
+
+@function get-space($space) {
+    @if (map-has-key($spaces, $space)) {
+        @return map-get($spaces,  $space) * 1px;
+    }
+        @warn("Warning! Space doesn't exist!");
+    @return null;
+};
+
+
+/**
+ * Breakpoint Infix
+ */
+
+@function breakpoint-infix($breakpoint, $breakpoints) {
+    @if(map-has-key($breakpoints, $breakpoint)) {
+        @if(map-get($breakpoints, $breakpoint) != 0) {
+            @return "-#{$breakpoint}";
+        } @else {
+            @return "";
+        }
+    } @else {
+        @warn 'Error';
+    }
 }

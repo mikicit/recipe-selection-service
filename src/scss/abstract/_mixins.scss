@@ -1,0 +1,233 @@
+@use "sass:math";
+
+/**
+ * Typography
+ */
+
+ @mixin typo($preset) {
+    @if(map-has-key($typography, $preset)) {
+        @each $key, $value in map-get($typography, $preset) {
+            #{$key}: #{$value};
+        }
+    } @else {
+        @warn 'Error';
+    }
+}
+
+
+/**
+ * Z-Index
+ */
+
+@mixin make-z-index($z-layer) {
+    @if(map-has-key($z-layers, $z-layer)) {
+        z-index: map-get($z-layers, $z-layer);
+    } @else {
+        @warn 'Error';
+    }
+}
+
+
+/**
+ * List Unstyled
+ *
+ * Unstyled keeps list items block level, just removes default browser padding and list-style
+ */
+
+@mixin list-unstyled() {
+    padding-left: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+
+/**
+ * Breakpoint
+ */
+
+@mixin media-breakpoint-up($breakpoint, $breakpoints: $grid-breakpoints) {
+    @if(map-has-key($breakpoints, $breakpoint)) {
+        @if(map-get($breakpoints, $breakpoint) != 0) {
+            @media (min-width: map-get($breakpoints, $breakpoint)) {
+                @content;
+            }
+        } @else {
+            @content;
+        }
+    } @else {
+        @warn 'Error';
+    }
+}
+  
+@mixin media-breakpoint-down($breakpoint, $breakpoints: $grid-breakpoints) {
+    @if(map-has-key($breakpoints, $breakpoint)) {
+        @if (map-get($breakpoints, $breakpoint) != 0) {
+            @media (max-width: map-get($breakpoints, $breakpoint) - 0.02px) {
+                @content;
+            }
+        } @else {
+            @warn 'Breakpoint must be greater than 0';
+        }
+    } @else {
+        @warn '#{$breakpoint} key does not exist in #{$breakpoints}';
+    }
+}
+
+
+/**
+ * Containers
+ */
+
+@mixin make-container() {
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    @include make-container-padding();
+}
+
+@mixin make-container-padding($container-padding: $container-padding, $breakpoints: $grid-breakpoints) {
+    @each $key, $value in $container-padding {
+        @include media-breakpoint-up($key) {
+            padding-left: $value;
+            padding-right: $value;
+        }
+    }
+}
+
+@mixin make-container-width($size: "normal", $container-width: $container-width, $max-container-padding: $max-container-padding) {
+    @if(map-has-key($container-width, $size)) {
+        max-width: map-get($container-width, $size) + $max-container-padding * 2;
+    }
+}
+
+@mixin container-width($size, $container-width: $container-width) {
+    @if(map-has-key($container-width, $size)) {
+        max-width: map-get($container-width, $size);
+    }
+}
+
+
+/**
+ * Grid
+ */
+
+@mixin make-row() {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: math.div($grid-gutter-width, -2);
+    margin-left: math.div($grid-gutter-width, -2);
+}
+  
+@mixin make-col-ready() {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: math.div($grid-gutter-width, 2);
+    padding-left: math.div($grid-gutter-width, 2);
+}
+
+@mixin make-col($size, $columns: $grid-columns) {
+    flex: 0 0 percentage(math.div($size, $columns));
+    max-width: percentage(math.div($size, $columns));
+}
+
+@mixin make-grid-columns($columns: $grid-columns, $gutter: $grid-gutter-width, $breakpoints: $grid-breakpoints) {
+    %grid-column {
+        position: relative;
+        width: 100%;
+        min-height: 1px;
+        padding-right: math.div($gutter, 2);
+        padding-left: math.div($gutter, 2);
+    }
+  
+    @each $breakpoint in map-keys($breakpoints) {
+        $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+        
+        .col#{$infix},
+        .col#{$infix}-auto {
+            @extend %grid-column;
+        }
+
+        @for $i from 1 through $columns {
+            .col#{$infix}-#{$i} {
+                @extend %grid-column;
+            }
+        }
+
+        @include media-breakpoint-up($breakpoint) {
+            .col#{$infix} {
+                flex-basis: 0;
+                flex-grow: 1;
+                max-width: 100%;
+            }
+
+            .col#{$infix}-auto {
+                flex: 0 0 auto;
+                width: auto;
+                max-width: none; // Reset earlier grid tiers
+            }
+
+            @for $i from 1 through $columns {
+                .col#{$infix}-#{$i} {
+                    @include make-col($i, $columns);
+                }
+            }
+        }
+    }
+}
+
+
+/**
+ * Make Vertical Gutter
+ */
+
+@mixin make-vgut($spaces: $vertical-gutters, $breakpoints: $grid-breakpoints) {
+    @each $breakpoint in map-keys($breakpoints) {
+        $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+        .vgut#{$infix} {
+            @include media-breakpoint-up($breakpoint) {
+                margin-top: $grid-gutter-width * -1;
+                > .col,
+                > [class*="col-"] {
+                    margin-top: $grid-gutter-width;
+                }
+            }
+        }
+
+        @each $space-name, $space-value in $spaces {
+            .vgut#{$infix}-#{$space-name} {
+                @include media-breakpoint-up($breakpoint) {
+                    margin-top: $space-value * -1;
+                    > .col,
+                    > [class*="col-"] {
+                        margin-top: $space-value;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/**
+ * Make Spaces
+ */
+
+@mixin make-space($values, $prefixes, $breakpoints) {
+    @each $breakpoint in map-keys($breakpoints) {
+        $infix: breakpoint-infix($breakpoint, $breakpoints);
+  
+        @each $attr-short, $attr-long in $prefixes {
+            @each $name, $value in $values {
+                .#{$attr-short}#{$infix}-#{$name} {
+                @include media-breakpoint-up($breakpoint) {
+                    #{$attr-long}: #{$value}#{'px'};
+                    }
+                }
+            }
+        } 
+    }
+}
