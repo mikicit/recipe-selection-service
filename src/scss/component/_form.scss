@@ -1,0 +1,16 @@
+.form-label {
+    margin-block: get-space('xs');
+    display: block;
+}
+
+.form-control {
+    display: block;
+    line-height: 40px;
+    border-radius: 4px;
+    background-color: get-color('gray-lighter');
+    border: none;
+    width: 100%;
+    padding: 0 get-space('s');
+    font-size: inherit;
+    font-family: inherit;
+}

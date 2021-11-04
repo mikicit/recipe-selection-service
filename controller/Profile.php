@@ -28,4 +28,8 @@ class Profile extends \core\Controller
     {
         echo $this->view->get('user/profile', $this->data);
     }
+
+    public function show() {
+        
+    }
 }

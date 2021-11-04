@@ -1,0 +1,9 @@
+.page-header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: get-space('s');
+    padding-bottom: get-space('s');
+}

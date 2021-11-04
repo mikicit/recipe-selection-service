@@ -1,0 +1,24 @@
+.btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: get-space('xs') get-space('s');
+    display: inline-block;
+    border-radius: 4px;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
+    @include typo('preset5');
+    &--lg {
+        padding: get-space('s') get-space('m');
+    }
+    &--primary {
+        background-color: get-color('green-normal');
+        color: white;
+    }
+    &--secondary {
+        background-color: white;
+        box-shadow: inset 0 0 0 1px get-color('black-normal');
+        color: get-color('black-normal');
+    }
+}

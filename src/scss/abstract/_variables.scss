@@ -4,7 +4,7 @@ $colors: (
     "black-normal": #474D52,
     "black-dark": #181A1B,
 
-    "gray-ligher": #F1F2F4,
+    "gray-lighter": #F1F2F4,
     "gray-light": #F1F2F4,
     "gray-normal": #F1F2F4,
 
@@ -14,14 +14,14 @@ $colors: (
 // Typography
 $typography: (
     "preset1": (
-        "font-size": 32px,
-        "line-height": 32px,
-        "font-weight": bold
+        "font-size": 40px,
+        "line-height": 48px,
+        "font-weight": normal
     ),
     "preset2": (
-        "font-size": 24px,
-        "line-height": 28px,
-        "font-weight": bold
+        "font-size": 32px,
+        "line-height": 40px,
+        "font-weight": normal
     ),
     "preset3": (
         "font-size": 18px,
@@ -121,7 +121,7 @@ $container-padding: (
 $container-width: (
     "small": 752px,
     "medium": 976px,
-    "normal": 1120px
+    "normal": 1264px
 );
 
 

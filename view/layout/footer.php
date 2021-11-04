@@ -1,4 +1,4 @@
-    <footer class="page-footer">
+    <footer class="page-footer mt-xxl">
 
     </footer>
 </body>

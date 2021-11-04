@@ -18,6 +18,16 @@
     @include make-container-width();
 }
 
+.container-small {
+    @extend %container-base;
+    @include make-container-width('small');
+}
+
+.container-medium {
+    @extend %container-base;
+    @include make-container-width('medium');
+}
+
 .container-fluid {
     @extend %container-base;
 }

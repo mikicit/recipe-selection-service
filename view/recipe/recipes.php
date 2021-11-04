@@ -1,53 +1,26 @@
 <?php echo $header; ?>
-<section class="pt-5 pb-5 bg-success">
-    <div class="container">
-        <h2 class="text-white">Search Recipes</h2>
-        <form class="mt-3" action="/search">
-            <input class="form-control form-control-lg" type="search" placeholder="Write name of reciep">
-        </form>
-    </div>
-</section>
-<div class="container mt-5 mb-5">
-    <div class="row g-5">
-        <div class="col-3">
-            <nav style="height: 100%;" class="bg-white">
-
-            </nav>
+<nav class="search-section">
+  <div class="container-medium">
+    <h2 class="search-section__heading">Search Recipes</h2>
+    <form class="mt-3" action="/">
+      <input class="" type="search" placeholder="Write name of reciep" name="search">
+    </form>
+  </div>
+</nav>
+<section class="section container mt-xxl">
+  <h1 class="section__heading">Recipes</h1>
+  <div class="row vgut">
+    <?php for ($i = 0; $i < 8; $i++): ?>
+    <div class="col-3">
+      <div class="recipe-card">
+        <img class="recipe-card__img" src="https://source.unsplash.com/304x228/?food&random=<?php echo $i; ?>" width="304" height="228" class="card-img-top" alt="">
+        <div class="recipe-card__body">
+          <h3 class="recipe-card__title">Card title</h3>
+          <a href="/recipe/<?php echo $i; ?>" class="btn btn--primary">See recipe</a>
         </div>
-        <main class="col-9">
-            <h2>Recipes</h2>
-            <div class="row g-3 mt-3">
-                <?php for ($i = 0; $i < 8; $i++): ?>
-                <div class="col-4">
-                    <div class="card">
-                        <img src="" width="286" height="180" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <a href="/recipe/<?php echo $i; ?>" class="btn btn-primary">See recipe</a>
-                        </div>
-                    </div>
-                </div>
-                <?php endfor; ?>
-            </div>
-            <nav class="mt-3" aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="/?page=1">1</a></li>
-                    <li class="page-item"><a class="page-link" href="/?page=1">2</a></li>
-                    <li class="page-item"><a class="page-link" href="/?page=1#">3</a></li>
-                    <li class="page-item">
-                    <a class="page-link" href="" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                    </li>
-                </ul>
-            </nav>
-        </main>
+      </div>
     </div>
-</div>
+    <?php endfor; ?>
+  </div>
+</section>
 <?php echo $footer; ?>

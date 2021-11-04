@@ -29,79 +29,52 @@ class Router
         $controller_name = 'Home';
         $action_name = 'index';
 
-        // $route = '/profile\/test\/(\d+)/';
-        // $request_string = 'profile/test/23';
-
-        // $matches = [];
-
-        // print_r(preg_match($route, $request_string, $matches));
-        // print_r($matches);
-        // die();
-
         if (!empty($request_string))
         {
             $matches = [];
-
+            $data = [];
+            $matched = 0;
+     
             foreach ($this->routes as $route => $controller)
             {
                 if (preg_match($route, $request_string, $matches))
-                {
-                    // print_r($matches);
-                    // die();
+                {   
+                    $matched = 1;
+                    $result = preg_replace($route, $controller, $matches)[0];
+                    $array = explode('/', $result);
 
-                    $array = explode('/', $controller);
+                    $controller_name = array_shift($array);
+                    $action_name = array_shift($array);
 
-                    $controller_name = $array[0];
-
-                    if (!empty($array[1]))
+                    if (!empty($array)) 
                     {
-                        $action_name = $array[1];
+                       foreach($array as $value) 
+                       {    
+                            $tmp = explode(':', $value);
+                            $data[$tmp[0]] = $tmp[1];
+                       }
                     }
 
                     $this->runController($controller_name, $action_name);
                 }
+            }
+
+            if (!$matched)
+            {
+                $this->redirect404();
             }
         }
         else
         {
             $this->runController($controller_name, $action_name);
         }
-
-
-        // if (!empty($request_string)) {
-        //     if (array_key_exists($request_string, $this->routes))
-        //     {   
-        //         $route = $this->routes[$request_string];
-        //         $controller_name = '\\controller\\' . $route['controller'];
-
-        //         if (!empty($route['action']))
-        //         {
-        //             $action_name = $route['action'];
-        //         }
-
-        //         $controller = new $controller_name;
-        //         $controller->$action_name();
-        //     }
-        //     else
-        //     {
-        //         $this->redirect404();
-        //     }
-        // }
-        // else
-        // {
-        //     $controller_name = '\\controller\\' . $controller_name;
-        //     $controller = new $controller_name;
-        //     $controller->$action_name();
-        // }
-
-       
     }
 
-    private function runController($controller_name, $action_name)
+    private function runController($controller_name, $action_name, $data = [])
     {
         $controller_name = '\\controller\\' . $controller_name;
         $controller = new $controller_name;
-        $controller->$action_name();
+        $controller->$action_name($data);
     }
 
     private function redirect404()
@@ -110,5 +83,6 @@ class Router
         header('HTTP/1.1 404 Not Found');
 		header("Status: 404 Not Found");
 		header('Location:' . $host . '404');
+        die();
     }
 }

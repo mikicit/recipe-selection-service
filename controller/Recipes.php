@@ -24,7 +24,7 @@ class Recipes extends \core\Controller
         $this->data['footer'] = $footer->index();
     }
 
-    public function show($id)
+    public function show($data)
     {
         echo $this->view->get('recipe/recipe', $this->data);
     }
