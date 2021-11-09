@@ -1,0 +1,16 @@
+.section {
+    &__heading {
+        margin: 0 0 get-space('xl');
+    }
+    &__footer {
+        margin-top: get-space('l');
+        text-align: center;
+    }
+}
+
+.section-small {
+    &__heading {
+        margin: 0 0 get-space('l');
+        @include typo('preset3');
+    }
+}

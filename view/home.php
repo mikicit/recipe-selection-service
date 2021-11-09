@@ -13,10 +13,15 @@
     <?php for ($i = 0; $i < 8; $i++): ?>
     <div class="col-3">
       <div class="recipe-card">
-        <img class="recipe-card__img" src="https://source.unsplash.com/304x228/?food&random=<?php echo $i; ?>" width="304" height="228" class="card-img-top" alt="">
+        <img class="recipe-card__img" src="https://picsum.photos/304/228?random=<?php echo $i; ?>" width="304" height="228" class="card-img-top" alt="">
         <div class="recipe-card__body">
           <h3 class="recipe-card__title">Card title</h3>
-          <a href="/recipe/<?php echo $i; ?>" class="btn btn--primary">See recipe</a>
+          <ul class="recipe-card__tags tags">
+            <li class="tags__tag"><a class="tags__link" href="#">dinner</a></li>
+            <li class="tags__tag"><a class="tags__link" href="#">dinner</a></li> 
+            <li class="tags__tag"><a class="tags__link" href="#">dinner</a></li> 
+          </ul>
+          <a class="recipe-card__btn btn btn--primary" href="/recipe/<?php echo $i; ?>">See recipe</a>
         </div>
       </div>
     </div>

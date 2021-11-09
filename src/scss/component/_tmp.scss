@@ -26,16 +26,6 @@
     }
 }
 
-.section {
-    &__heading {
-        margin: 0 0 get-space('xl');
-    }
-    &__footer {
-        margin-top: get-space('l');
-        text-align: center;
-    }
-}
-
 .header-auth {
     display: flex;
     flex-wrap: wrap;
@@ -82,5 +72,47 @@
         font-size: 48px;
         line-height: 48px;
         font-weight: bold;
+    }
+}
+
+.review-card {
+    display: flex;
+    align-items: flex-start;
+    background-color: white;
+    padding: get-space('m');
+    border-radius: 4px;
+    &__avatar {
+        flex-shrink: 0;
+        margin-right: get-space('s');
+        overflow: hidden;
+        border-radius: 50px;
+    }
+    &__heading {
+        margin: 0 0 get-space('xxs');
+        @include typo('preset5');
+    }
+    &__review {
+        margin: 0;
+    }
+}
+
+.tags {
+    @include list-unstyled;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: get-space('xs') * -1;
+    margin-top: get-space('xs') * -1;
+    &__tag {
+        margin-left: get-space('xs');
+        margin-top: get-space('xs');
+    }
+    &__link {
+        display: inline-block;
+        background-color: #E3E6E8;
+        color: #646464;
+        border-radius: 50px;
+        padding: 4px 8px;
+        font-size: 14px;
+        line-height: 16px;
     }
 }

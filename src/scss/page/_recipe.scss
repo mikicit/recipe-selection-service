@@ -1,0 +1,24 @@
+.adding-review {
+    &__heading {
+        margin: 0 0 get-space('l');
+        @include typo('preset3');
+    }
+    &__main {
+        background-color: white;
+        border-radius: 4px;
+        padding: get-space('l') get-space('m');
+    }
+}
+
+
+.reviews {
+    &__heading {
+        margin: 0 0 get-space('l');
+        @include typo('preset3');
+    }
+    &__main {
+        & > * + * {
+            margin-top: get-space('m');
+        }
+    }
+}
