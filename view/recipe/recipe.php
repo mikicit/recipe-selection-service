@@ -16,23 +16,7 @@
     </header>
     <div class="container-medium">
         <div class="recipe__content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Donec at pellentesque diam, nec dapibus quam.
-                Sed molestie porttitor ultrices. Phasellus nisl arcu,
-                auctor sit amet tristique in, faucibus at erat. Lorem
-                ipsum dolor sit amet, consectetur adipiscing elit. Aliquam cursus sagittis tempus.
-                Nunc rutrum imperdiet dolor id eleifend. Vivamus iaculis odio vitae turpis placerat, ac pulvinar leo aliquet.
-                Ut aliquet mollis leo nec dictum. Maecenas leo erat, finibus in purus at, finibus maximus lorem.
-            </p>
-            <p>Morbi non dolor erat. Aliquam eu velit velit. Aenean congue et dui quis pharetra.
-                Proin convallis, quam condimentum faucibus pulvinar, metus velit molestie eros,
-                sed suscipit nunc tortor sit amet lectus. Pellentesque habitant morbi tristique senectus
-                et netus et malesuada fames ac turpis egestas. Donec ullamcorper, velit quis convallis sollicitudin
-                neque orci tristique risus, non pharetra nibh sapien at velit. Phasellus scelerisque rhoncus ipsum,
-                et dapibus quam fermentum ornare. Sed vulputate pellentesque aliquet. Duis condimentum urna dolor, at elementum orci placerat non.
-                Vivamus sed felis est. Aenean mattis quam eu facilisis blandit. In ornare dui vel facilisis vestibulum. Vivamus fermentum,
-                libero in euismod maximus, nisl dui facilisis ligula, sit amet imperdiet tellus augue ac ex. 
-            </p>
+            <?php echo 'fs'; ?>
         </div>
         <section class="adding-review mt-xl">
             <h2 class="adding-review__heading">Add Review</h2>
