@@ -14,4 +14,12 @@ class ModelRecipeRecipes extends Model
 
         return $data;
     }
+
+    public function get($query_vars) 
+    {
+        $db = App::$db;
+        $stmt = $db->query('SELECT * FROM recipe WHERE recipe_id = ' . $query_vars['id']);
+
+        return $stmt->fetch();
+    }
 }

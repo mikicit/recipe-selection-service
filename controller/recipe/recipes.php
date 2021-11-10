@@ -2,7 +2,7 @@
 
 class ControllerRecipeRecipes extends Controller
 {
-    public function show($data)
+    public function show($id)
     {
         $view = new View();
         $model_recipes = new ModelRecipeRecipes();
@@ -15,7 +15,12 @@ class ControllerRecipeRecipes extends Controller
         $data['header'] = $header->index();
         $data['footer'] = $footer->index();
 
-        $data['recipes'] = $model_recipes->getData();
+        $data['recipe'] = $model_recipes->get($id);
+
+        if (!$data['recipe']) 
+        {
+            die(); // Добавить редирект на 404
+        }
 
         echo $view->get('recipe/recipe', $data);
     }

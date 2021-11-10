@@ -53,7 +53,7 @@ class Router
                        }
                     }
 
-                    $this->runController($controller_name, $action_name);
+                    $this->runController($controller_name, $action_name, $data);
                 }
             }
 

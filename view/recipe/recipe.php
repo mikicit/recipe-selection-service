@@ -3,7 +3,7 @@
     <header class="recipe-header">
         <div class="recipe-header__cover" style="background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80')"></div>
         <div class="recipe-header__main container-medium">
-            <h1 class="recipe-header__title">Chopped Brussels Sprout Salad</h1>
+            <h1 class="recipe-header__title"><?php echo $recipe['title']; ?></h1>
             <div class="recipe-header__stars star-rating star-rating--lg">
                 <i class="is-active fas fa-star"></i>
                 <i class="is-active fas fa-star"></i>
@@ -16,7 +16,7 @@
     </header>
     <div class="container-medium">
         <div class="recipe__content">
-            <?php echo 'fs'; ?>
+            <?php echo $recipe['description']; ?>
         </div>
         <section class="adding-review mt-xl">
             <h2 class="adding-review__heading">Add Review</h2>
