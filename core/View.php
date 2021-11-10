@@ -1,7 +1,5 @@
 <?php
 
-namespace core;
-
 class View
 {
     public function get($template_name, $data = [])

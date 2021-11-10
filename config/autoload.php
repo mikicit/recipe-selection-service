@@ -1,10 +1,23 @@
 <?php
 
 spl_autoload_register(function($class) {
-    $path = ROOT . '/' .  $class . '.php';
+    $parts = preg_split('/(?=[A-Z])/', $class, -1, PREG_SPLIT_NO_EMPTY);
 
-    if (file_exists($path))
+    if (count($parts) == 1)
+    {   
+        $path = ROOT . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR . strtolower($parts[0]) . '.php';
+        if (file_exists($path))
+        {
+            include($path);
+        }
+    }
+    else
     {
-        include(ROOT . '/' .  $class . '.php');
+        $path = ROOT . DIRECTORY_SEPARATOR . strtolower(implode(DIRECTORY_SEPARATOR, $parts)) . '.php';
+
+        if (file_exists($path))
+        {
+            include($path);
+        }
     }
 });

@@ -1,0 +1,11 @@
+.star-rating {
+    color: white;
+    font-size: 16px;
+    line-height: 1em;
+    &--lg {
+        font-size: 24px;
+    }
+    & > *.is-active {
+        color: get-color('yellow-normal');
+    }
+}

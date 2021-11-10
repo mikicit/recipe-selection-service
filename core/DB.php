@@ -1,11 +1,16 @@
 <?php
 
-namespace Core;
-
-class DB
+class Db
 {
+    private $connection;
+
     public function __construct()
     {
-        // $connection = new \PDO('mysql:host=localhost;dbname=hrecept;charset=utf8', 'root', '');
+        $this->connection = new \PDO('mysql:host=remotemysql.com;dbname=mR0KM36tCK;charset=utf8', 'mR0KM36tCK', 'Z8QDmiEx0h');
+    }
+
+    public function query($query)
+    {
+        return $this->connection->query($query);
     }
 }

@@ -9,6 +9,10 @@
         @include typo('preset5');
         margin: 0;
     }
+    &__stars {
+        color: get-color('gray-normal');
+        margin-top: get-space('xs');
+    }
     &__tags {
         margin-top: get-space('xs');
     }

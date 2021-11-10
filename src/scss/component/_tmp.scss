@@ -31,50 +31,6 @@
     flex-wrap: wrap;
 }
 
-.recipe {
-    &__content {
-        background-color: white;
-        padding: get-space('xl') get-space('l');
-        border-radius: 4px;
-        margin-top: get-space('xl');
-        & p {
-           margin: 0; 
-        }
-        & p + p {
-            margin-top: get-space('m');
-        }
-    }
-}
-
-.recipe-header {
-    display: flex;
-    align-items: center;
-    background-color: get-color('black-dark');
-    position: relative;
-    min-height: 440px;
-    padding: get-space('xl') 0;
-    &__cover {
-        background-size: cover;
-        background-position: center;
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        opacity: 0.40;
-    }
-    &__main {
-        position: relative;
-        text-align: center;
-    }
-    &__title {
-        color: white;
-        font-size: 48px;
-        line-height: 48px;
-        font-weight: bold;
-    }
-}
-
 .review-card {
     display: flex;
     align-items: flex-start;
@@ -93,26 +49,5 @@
     }
     &__review {
         margin: 0;
-    }
-}
-
-.tags {
-    @include list-unstyled;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: get-space('xs') * -1;
-    margin-top: get-space('xs') * -1;
-    &__tag {
-        margin-left: get-space('xs');
-        margin-top: get-space('xs');
-    }
-    &__link {
-        display: inline-block;
-        background-color: #E3E6E8;
-        color: #646464;
-        border-radius: 50px;
-        padding: 4px 8px;
-        font-size: 14px;
-        line-height: 16px;
     }
 }

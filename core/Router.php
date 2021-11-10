@@ -1,7 +1,5 @@
 <?php
 
-namespace Core;
-
 class Router
 {
     private $routes = [];
@@ -26,7 +24,7 @@ class Router
 
     private function resolveRoute($request_string)
     {   
-        $controller_name = 'Home';
+        $controller_name = 'CommonHome';
         $action_name = 'index';
 
         if (!empty($request_string))
@@ -72,7 +70,7 @@ class Router
 
     private function runController($controller_name, $action_name, $data = [])
     {
-        $controller_name = '\\controller\\' . $controller_name;
+        $controller_name = 'Controller' . $controller_name;
         $controller = new $controller_name;
         $controller->$action_name($data);
     }

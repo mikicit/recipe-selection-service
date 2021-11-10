@@ -1,23 +1,14 @@
 <?php
 
-namespace Core;
-
-class App 
+class App
 {
-    private static $DB;
+    public static $db;
     private static $router;
 
     public static function init()
     {
-        self::$DB = new DB();
+        self::$db = new Db();
         self::$router = new Router();
-
-        self::initDbConnection();
         self::$router->run();
-    }
-
-    private static function initDbConnection()
-    {
-
     }
 }

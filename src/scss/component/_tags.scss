@@ -1,0 +1,20 @@
+.tags {
+    @include list-unstyled;
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: get-space('xs') * -1;
+    margin-top: get-space('xs') * -1;
+    &__tag {
+        margin-left: get-space('xs');
+        margin-top: get-space('xs');
+    }
+    &__link {
+        display: inline-block;
+        background-color: #E3E6E8;
+        color: #646464;
+        border-radius: 50px;
+        padding: 4px 8px;
+        font-size: 14px;
+        line-height: 16px;
+    }
+}

@@ -1,8 +1,6 @@
 <?php 
 
-namespace controller;
-
-class Profile extends \core\Controller
+class ControllerAccountProfile extends Controller
 {
     private $data = [];
     private $model;
@@ -10,15 +8,10 @@ class Profile extends \core\Controller
 
     public function __construct()
     {
-        if (class_exists('\model\Profile'))
-        {
-            $this->model = new \model\Profile;
-        }
+        $this->view = new View();
 
-        $this->view = new \Core\View();
-
-        $header = new Header();
-        $footer = new Footer();
+        $header = new ControllerCommonHeader();
+        $footer = new ControllerCommonFooter();
 
         $this->data['header'] = $header->index();
         $this->data['footer'] = $footer->index();
