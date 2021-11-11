@@ -72,7 +72,8 @@
         <section class="reviews mt-xl" id="reviews">
             <h2 class="reviews__heading">Reviews</h2>
             <div class="reviews__main">
-                <?php for ($i = 0; $i < 8; $i++): ?>
+                <?php print_r($reviews); ?>
+                <?php foreach ($reviews as $review): ?>
                 <article class="review-card">
                     <div class="review-card__avatar">
                         <img src="https://placeimg.com/64/64/people" alt="" width="64" height="64">
@@ -83,7 +84,7 @@
                             Praesent varius semper risus, a posuere metus congue ut. Proin pellentesque nulla orci, sed condimentum nisl aliquet ut. </p>
                     </div>
                 </article>
-                <?php endfor; ?>
+                <?php endforeach; ?>
             </div>
         </section>
     </div>

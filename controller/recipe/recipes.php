@@ -22,6 +22,8 @@ class ControllerRecipeRecipes extends Controller
             die(); // Добавить редирект на 404
         }
 
+        $data['reviews'] = $model_recipes->getReviews(1);
+
         echo $view->get('recipe/recipe', $data);
     }
 
