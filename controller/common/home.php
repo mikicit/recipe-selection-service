@@ -3,8 +3,9 @@
 class ControllerCommonHome extends Controller
 {
     public function index()
-    {
-        $view = new View();
+    {   
+        $model_recipe = new ModelRecipeRecipe();
+
         $data = [];
 
         $header = new ControllerCommonHeader();
@@ -13,6 +14,8 @@ class ControllerCommonHome extends Controller
         $data['header'] = $header->index();
         $data['footer'] = $footer->index();
 
-        echo $view->get('common/home', $data);
+        $data['futured_recipes'] = $model_recipe->getFutured();
+
+        $this->response->setOutput($this->view->get('common/home', $data));
     }
 }

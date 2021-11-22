@@ -6,11 +6,12 @@ class Db
 
     public function __construct()
     {
-        $this->connection = new \PDO('mysql:host=remotemysql.com;dbname=mR0KM36tCK;charset=utf8', 'mR0KM36tCK', 'Z8QDmiEx0h');
+        $this->connection = new \PDO('mysql:host=' . DBHOST . ';dbname=' . DBNAME . ';charset=utf8', DBUSER, DBPASSWORD);
+        // $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     }
 
-    public function query($query)
+    public function pdo()
     {
-        return $this->connection->query($query);
+        return $this->connection;
     }
 }

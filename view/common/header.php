@@ -16,6 +16,12 @@
         <li class="header-nav__item"><a class="header-nav__link" href="/recipes">Recipes</a></li>
       </ul>
     </nav>
+    <div class="page-header__search">
+      <form class="header-search" action="/recipes" method="GET">
+        <input class="header-search__input" type="search" placeholder="Search recipe..." name="search" value="<?php echo isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+        <button class="header-search__btn btn btn--primary" type="submit">Search</button>
+      </form>
+    </div>
     <div>
       <div class="header-user">
 

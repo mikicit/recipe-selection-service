@@ -1,0 +1,28 @@
+.hero {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-height: 440px;
+    padding: get-space('xl') 0;
+    background-color: get-color('gray-normal');
+    &__cover {
+        background-size: cover;
+        background-position: center;
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+    }
+    &__heading {
+        color: white;
+        font-size: 48px;
+        line-height: 48px;
+        font-weight: bold;
+        margin: 0;
+    }
+    &__main {
+        position: relative;
+        text-align: center;
+    }
+}

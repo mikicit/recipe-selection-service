@@ -16,7 +16,7 @@
 .recipe-header {
     display: flex;
     align-items: center;
-    background-color: get-color('black-dark');
+    background-color: #2F353C;
     position: relative;
     min-height: 440px;
     padding: get-space('xl') 0;
@@ -42,6 +42,7 @@
         margin: 0;
     }
     &__stars {
+        justify-content: center;
         margin-top: get-space('l');
     }
     &__reviews {
@@ -74,5 +75,30 @@
         & > * + * {
             margin-top: get-space('m');
         }
+    }
+}
+
+.review-card {
+    display: flex;
+    align-items: flex-start;
+    background-color: white;
+    padding: get-space('m');
+    border-radius: 4px;
+    &__avatar {
+        flex-shrink: 0;
+        margin-right: get-space('s');
+        overflow: hidden;
+        border-radius: 50px;
+    }
+    &__heading {
+        margin: 0 0 get-space('xxs');
+        @include typo('preset5');
+    }
+    &__review {
+        margin: 0;
+    }
+    &__stars {
+        color: get-color('gray-normal');
+        margin-top: get-space('s');
     }
 }

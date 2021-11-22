@@ -59,7 +59,7 @@ class Router
 
             if (!$matched)
             {
-                $this->redirect404();
+                $this->runController('ErrorNotfound', 'index');
             }
         }
         else
@@ -73,14 +73,5 @@ class Router
         $controller_name = 'Controller' . $controller_name;
         $controller = new $controller_name;
         $controller->$action_name($data);
-    }
-
-    private function redirect404()
-	{
-        $host = 'http://' . $_SERVER['HTTP_HOST'] . '/';
-        header('HTTP/1.1 404 Not Found');
-		header("Status: 404 Not Found");
-		header('Location:' . $host . '404');
-        die();
     }
 }

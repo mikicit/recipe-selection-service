@@ -22,7 +22,7 @@
     padding-top: get-space('xxl');
     padding-bottom: get-space('xxl');
     &__heading {
-
+        
     }
 }
 
@@ -31,23 +31,31 @@
     flex-wrap: wrap;
 }
 
-.review-card {
-    display: flex;
-    align-items: flex-start;
+.sidebar {
     background-color: white;
-    padding: get-space('m');
     border-radius: 4px;
-    &__avatar {
-        flex-shrink: 0;
-        margin-right: get-space('s');
-        overflow: hidden;
-        border-radius: 50px;
-    }
+    padding: get-space('l') get-space('m');
+}
+
+.sidebar-filter {
     &__heading {
-        margin: 0 0 get-space('xxs');
-        @include typo('preset5');
+        @include typo('preset6');
+        margin: 0 0 get-space('s');
+        padding-bottom: get-space('s');
+        border-bottom: 1px solid get-color('gray-light');
     }
-    &__review {
+    &__block {
         margin: 0;
+        padding: 0;
+        border: 0;
+        & + & {
+            margin-top: get-space('s')
+        }
+    }
+    &__block-heading {
+        @include typo('preset5');
+        margin: 0 0 get-space('xs');
+        padding: 0;
+        width: 100%;
     }
 }

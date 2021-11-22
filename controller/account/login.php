@@ -4,7 +4,6 @@ class ControllerAccountLogin extends Controller
 {
     public function index()
     {
-        $view = new View();
         $data = [];
 
         $header = new ControllerCommonHeader();
@@ -13,6 +12,6 @@ class ControllerAccountLogin extends Controller
         $data['header'] = $header->index();
         $data['footer'] = $footer->index();
 
-        echo $view->get('account/login', $data);
+        echo $this->view->get('account/login', $data);
     }
 }

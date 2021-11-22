@@ -1,0 +1,30 @@
+.page-header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: get-space('s');
+    padding-bottom: get-space('s');
+    &__search {
+        flex-grow: 1;
+        margin: 0 get-space('l');
+    }
+}
+
+.header-search {
+    display: flex;
+    &__input {
+        line-height: 40px;
+        padding: 0 16px;
+        border: 0;
+        background-color: get-color('gray-lighter');
+        border-radius: 4px 0 0 4px;
+        flex-grow: 1;
+        font-family: inherit;
+        font-size: inherit;
+    }
+    &__btn {
+        border-radius: 0 4px 4px 0;
+    }
+}

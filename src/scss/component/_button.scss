@@ -15,11 +15,27 @@
     &--primary {
         background-color: get-color('green-normal');
         color: white;
+        transition: background-color 200ms;
+        &:focus,
+        &:hover {
+            background-color: get-color('green-light');
+        }
+        &:active {
+            background-color: get-color('green-dark');
+        }
     }
     &--secondary {
         background-color: white;
-        box-shadow: inset 0 0 0 1px get-color('black-normal');
+        box-shadow: inset 0 0 0 1px get-color('gray-normal');
         color: get-color('black-normal');
+        transition: background-color 200ms, box-shadow 200ms;
+        &:focus,
+        &:hover {
+            box-shadow: inset 0 0 0 1px get-color('black-normal');
+        }
+        &:active {
+            background-color: get-color('gray-lighter');
+        }
     }
 }
 

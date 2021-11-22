@@ -1,10 +1,9 @@
 <?php 
 
-class Notfound extends Controller
+class ControllerErrorNotfound extends Controller
 {
     public function index()
     {
-        $view = new View();
         $data = [];
 
         $header = new ControllerCommonHeader();
@@ -13,6 +12,7 @@ class Notfound extends Controller
         $data['header'] = $header->index();
         $data['footer'] = $footer->index();
 
-        echo $view->get('error/404', $data);
+        $this->response->setResponseCode(404);
+        $this->response->setOutput($this->view->get('error/404', $data));
     }
 }
