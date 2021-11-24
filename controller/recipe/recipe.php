@@ -4,6 +4,8 @@ class ControllerRecipeRecipe extends Controller
 {
     public function index()
     {  
+        $this->document->setTitle('Recipes');
+
         $model_recipe = new ModelRecipeRecipe();
 
         $data = [];
@@ -11,11 +13,11 @@ class ControllerRecipeRecipe extends Controller
         $header = new ControllerCommonHeader();
         $footer = new ControllerCommonFooter();
 
-        $data['header'] = $header->index();
-        $data['footer'] = $footer->index();
-
         $data['recipes'] = $model_recipe->getData();
         $data['ingredients'] = $model_recipe->getAllIngredients();
+
+        $data['header'] = $header->index();
+        $data['footer'] = $footer->index();
         
         $this->response->setOutput($this->view->get('recipe/recipes', $data));
     }
@@ -29,9 +31,6 @@ class ControllerRecipeRecipe extends Controller
         $header = new ControllerCommonHeader();
         $footer = new ControllerCommonFooter();
 
-        $data['header'] = $header->index();
-        $data['footer'] = $footer->index();
-
         $data['recipe'] = $model_recipe->get($query_vars['id']);
 
         if (!$data['recipe'])
@@ -39,6 +38,8 @@ class ControllerRecipeRecipe extends Controller
             $not_found = new ControllerErrorNotfound();
             $not_found->index();
         }
+
+		$this->document->setTitle($data['recipe']['title']);
 
         $data['reviews'] = $model_recipe->getReviews($query_vars['id']);
         $data['avg_rating'] = 0;
@@ -56,9 +57,10 @@ class ControllerRecipeRecipe extends Controller
         $data['form_validation'] = [];
 
         ## POST processing
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_SESSION['user']) && $_SERVER["REQUEST_METHOD"] == "POST") {
             $form_data = [];
 
+            $form_data['user_id'] = $_SESSION['user']['user_id'];
             $form_data['recipe_id']  = isset($_POST['recipe_id']) ? (int)$_POST['recipe_id'] : 1;
             $form_data['review']  = isset($_POST['review']) ? trim(htmlspecialchars($_POST['review'])) : '';
             $form_data['rating'] = isset($_POST['rating']) ? (int)$_POST['rating'] : '';
@@ -80,14 +82,23 @@ class ControllerRecipeRecipe extends Controller
 
             if (empty($data['form_validation'])) {
                 $model_recipe->addReview($form_data);
+                $_SESSION['review_adding_success'] = 'The review was successfully submitted.';
+                $this->response->redirect($_SERVER['REQUEST_URI']);
             }
         }
+
+		$data['header'] = $header->index();
+        $data['footer'] = $footer->index();
 
         $this->response->setOutput($this->view->get('recipe/recipe', $data));
     }
 
     public function add()
     {
+        if (!isset($_SESSION['user']) || $_SESSION['user']['user_group_id'] != 1) {
+            $this->response->redirect('/');
+        }
+
         $model_recipe = new ModelRecipeRecipe();
 
         $data = [];

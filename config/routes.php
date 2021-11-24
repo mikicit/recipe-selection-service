@@ -8,5 +8,6 @@ $routes = [
     '/^recipe\/(\d+)$/' => 'RecipeRecipe/show/id:$1',
     '/^login$/' => 'AccountLogin/index',
     '/^registration$/' => 'AccountRegistration/index',
+    '/^logout$/' => 'AccountLogout/index',
     '/^404$/' => 'ErrorNotfound/index',
 ];

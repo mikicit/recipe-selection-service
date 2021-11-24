@@ -17,9 +17,10 @@
     &__heading {
         color: white;
         font-size: 48px;
-        line-height: 48px;
+        line-height: 56px;
         font-weight: bold;
         margin: 0;
+        text-shadow: 0 8px 16px hsl(200deg 10% 20% / 15%), 0 1px 0 hsl(200deg 10% 20% / 10%), 0 -1px 0 hsl(200deg 10% 20% / 10%), 1px 0 0 hsl(200deg 10% 20% / 10%), -1px 0 0 hsl(200deg 10% 20% / 10%);
     }
     &__main {
         position: relative;

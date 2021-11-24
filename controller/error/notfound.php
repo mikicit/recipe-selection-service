@@ -9,6 +9,8 @@ class ControllerErrorNotfound extends Controller
         $header = new ControllerCommonHeader();
         $footer = new ControllerCommonFooter();
 
+        $this->document->setTitle('Page not found!');
+
         $data['header'] = $header->index();
         $data['footer'] = $footer->index();
 

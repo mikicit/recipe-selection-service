@@ -1,11 +1,13 @@
 .page-header {
     background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
     padding-top: get-space('s');
     padding-bottom: get-space('s');
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
     &__search {
         flex-grow: 1;
         margin: 0 get-space('l');
@@ -27,4 +29,28 @@
     &__btn {
         border-radius: 0 4px 4px 0;
     }
+}
+
+.header-nav {
+    &__list {
+        @include list-unstyled();
+        display: flex;
+    }
+    &__item {
+
+    }
+    &__link {
+        @include typo('preset6');
+        color: get-color('black-dark');
+        display: block;
+        padding: get-space('xs');
+        &:hover {
+            color: get-color('green-normal');
+        }
+    }
+}
+
+.header-auth {
+    display: flex;
+    flex-wrap: wrap;
 }

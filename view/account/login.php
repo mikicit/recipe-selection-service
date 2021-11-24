@@ -5,15 +5,12 @@
     <form class="form" action="" method="POST" id="login-form">
       <?php if (isset($form_error)): ?>
       <div class="mb-m">
-        <p class="form-error"><?php echo $form_error; ?></p>
+        <p class="alert alert--error"><?php echo $form_error; ?></p>
       </div>
       <?php endif; ?>
       <div>
         <label class="form-label" for="email">Email</label>
-        <input class="form-input <?php echo isset($form_validation['email']) ? 'is-invalid' : ''; ?>" type="email" name="email" id="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>">
-        <?php if (isset($form_validation['email'])): ?>
-        <p class="input-error"><?php echo $form_validation['email']; ?></p>
-        <?php endif; ?>
+        <input class="form-input" type="email" name="email" id="email" value="<?php echo isset($_POST['email']) ? $_POST['email'] : '' ?>">
       </div>
       <div class="mt-s">
         <label class="form-label" for="password">Password</label>

@@ -30,15 +30,6 @@
     position: relative;
 }
 
-.form-error {
-    background-color: get-color('red-normal');
-    color: white;
-    border-radius: 4px;
-    padding: get-space('s');
-    margin: 0;
-    @include typo('preset7');
-}
-
 .input-error {
     color: get-color('red-normal');
     margin: get-space('xxs') 0 0;

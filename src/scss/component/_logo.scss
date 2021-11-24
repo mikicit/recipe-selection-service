@@ -1,0 +1,11 @@
+.logo {
+    display: inline-block;
+    margin-right: get-space('m');
+    width: 160px;
+    height: 40px;
+    transition: opacity 200ms;
+    &:focus,
+    &:hover {
+        opacity: .6;
+    }
+}

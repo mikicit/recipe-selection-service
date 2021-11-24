@@ -1,6 +1,7 @@
 <?php
 
-class Response {
+class Response 
+{
   public function setOutput($output)
   {
     echo $output;
@@ -19,13 +20,15 @@ class Response {
 
   public function redirect($diraction)
   {
-    $url = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/' . $diraction;
+    $url = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $diraction;
 
     header("Location: $url");
+    die();
   }
 
   public function redirectToRef()
   {
     header('Location: ' . $_SERVER['HTTP_REFERER']);
+    die();
   }
 }

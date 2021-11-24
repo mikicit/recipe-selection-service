@@ -11,10 +11,12 @@ class ControllerCommonHome extends Controller
         $header = new ControllerCommonHeader();
         $footer = new ControllerCommonFooter();
 
+        $data['featured_recipes'] = $model_recipe->getFeatured();
+
+        $this->document->setTitle('Hrecept.cz - Look for recipes by ingredients!');
+
         $data['header'] = $header->index();
         $data['footer'] = $footer->index();
-
-        $data['futured_recipes'] = $model_recipe->getFutured();
 
         $this->response->setOutput($this->view->get('common/home', $data));
     }

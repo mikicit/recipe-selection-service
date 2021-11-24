@@ -5,7 +5,7 @@
     <form class="form" action="" method="POST" id="registration-form">
       <?php if (isset($form_error)): ?>
       <div class="mb-m">
-        <p class="form-error"><?php echo $form_error; ?></p>
+        <p class="alert alert--error"><?php echo $form_error; ?></p>
       </div>
       <?php endif; ?>
       <div class="mt-s">

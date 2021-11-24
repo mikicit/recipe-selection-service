@@ -1,0 +1,13 @@
+.alert {
+    color: white;
+    border-radius: 4px;
+    padding: get-space('s');
+    margin: 0;
+    @include typo('preset7');
+    &--success {
+        background-color: get-color('green-normal');
+    }
+    &--error {
+        background-color: get-color('red-normal');
+    }
+}

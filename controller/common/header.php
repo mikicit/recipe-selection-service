@@ -6,6 +6,8 @@ class ControllerCommonHeader extends Controller
     {
         $view = new View();
         $data = [];
+
+        $data['title'] = $this->document->getTitle();
         
         return $view->get('common/header', $data);
     }
