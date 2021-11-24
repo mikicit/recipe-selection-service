@@ -70,7 +70,7 @@ class ControllerAccountRegistration extends Controller
                 if (!$result) {
                     $data['form_error'] = 'Something went wrong.';
                 } else {
-                    $this->response->redirect('/profile');
+                    $this->response->redirect('/login');
                 }
             }
         }
