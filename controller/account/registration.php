@@ -7,6 +7,8 @@ class ControllerAccountRegistration extends Controller
         $model_registration = new ModelAccountRegistration();
         $data = [];
 
+        $this->document->setTitle('Registration');
+
         $header = new ControllerCommonHeader();
         $footer = new ControllerCommonFooter();
 

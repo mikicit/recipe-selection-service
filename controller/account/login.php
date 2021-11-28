@@ -8,6 +8,8 @@ class ControllerAccountLogin extends Controller
 
     $data = [];
 
+    $this->document->setTitle('Login');
+
     $header = new ControllerCommonHeader();
     $footer = new ControllerCommonFooter();
 

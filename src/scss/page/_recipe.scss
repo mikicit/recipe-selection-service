@@ -16,20 +16,9 @@
 .recipe-header {
     display: flex;
     align-items: center;
-    background-color: #2F353C;
+    background-color: get-color('green-normal');
     position: relative;
-    min-height: 440px;
     padding: get-space('xl') 0;
-    &__cover {
-        background-size: cover;
-        background-position: center;
-        position: absolute;
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        opacity: 0.40;
-    }
     &__main {
         position: relative;
         text-align: center;
@@ -93,6 +82,11 @@
     &__heading {
         margin: 0 0 get-space('xxs');
         @include typo('preset5');
+    }
+    &__date {
+        color: get-color('black-light');
+        margin: 0 0 get-space('xs');
+        @include typo('preset7');
     }
     &__review {
         margin: 0;

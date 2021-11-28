@@ -1,18 +1,17 @@
-<?php echo $header; ?>
+<?= $header; ?>
 <article class="recipe">
   <header class="recipe-header">
-    <div class="recipe-header__cover" style="background-image: url('https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80')"></div>
     <div class="recipe-header__main container-medium">
-      <h1 class="recipe-header__title"><?php echo $recipe['title']; ?></h1>
+      <h1 class="recipe-header__title"><?= $recipe['title']; ?></h1>
       <div class="recipe-header__stars star-rating star-rating--lg">
-        <?php for ($i = 0; $i < $avg_rating; $i++): ?>
+        <?php for ($i = 0; $i < $recipe['rating']; $i++): ?>
         <i class="is-active fas fa-star"></i>
         <?php endfor; ?>
-        <?php for ($i = 0; $i < 5 - $avg_rating; $i++): ?>
+        <?php for ($i = 0; $i < 5 - $recipe['rating']; $i++): ?>
         <i class="fas fa-star"></i>
         <?php endfor; ?>
       </div>
-      <a class="recipe-header__reviews" href="#reviews"><?php echo count($reviews); ?> reviews</a>
+      <a class="recipe-header__reviews" href="#reviews"><?= $recipe['quantity']; ?> reviews</a>
     </div>
   </header>
   <div class="container-medium">
@@ -62,34 +61,6 @@
             <p class="input-error"><?php echo $form_validation['rating']; ?></p>
             <?php endif; ?>
           </div>
-          <!-- <div class="mt-s">
-              <label class="form-label" for="form-comment-rating">Rating</label>
-              <select class="form-select w-100" name="reting" id="form-comment-rating">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-              </select>
-          </div>
-          <div class="mt-s">
-              <label class="form-label" for="form-comment-review">Input</label>
-              <input class="form-input" type="text" name="">
-          </div>
-          <div class="mt-s">
-              <div class="form-checkbox">
-                  <input class="form-checkbox__control" type="checkbox" name="" id="form-comment-checkbox">
-                  <label class="form-checkbox__label" for="form-comment-checkbox">Input</label>
-              </div>
-              <div class="form-checkbox mt-xxs">
-                  <input class="form-checkbox__control" type="checkbox" name="" id="form-comment-checkbox1">
-                  <label class="form-checkbox__label" for="form-comment-checkbox1">Input</label>
-              </div>
-          </div> -->
-          <!-- <div class="mt-s">
-              <label class="form-label" for="form-comment-review">File</label>
-              <input class="form-file" type="file">
-          </div> -->
           <input type="hidden" name="recipe_id" id="form-recipe-id" value="<?php echo $recipe['recipe_id']; ?>">
           <button class="btn btn--primary mt-s w-100" type="submit">Send</button>
         </form>
@@ -108,8 +79,9 @@
             <img src="https://placeimg.com/64/64/people" alt="<?php echo $review['firstname'] . ' ' . $review['lastname']; ?>" width="64" height="64">
           </div>
           <div class="review-card__body">
-            <h3 class="review-card__heading"><?php echo $review['firstname'] . ' ' . $review['lastname']; ?></h3>
-            <p class="review-card__review"><?php echo $review['description']; ?></p>
+            <h3 class="review-card__heading"><?= $review['firstname'] . ' ' . $review['lastname']; ?></h3>
+            <p class="review-card__date"><time datetime="<?= $review['date_added']; ?>"><?= date("d F Y", strtotime($review['date_added'])); ?></time></p>
+            <p class="review-card__review"><?= $review['description']; ?></p>
             <div class="review-card__stars star-rating">
               <?php for ($i = 0; $i < $review['rating']; $i++): ?>
               <i class="is-active fas fa-star"></i>
@@ -125,6 +97,9 @@
         <p class="reviews__empty">No reviews.</p>
         <?php endif; ?>
       </div>
+      <?php if (!empty($reviews)): ?>
+      <a href="#" class="btn btn--primary w-100 mt-m">More Reviews</a>
+      <?php endif; ?>
     </section>
   </div>
 </article>
