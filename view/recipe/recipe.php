@@ -14,12 +14,35 @@
       <a class="recipe-header__reviews" href="#reviews"><?= $recipe['quantity']; ?> reviews</a>
     </div>
   </header>
+  <?php if (!empty($recipe['images'])): ?>
+    <div class="container mt-xl">
+      <div class="row vgut">
+        <?php foreach ($recipe['images'] as $image): ?>
+          <div class="col-3">
+            <a href="<?= Helper::getImage($image);?>" target="_blank">
+              <img src="<?= Helper::getImage($image, 292, 204);?>" alt="<?= $recipe['title']; ?>" width="294" height="204">
+            </a>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  <?php endif; ?>
   <div class="container-medium">
     <div class="recipe__content">
       <h2>Ingredients</h2>
-      <ul>
+      <ul class="tags">
         <?php foreach ($ingredients as $ingredient): ?>
-        <li><?php echo $ingredient['name']; ?></li>
+        <li class="tags__tag">
+          <a class="tags__link" href="#"><?php echo $ingredient['name']; ?></a>
+        </li>
+        <?php endforeach; ?>
+      </ul>
+      <h2>Categories</h2>
+      <ul class="tags">
+        <?php foreach ($categories as $category): ?>
+        <li class="tags__tag">
+          <a class="tags__link" href="#"><?php echo $category['name']; ?></a>
+        </li>
         <?php endforeach; ?>
       </ul>
       <h2>How to cook</h2>
@@ -29,7 +52,7 @@
       <h2 class="adding-review__heading">Add Review</h2>
       <?php if (isset($_SESSION['user'])): ?>
       <div class="adding-review__main">
-        <form class="form" action="" method="post" id="form-review">
+        <form class="form" action="<?= Helper::getCurrentUrl(); ?>" method="post" id="form-review">
           <?php if (isset($_SESSION['review_adding_success'])): $msg = $_SESSION['review_adding_success']; ?>
           <div class="mb-m">
             <p class="alert alert--success"><?php echo $msg; ?></p>
@@ -42,7 +65,7 @@
           <?php endif; ?>
           <div>
             <label class="form-label" for="form-comment-review">Review</label>
-            <textarea class="form-textarea <?php echo isset($form_validation['review']) ? 'is-invalid' : ''; ?>" name="review" cols="30" rows="4" id="form-comment-review"><?php echo isset($_POST['review']) ? $_POST['review'] : ''; ?></textarea>
+            <textarea class="form-textarea <?php echo isset($form_validation['review']) ? 'is-invalid' : ''; ?>" name="review" cols="30" rows="4" id="form-comment-review" required><?php echo isset($_POST['review']) ? $_POST['review'] : ''; ?></textarea>
             <?php if (isset($form_validation['review'])): ?>
             <p class="input-error"><?php echo $form_validation['review']; ?></p>
             <?php endif; ?>

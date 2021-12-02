@@ -12,7 +12,7 @@
   <header class="page-header">
     <nav class="page-header__inner container-fluid">
       <a href="/" class="logo">
-        <img src="/public/images/logo.svg" alt="Hrecept.cz logotype" witdh="160" height="40">
+        <img src="/public/images/logo.svg" alt="Hrecept.cz logotype" width="160" height="40">
       </a>
       <div class="header-nav">
         <ul class="header-nav__list">

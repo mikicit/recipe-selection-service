@@ -23,6 +23,11 @@ class ControllerAccountLogin extends Controller
       $form_data['password'] = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : '';
       $form_data['email']    = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
       
+      ## Password
+      if (strlen($form_data['password']) == 0) {
+        $data['form_error'] = 'Enter the correct password and email.';
+      }
+
       ## Email
       if (!filter_var($form_data['email'], FILTER_VALIDATE_EMAIL)) {
         $data['form_error'] = 'Enter the correct password and email.';

@@ -20,7 +20,7 @@ class ModelRecipeRecipe extends Model
                     $result[$key]['images'] = (array)unserialize($recipe['images']);
 
                     foreach ($result[$key]['images'] as $index => $image) {
-                        $result[$key]['images'][$index] = PUBLIC_UPLOAD . 'recipes/' . $recipe['recipe_id'] . '/' . $image;
+                        $result[$key]['images'][$index] = BASE_URL . '/uploads/recipes/' . $recipe['recipe_id'] . '/' . $image;
                     }
                 }
             }
@@ -33,7 +33,7 @@ class ModelRecipeRecipe extends Model
 
     public function get($id)
     {
-        $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.description, ROUND(AVG(review.rating)) as rating, COUNT(recipe.recipe_id) as quantity ';
+        $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.description, recipe.images, ROUND(AVG(review.rating)) as rating, COUNT(review.recipe_id) as quantity ';
         $sql .= 'FROM recipe ';
         $sql .= 'LEFT JOIN review ';
         $sql .= 'ON review.recipe_id = recipe.recipe_id ';
@@ -42,8 +42,21 @@ class ModelRecipeRecipe extends Model
 
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
+        $result = $stmt->fetch();
 
-        return $stmt->fetch();
+        if ($result) {
+            if (!empty($result['images'])) {
+                $result['images'] = (array)unserialize($result['images']);
+
+                foreach ($result['images'] as $index => $image) {
+                    $result['images'][$index] = BASE_URL . '/uploads/recipes/' . $result['recipe_id'] . '/' . $image;
+                }
+            }
+
+            return $result;
+        } else {
+            return [];
+        }
     }
 
     public function getFeatured()
@@ -155,7 +168,7 @@ class ModelRecipeRecipe extends Model
             }
 
             if (!empty($data['images'])) {
-                $path = UPLOAD . 'recipes' . DIRECTORY_SEPARATOR . $recipe_id . DIRECTORY_SEPARATOR;
+                $path = ROOT . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . 'recipes' . DIRECTORY_SEPARATOR . $recipe_id . DIRECTORY_SEPARATOR;
                 $images = [];
 
                 if (!is_dir($path)) {

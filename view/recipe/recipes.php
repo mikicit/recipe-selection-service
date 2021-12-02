@@ -6,7 +6,7 @@
       <div class="sidebar">
         <div class="sidebar-filter">
           <h3 class="sidebar-filter__heading">Filter</h3>
-          <form class="sidebar-filter__form" action="" method="GET" id="sidebar-filter">
+          <form class="sidebar-filter__form" action="<?= Helper::getCurrentUrl(); ?>" method="get" id="sidebar-filter">
             <fieldset class="sidebar-filter__block">
               <legend class="sidebar-filter__block-heading">Ingredients</legend>
               <?php foreach($ingredients as $ingredient): $checked = isset($_GET['ingredients']) && in_array($ingredient['ingredient_id'], $_GET['ingredients']) ? 'checked' : ''; ?>
@@ -35,7 +35,7 @@
         <?php foreach ($recipes as $recipe): ?>
         <div class="col-4">
           <div class="recipe-card">
-            <img class="recipe-card__img" src="<?= !empty($recipe['images']) ? $recipe['images'][0] : 'https://dummyimage.com/304x228/cbced5/2b2d2e.jpg'; ?>" width="304" height="228" alt="<?= $recipe['title']; ?>">
+            <img class="recipe-card__img" src="<?= !empty($recipe['images']) ? Helper::getImage($recipe['images'][0], 304, 228) : 'https://dummyimage.com/304x228/cbced5/2b2d2e.jpg'; ?>" width="304" height="228" alt="<?= $recipe['title']; ?>">
             <div class="recipe-card__body">
               <h3 class="recipe-card__title"><?= $recipe['title']; ?></h3>
               <div class="recipe-card__stars star-rating">
@@ -49,7 +49,7 @@
               <?php if (!empty($recipe['categories'])): ?>
               <ul class="recipe-card__tags tags">
                 <?php foreach($recipe['categories'] as $category): ?>
-                <li class="tags__tag"><a class="tags__link" href="/recipes?categories[]=<?= $category['category_id']; ?>"><?= $category['name']; ?></a></li>
+                <li class="tags__tag"><a class="tags__link" href="#"><?= $category['name']; ?></a></li>
                 <?php endforeach; ?>
               </ul>
               <?php endif;?>

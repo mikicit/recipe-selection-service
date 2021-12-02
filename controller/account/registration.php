@@ -22,8 +22,8 @@ class ControllerAccountRegistration extends Controller
             $form_data = [];
 
             $form_data['password']  = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : '';
-            $form_data['firstname'] = isset($_POST['firstname']) ? htmlspecialchars($_POST['firstname']) : '';
-            $form_data['lastname']  = isset($_POST['lastname']) ? htmlspecialchars($_POST['lastname']) : '';
+            $form_data['firstname'] = isset($_POST['firstname']) ? trim(htmlspecialchars($_POST['firstname'])) : '';
+            $form_data['lastname']  = isset($_POST['lastname']) ? trim(htmlspecialchars($_POST['lastname'])) : '';
             $form_data['email']     = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
 
             ## Validation

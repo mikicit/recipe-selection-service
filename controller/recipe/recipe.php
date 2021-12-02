@@ -56,6 +56,7 @@ class ControllerRecipeRecipe extends Controller
         }
 
         $data['ingredients'] = $model_recipe->getIngredients($query_vars['id']);
+        $data['categories'] = $model_recipe->getCategories($query_vars['id']);
 
         $data['form_validation'] = [];
 

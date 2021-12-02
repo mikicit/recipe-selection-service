@@ -15,14 +15,14 @@
       <?php endif; ?>
       <div>
         <label class="form-label" for="form-title">Title</label>
-        <input class="form-input <?= isset($form_validation['title']) ? 'is-invalid' : ''; ?>" type="text" name="title" value="<?= isset($_POST['title']) ? $_POST['title'] : ''; ?>">
+        <input class="form-input <?= isset($form_validation['title']) ? 'is-invalid' : ''; ?>" type="text" name="title" value="<?= isset($_POST['title']) ? $_POST['title'] : ''; ?>" pattern=".{2, }" required>
         <?php if (isset($form_validation['title'])): ?>
         <p class="input-error"><?= $form_validation['title']; ?></p>
         <?php endif; ?>
       </div>
       <div class="mt-s">
         <label class="form-label" for="form-description">Description</label>
-        <textarea class="form-textarea <?= isset($form_validation['description']) ? 'is-invalid' : ''; ?>" name="description" cols="30" rows="4" id="form-description"><?= isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea>
+        <textarea class="form-textarea <?= isset($form_validation['description']) ? 'is-invalid' : ''; ?>" name="description" cols="30" rows="4" id="form-description" required><?= isset($_POST['description']) ? $_POST['description'] : ''; ?></textarea>
         <?php if (isset($form_validation['description'])): ?>
         <p class="input-error"><?= $form_validation['description']; ?></p>
         <?php endif; ?>
