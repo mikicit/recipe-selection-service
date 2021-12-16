@@ -4,79 +4,96 @@ class ControllerAccountRegistration extends Controller
 {
     public function index()
     {
-        $model_registration = new ModelAccountRegistration();
-        $data = [];
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if (isset($_SESSION['user'])) $this->response->redirect('/profile');
 
-        $this->document->setTitle('Registration');
+            $model_registration = new ModelAccountRegistration();
+            $data = [];
 
-        $header = new ControllerCommonHeader();
-        $footer = new ControllerCommonFooter();
+            ## session form data
+            if (isset($_SESSION['form_data'])) {
+                $data['form_data'] = $_SESSION['form_data'];
+                unset($_SESSION['form_data']);
+            }
+    
+            $this->document->setTitle('Registration');
+    
+            $header = new ControllerCommonHeader();
+            $footer = new ControllerCommonFooter();
+    
+            $data['header'] = $header->index();
+            $data['footer'] = $footer->index();
 
-        $data['header'] = $header->index();
-        $data['footer'] = $footer->index();
+            $this->response->setOutput($this->view->get('account/registration', $data));
+        } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_SESSION['user'])) return;
 
-        $data['form_validation'] = [];
+            $model_registration = new ModelAccountRegistration();
+            $data = [];
 
-        ## POST processing
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $form_data = [];
+            $data['password']  = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : '';
+            $data['firstname'] = isset($_POST['firstname']) ? trim(htmlspecialchars($_POST['firstname'])) : '';
+            $data['lastname']  = isset($_POST['lastname']) ? trim(htmlspecialchars($_POST['lastname'])) : '';
+            $data['email']     = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
 
-            $form_data['password']  = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : '';
-            $form_data['firstname'] = isset($_POST['firstname']) ? trim(htmlspecialchars($_POST['firstname'])) : '';
-            $form_data['lastname']  = isset($_POST['lastname']) ? trim(htmlspecialchars($_POST['lastname'])) : '';
-            $form_data['email']     = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
+            $data['validation'] = [];
 
             ## Validation
 
             ## Firstname
-            if (strlen($form_data['firstname']) < 2) {
-                $data['form_validation']['firstname'] = 'Firstname must not be shorter than 2 characters.';
+            if (strlen($data['firstname']) < 2) {
+                $data['validation']['firstname'] = 'Firstname must not be shorter than 2 characters.';
             }
 
-            if (!preg_match("/^[a-zA-Z]*$/", $form_data['firstname'])) {
-                $data['form_validation']['firstname'] = 'Only letters allowed.';
+            if (!preg_match("/^[a-zA-Z]*$/", $data['firstname'])) {
+                $data['validation']['firstname'] = 'Only letters allowed.';
             }
 
             ## Lastname
-            if (strlen($form_data['lastname']) < 2) {
-                $data['form_validation']['lastname'] = 'Lastname must not be shorter than 2 characters.';
+            if (strlen($data['lastname']) < 2) {
+                $data['validation']['lastname'] = 'Lastname must not be shorter than 2 characters.';
             }
 
-            if (!preg_match("/^[a-zA-Z]*$/", $form_data['lastname'])) {
-                $data['form_validation']['lastname'] = 'Only letters allowed.';
+            if (!preg_match("/^[a-zA-Z]*$/", $data['lastname'])) {
+                $data['validation']['lastname'] = 'Only letters allowed.';
             }
 
             ## Email
-            if (!filter_var($form_data['email'], FILTER_VALIDATE_EMAIL)) {
-                $data['form_validation']['email'] = 'Invalid email format.';
+            if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+                $data['validation']['email'] = 'Invalid email format.';
             }
             
             ## Passwotd
-            if (strlen($form_data['password']) < 8) {
-                $data['form_validation']['password'] = 'Password must not be shorter than 8 characters.';
+            if (strlen($data['password']) < 8) {
+                $data['validation']['password'] = 'Password must not be shorter than 8 characters.';
             }
 
-            if (empty($data['form_validation'])) {
+            if (empty($data['validation'])) {
                 ## Check if email exists
-                if ($model_registration->emailExists($form_data['email'])) {
-                    $data['form_error'] = 'A user with this Email already exists.';
-                    
-                    $this->response->setOutput($this->view->get('account/registration', $data));
+                if ($model_registration->emailExists($data['email'])) {
+                    $data['error'] = 'A user with this Email already exists.';
                 }
 
-                ## Hash with salt
-                $form_data['password'] = password_hash($form_data['password'], PASSWORD_DEFAULT);
+                if (!isset($data['error'])) {
+                    ## Hash with salt
+                    $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+                    $result = $model_registration->register([
+                        'password'  => $data['password'],
+                        'firstname' => $data['firstname'],
+                        'lastname'  => $data['lastname'],
+                        'email'     => $data['email']
+                    ]);
 
-                $result = $model_registration->register($form_data);
+                    $_SESSION['form_data']['registration_success'] = 'Congratulations, you have successfully registered. Enter your login details.';
 
-                if (!$result) {
-                    $data['form_error'] = 'Something went wrong.';
-                } else {
-                    $this->response->redirect('/login');
+                    if ($result) $this->response->redirect('/login');
+                    $data['error'] = 'Something went wrong.';
                 }
             }
+
+            $_SESSION['form_data'] = $data;
+
+            $this->response->redirect($_SERVER['REQUEST_URI']);
         }
-        
-        $this->response->setOutput($this->view->get('account/registration', $data));
     }
 }

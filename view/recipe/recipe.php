@@ -33,7 +33,7 @@
       <ul class="tags">
         <?php foreach ($ingredients as $ingredient): ?>
         <li class="tags__tag">
-          <a class="tags__link" href="#"><?php echo $ingredient['name']; ?></a>
+          <a class="tags__link" href="#"><?= $ingredient['name']; ?></a>
         </li>
         <?php endforeach; ?>
       </ul>
@@ -41,33 +41,33 @@
       <ul class="tags">
         <?php foreach ($categories as $category): ?>
         <li class="tags__tag">
-          <a class="tags__link" href="#"><?php echo $category['name']; ?></a>
+          <a class="tags__link" href="#"><?= $category['name']; ?></a>
         </li>
         <?php endforeach; ?>
       </ul>
       <h2>How to cook</h2>
-      <?php echo $recipe['description']; ?>
+      <?= $recipe['description']; ?>
     </div>
     <section class="adding-review mt-xl">
       <h2 class="adding-review__heading">Add Review</h2>
       <?php if (isset($_SESSION['user'])): ?>
       <div class="adding-review__main">
-        <form class="form" action="<?= Helper::getCurrentUrl(); ?>" method="post" id="form-review">
-          <?php if (isset($_SESSION['review_adding_success'])): $msg = $_SESSION['review_adding_success']; ?>
+        <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="form-review" novalidate>
+          <?php if (isset($form_data['success'])): ?>
           <div class="mb-m">
-            <p class="alert alert--success"><?php echo $msg; ?></p>
+            <p class="alert alert--success"><?= $form_data['success']; ?></p>
           </div>
-          <?php unset($_SESSION['review_adding_success']); endif; ?>
-          <?php if (isset($form_error)): ?>
+          <?php endif; ?>
+          <?php if (isset($form_data['error'])): ?>
           <div class="mb-m">
-              <p class="alert alert--error"><?php echo $form_error; ?></p>
+            <p class="alert alert--error"><?= $form_data['error']; ?></p>
           </div>
           <?php endif; ?>
           <div>
             <label class="form-label" for="form-comment-review">Review</label>
-            <textarea class="form-textarea <?php echo isset($form_validation['review']) ? 'is-invalid' : ''; ?>" name="review" cols="30" rows="4" id="form-comment-review" required><?php echo isset($_POST['review']) ? $_POST['review'] : ''; ?></textarea>
-            <?php if (isset($form_validation['review'])): ?>
-            <p class="input-error"><?php echo $form_validation['review']; ?></p>
+            <textarea class="form-textarea <?= isset($form_data['validation']['review']) ? 'is-invalid' : ''; ?>" name="review" cols="30" rows="4" id="form-comment-review" required><?= isset($form_data['review']) ? $form_data['review'] : ''; ?></textarea>
+            <?php if (isset($form_data['validation']['review'])): ?>
+            <p class="input-error"><?= $form_data['validation']['review']; ?></p>
             <?php endif; ?>
           </div>
           <div class="mt-s">
@@ -75,16 +75,16 @@
             <div class="form-radio-row">
               <?php for ($i = 1; $i <= 5; $i++): ?>
               <div class="form-radio">
-                <input class="form-radio__control" type="radio" name="rating" value="<?php echo $i; ?>" id="form-comment-rating<?php echo $i; ?>" <?php echo isset($_POST['rating']) && $_POST['rating'] == $i ? 'checked' : ''; ?>>
-                <label class="form-radio__label" for="form-comment-rating<?php echo $i; ?>"><?php echo $i; ?></label>
+                <input class="form-radio__control" type="radio" name="rating" value="<?= $i; ?>" id="form-comment-rating<?= $i; ?>" <?= isset($form_data['rating']) && $form_data['rating'] == $i ? 'checked' : ''; ?>>
+                <label class="form-radio__label" for="form-comment-rating<?= $i; ?>"><?= $i; ?></label>
               </div>
               <?php endfor; ?>
             </div>
-            <?php if (isset($form_validation['rating'])): ?>
-            <p class="input-error"><?php echo $form_validation['rating']; ?></p>
+            <?php if (isset($form_data['validation']['rating'])): ?>
+            <p class="input-error"><?= $form_data['validation']['rating']; ?></p>
             <?php endif; ?>
           </div>
-          <input type="hidden" name="recipe_id" id="form-recipe-id" value="<?php echo $recipe['recipe_id']; ?>">
+          <input type="hidden" name="recipe_id" id="form-recipe-id" value="<?= $recipe['recipe_id']; ?>">
           <button class="btn btn--primary mt-s w-100" type="submit">Send</button>
         </form>
       </div>
@@ -98,8 +98,8 @@
         <?php if (!empty($reviews)): ?>
         <?php foreach ($reviews as $review): ?>
         <article class="review-card">
-          <div class="review-card__avatar">
-            <img src="https://placeimg.com/64/64/people" alt="<?php echo $review['firstname'] . ' ' . $review['lastname']; ?>" width="64" height="64">
+          <div class="review-card__avatar review-card__avatar--no-avatar">
+            <p aria-hidden="true"><?= substr($review['firstname'], 0, 1); ?></p>
           </div>
           <div class="review-card__body">
             <h3 class="review-card__heading"><?= $review['firstname'] . ' ' . $review['lastname']; ?></h3>
@@ -126,4 +126,4 @@
     </section>
   </div>
 </article>
-<?php echo $footer; ?>
+<?= $footer; ?>

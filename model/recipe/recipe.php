@@ -2,16 +2,75 @@
 
 class ModelRecipeRecipe extends Model
 {
-    public function getData($query_vars = [])
+    public function getAll($query_vars = [])
     {
+        $defaults = [
+            'per_page' => 12,
+            'page'     => 1
+        ];
+        
+        $query_vars = array_merge($defaults, $query_vars);
+
+        ## creating SQL
+        $ingredient_filter_sql = 1;
+
+        if (isset($query_vars['ingredients'])) {
+            $placeholder = '0';
+            for ($i = 0; $i < count($query_vars['ingredients']); $i++) {
+                $placeholder .= ", :ingredient$i";
+            }
+            $ingredient_filter_sql = "recipe.recipe_id IN (SELECT recipe_id FROM ingredient_recipe WHERE ingredient_recipe.ingredient_id IN ($placeholder))";
+        }
+
+        $category_filter_sql = 1;
+
+        if (isset($query_vars['categories'])) {
+            $placeholder = '0';
+            for ($i = 0; $i < count($query_vars['categories']); $i++) {
+                $placeholder .= ", :category$i";
+            }
+            $category_filter_sql = "recipe.recipe_id IN (SELECT recipe_id FROM category_recipe WHERE category_recipe.category_id IN ($placeholder))";
+        }
+
+        $search_filter_sql = 1;
+
+        if (isset($query_vars['search'])) {
+            $search_filter_sql = "recipe.title LIKE CONCAT('%', :search, '%')";
+        }
+
+        $filter_sql = "WHERE ($ingredient_filter_sql) AND ($category_filter_sql) AND ($search_filter_sql)";
+
         $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.images, ROUND(AVG(review.rating)) as rating ';
         $sql .= 'FROM recipe ';
         $sql .= 'LEFT JOIN review ON recipe.recipe_id = review.recipe_id ';
+        $sql .= $filter_sql;
         $sql .= 'GROUP BY recipe.recipe_id ';
         $sql .= 'ORDER BY recipe.date_added DESC ';
-        $sql .= 'LIMIT 0, 12';
+        $sql .= 'LIMIT :offset, :per_page';
         
-        $stmt = $this->db->query($sql);
+        $stmt = $this->db->prepare($sql);
+
+        ## binding
+        if (isset($query_vars['ingredients'])) {
+            foreach ($query_vars['ingredients'] as $key => $ingredient) {
+                $stmt->bindValue("ingredient$key", $ingredient);
+            }
+        }
+
+        if (isset($query_vars['categories'])) {
+            foreach ($query_vars['categories'] as $key => $category) {
+                $stmt->bindValue("category$key", $category);
+            }
+        }
+
+        if (isset($query_vars['search'])) {
+            $stmt->bindValue("search", $query_vars['search']);
+        }
+
+        $stmt->bindValue('offset',  ($query_vars['page'] - 1) * $query_vars['per_page']);
+        $stmt->bindValue('per_page', $query_vars['per_page']);
+
+        $stmt->execute();
         $result = $stmt->fetchAll();
         
         if ($result) {
@@ -28,6 +87,69 @@ class ModelRecipeRecipe extends Model
             return $result;
         } else {
             return [];
+        }
+    }
+
+    public function getQuantity($query_vars = [])
+    {
+        ## creating SQL
+        $ingredient_filter_sql = 1;
+
+        if (isset($query_vars['ingredients'])) {
+            $placeholder = '0';
+            for ($i = 0; $i < count($query_vars['ingredients']); $i++) {
+                $placeholder .= ", :ingredient$i";
+            }
+            $ingredient_filter_sql = "recipe.recipe_id IN (SELECT recipe_id FROM ingredient_recipe WHERE ingredient_recipe.ingredient_id IN ($placeholder))";
+        }
+
+        $category_filter_sql = 1;
+
+        if (isset($query_vars['categories'])) {
+            $placeholder = '0';
+            for ($i = 0; $i < count($query_vars['categories']); $i++) {
+                $placeholder .= ", :category$i";
+            }
+            $category_filter_sql = "recipe.recipe_id IN (SELECT recipe_id FROM category_recipe WHERE category_recipe.category_id IN ($placeholder))";
+        }
+
+        $search_filter_sql = 1;
+
+        if (isset($query_vars['search'])) {
+            $search_filter_sql = "recipe.title LIKE CONCAT('%', :search, '%')";
+        }
+
+        $filter_sql = "WHERE ($ingredient_filter_sql) AND ($category_filter_sql) AND ($search_filter_sql)";
+
+        $sql = 'SELECT COUNT(*) as quantity FROM recipe ';
+        $sql .= $filter_sql;
+
+        $stmt = $this->db->prepare($sql);
+
+        ## binding
+        if (isset($query_vars['ingredients'])) {
+            foreach ($query_vars['ingredients'] as $key => $ingredient) {
+                $stmt->bindValue("ingredient$key", $ingredient);
+            }
+        }
+
+        if (isset($query_vars['categories'])) {
+            foreach ($query_vars['categories'] as $key => $category) {
+                $stmt->bindValue("category$key", $category);
+            }
+        }
+
+        if (isset($query_vars['search'])) {
+            $stmt->bindValue("search", $query_vars['search']);
+        }
+
+        $stmt->execute();
+        $result = $stmt->fetch();
+
+        if ($result) {
+            return $result['quantity'];
+        } else {
+            return 0;
         }
     }
 
@@ -67,7 +189,6 @@ class ModelRecipeRecipe extends Model
         $sql .= 'GROUP BY recipe.recipe_id ';
         $sql .= 'ORDER BY rating DESC LIMIT 8';
         $sql .= '';
-        
         
         $stmt = $this->db->query($sql);
 

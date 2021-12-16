@@ -15,7 +15,7 @@
       <?php endif; ?>
       <div>
         <label class="form-label" for="form-title">Title</label>
-        <input class="form-input <?= isset($form_validation['title']) ? 'is-invalid' : ''; ?>" type="text" name="title" value="<?= isset($_POST['title']) ? $_POST['title'] : ''; ?>" pattern=".{2, }" required>
+        <input id="form-title" class="form-input <?= isset($form_validation['title']) ? 'is-invalid' : ''; ?>" type="text" name="title" value="<?= isset($_POST['title']) ? $_POST['title'] : ''; ?>" pattern=".{2, }" required>
         <?php if (isset($form_validation['title'])): ?>
         <p class="input-error"><?= $form_validation['title']; ?></p>
         <?php endif; ?>

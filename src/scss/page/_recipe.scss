@@ -74,10 +74,26 @@
     padding: get-space('m');
     border-radius: 4px;
     &__avatar {
+        background-color: get-color('gray-light');
         flex-shrink: 0;
         margin-right: get-space('s');
         overflow: hidden;
         border-radius: 50px;
+        width: 64px;
+        height: 64px;
+        &--no-avatar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            & > p {
+                font-size: 32px;
+                line-height: 32px;
+                font-weight: bold;
+                color: get-color('gray-normal');
+                user-select: none;
+                margin: 0;
+            }
+        }
     }
     &__heading {
         margin: 0 0 get-space('xxs');

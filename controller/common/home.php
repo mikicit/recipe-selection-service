@@ -13,9 +13,9 @@ class ControllerCommonHome extends Controller
 
         $data['featured_recipes'] = $model_recipe->getFeatured();
 
-        foreach($data['featured_recipes'] as $key => $recipe) {
-            $data['featured_recipes'][$key]['categories'] = $model_recipe->getCategories($recipe['recipe_id']);
-        }
+        // foreach($data['featured_recipes'] as $key => $recipe) {
+        //     $data['featured_recipes'][$key]['categories'] = $model_recipe->getCategories($recipe['recipe_id']);
+        // }
 
         $this->document->setTitle('Hrecept.cz - Look for recipes by ingredients!');
 

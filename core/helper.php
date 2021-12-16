@@ -2,16 +2,6 @@
 
 class Helper
 {
-	public static function getUrl($path = '/') 
-	{
-		return BASE_URL . $path;
-	}
-
-	public static function getCurrentUrl()
-	{
-		return BASE_URL . $_SERVER['REQUEST_URI'];
-	}
-
 	public static function getImage($url, $width = 0, $height = 0)
 	{
 		if (!$width && !$height) {

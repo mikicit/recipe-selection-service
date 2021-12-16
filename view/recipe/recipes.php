@@ -6,7 +6,7 @@
       <div class="sidebar">
         <div class="sidebar-filter">
           <h3 class="sidebar-filter__heading">Filter</h3>
-          <form class="sidebar-filter__form" action="<?= Helper::getCurrentUrl(); ?>" method="get" id="sidebar-filter">
+          <form class="sidebar-filter__form" action="<?= Url::getCurrentUrl(); ?>" method="get" id="sidebar-filter">
             <fieldset class="sidebar-filter__block">
               <legend class="sidebar-filter__block-heading">Ingredients</legend>
               <?php foreach($ingredients as $ingredient): $checked = isset($_GET['ingredients']) && in_array($ingredient['ingredient_id'], $_GET['ingredients']) ? 'checked' : ''; ?>
@@ -35,7 +35,7 @@
         <?php foreach ($recipes as $recipe): ?>
         <div class="col-4">
           <div class="recipe-card">
-            <img class="recipe-card__img" src="<?= !empty($recipe['images']) ? Helper::getImage($recipe['images'][0], 304, 228) : 'https://dummyimage.com/304x228/cbced5/2b2d2e.jpg'; ?>" width="304" height="228" alt="<?= $recipe['title']; ?>">
+            <img class="recipe-card__img" src="<?= !empty($recipe['images']) ? Helper::getImage($recipe['images'][0], 304, 228) : Url::getUrl('/public/images/card-placeholder.jpg'); ?>" width="304" height="228" alt="<?= $recipe['title']; ?>">
             <div class="recipe-card__body">
               <h3 class="recipe-card__title"><?= $recipe['title']; ?></h3>
               <div class="recipe-card__stars star-rating">
@@ -59,19 +59,25 @@
         </div>
         <?php endforeach; ?>
       </div>
+      <?php if ($pagination): ?>
       <div class="pagination mt-l">
         <ul class="pagination__list">
-          <li class="pagination__item"><a class="pagination__link" href="#">Prev</a></li>
-          <?php for ($i = 1; $i < 7; $i++): ?>
-          <?php if ($i == 3): ?>
-          <li class="pagination__item"><span class="pagination__link is-active"><?= $i; ?></span></li>
-          <?php else: ?>
-          <li class="pagination__item"><a class="pagination__link" href="#"><?= $i; ?></a></li>
+          <?php if (isset($pagination['prev'])): ?>
+          <li class="pagination__item"><a class="pagination__link" href="<?= $pagination['prev']; ?>">Prev</a></li>
           <?php endif; ?>
-          <?php endfor; ?>
-          <li class="pagination__item"><a class="pagination__link" href="#">Next</a></li>
+          <?php foreach ($pagination['items'] as $item): ?>
+          <?php if ($item['current']): ?>
+          <li class="pagination__item"><span class="pagination__link is-active"><?= $item['page']; ?></span></li>
+          <?php else: ?>
+          <li class="pagination__item"><a class="pagination__link" href="<?= $item['link']; ?>"><?= $item['page']; ?></a></li>
+          <?php endif; ?>
+          <?php endforeach; ?>
+          <?php if (isset($pagination['next'])): ?>
+          <li class="pagination__item"><a class="pagination__link" href="<?= $pagination['next']; ?>">Next</a></li>
+          <?php endif; ?>
         </ul>
       </div>
+      <?php endif; ?>
     </div>
   </div>
 </main>
