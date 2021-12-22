@@ -11,29 +11,24 @@ class ControllerRecipeRecipe extends Controller
         $header = new ControllerCommonHeader();
         $footer = new ControllerCommonFooter();
 
+        ## Handling and Filtering Request Variables
         $query_vars = [
             'per_page' => 9,
             'page'     => 1
         ];
 
-        if (isset($_GET['page']) && (int)$_GET['page'] > 1) {
-            $query_vars['page'] = (int)$_GET['page'];
-        }
+        $filter_function = function($item) {
+            return filter_var($item, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
+        };
 
         if (isset($_GET['ingredients']) && is_array($_GET['ingredients'])) {
-            $query_vars['ingredients'] = $_GET['ingredients'];
-
-            foreach ($query_vars['ingredients'] as $key => $ingredient) {
-                $query_vars['ingredients'][$key] = (int)$ingredient;
-            }
+            $filtered_ingredients = array_filter($_GET['ingredients'], $filter_function);
+            if ($filtered_ingredients) $query_vars['ingredients'] =  $filtered_ingredients;
         }
 
         if (isset($_GET['categories']) && is_array($_GET['categories'])) {
-            $query_vars['categories'] = $_GET['categories'];
-
-            foreach ($query_vars['categories'] as $key => $category) {
-                $query_vars['categories'][$key] = (int)$category;
-            }
+            $filtered_categories = array_filter($_GET['categories'], $filter_function);
+            if ($filtered_categories) $query_vars['categories'] =  $filtered_categories;
         }
 
         if (isset($_GET['search']) && is_string($_GET['search'])) {
@@ -43,22 +38,22 @@ class ControllerRecipeRecipe extends Controller
             }
         }
         
+        $max_pages = ceil($model_recipe->getQuantity($query_vars) / $query_vars['per_page']);
+        
+        if (isset($_GET['page'])) {
+            $filter_page = filter_var($_GET['page'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => $max_pages]]);
+            if (!$filter_page) {
+                $not_found = new ControllerErrorNotfound();
+                $not_found->index();
+            }
+            $query_vars['page'] = $filter_page;
+        }
+        
         $data['ingredients'] = $model_recipe->getAllIngredients();
         $data['categories']  = $model_recipe->getAllCategories();
         $data['recipes']     = $model_recipe->getAll($query_vars);
 
-        // foreach($data['recipes'] as $key => $recipe) {
-        //     $data['recipes'][$key]['categories'] = $model_recipe->getCategories($recipe['recipe_id']);
-        // }
-
         ## Pagination
-        $max_pages = ceil($model_recipe->getQuantity($query_vars) / $query_vars['per_page']);
-
-        if (isset($_GET['page']) && $query_vars['page'] > $max_pages) {
-            $not_found = new ControllerErrorNotfound();
-            $not_found->index();
-        }
-
         $data['pagination'] = [];
 
         if ($max_pages > 1) {
@@ -79,6 +74,8 @@ class ControllerRecipeRecipe extends Controller
             }
         }
 
+        $data['query_vars'] = $query_vars;
+
         $this->document->setTitle('Recipes');
 
         $data['header'] = $header->index();
@@ -91,6 +88,7 @@ class ControllerRecipeRecipe extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $model_recipe = new ModelRecipeRecipe();
+            $model_review = new ModelRecipeReview();
 
             $data = [];
 
@@ -104,7 +102,32 @@ class ControllerRecipeRecipe extends Controller
                 $not_found->index();
             }
 
-            $data['reviews'] = $model_recipe->getReviews($query_vars['id']);
+            $data['review_quantity'] = $model_review->getQuantity($query_vars);
+
+            ## reviews pagination
+            $data['next_reviews'] = '';
+            
+            $review_pagination = [
+                'per_page' => 6,
+                'page' => 1
+            ];
+
+            if (isset($_GET['page']) && (int)$_GET['page'] > 1) {
+                $review_pagination['page'] = (int)$_GET['page'];
+            }
+
+            $max_pages = ceil($data['review_quantity'] / $review_pagination['per_page']);
+
+            if ($review_pagination['page'] < $max_pages) {
+                $data['next_reviews'] = Url::setVars(Url::getCurrentUrl(), ['page' => $review_pagination['page'] + 1]) . '#reviews';
+            }
+
+            $data['reviews'] = $model_review->get([
+                'id' => $query_vars['id'],
+                'per_page' => $review_pagination['per_page'],
+                'page' => $review_pagination['page']
+            ]);
+
             $data['ingredients'] = $model_recipe->getIngredients($query_vars['id']);
             $data['categories'] = $model_recipe->getCategories($query_vars['id']);
 
@@ -114,11 +137,6 @@ class ControllerRecipeRecipe extends Controller
                 unset($_SESSION['form_data']);
             }
 
-            ## reviews pagination
-            if (isset($_GET['page'])) {
-                
-            }
-
             $this->document->setTitle($data['recipe']['title']);
 
             $data['header'] = $header->index();
@@ -126,13 +144,14 @@ class ControllerRecipeRecipe extends Controller
 
             $this->response->setOutput($this->view->get('recipe/recipe', $data));
         } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (!isset($_SESSION['user'])) return false;
+            if (!(App::$user->isAuth())) return false;
 
-            $model_recipe = new ModelRecipeRecipe();
+            $model_review = new ModelRecipeReview();
             $data = [];
+            $user = App::$user->getCurrentUser();
             
             ## getting POST data
-            $data['user_id']   = $_SESSION['user']['user_id'];
+            $data['user_id']   = $user['user_id'];
             $data['recipe_id'] = isset($_POST['recipe_id']) ? (int)$_POST['recipe_id'] : 1;
             $data['review']    = isset($_POST['review']) ? trim(htmlspecialchars($_POST['review'])) : '';
             $data['rating']    = isset($_POST['rating']) ? (int)$_POST['rating'] : '';
@@ -162,7 +181,7 @@ class ControllerRecipeRecipe extends Controller
             }
 
             if (empty($data['validation'])) {
-                $result = $model_recipe->addReview([
+                $result = $model_review->add([
                     'user_id'   => $data['user_id'],
                     'recipe_id' => $data['recipe_id'],
                     'review'    => $data['review'],
@@ -184,96 +203,108 @@ class ControllerRecipeRecipe extends Controller
 
     public function add()
     {
-        if (!isset($_SESSION['user']) || $_SESSION['user']['user_group_id'] != 1) {
+        if (!(App::$user->isAuth()) || App::$user->getCurrentUser()['user_group_id'] != 1) {
             $this->response->redirect('/');
         }
 
-        $model_recipe = new ModelRecipeRecipe();
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $model_recipe = new ModelRecipeRecipe();
 
-        $data = [];
+            $data = [];
 
-        $data['ingredients'] = $model_recipe->getAllIngredients();
-        $data['categories'] = $model_recipe->getAllCategories();
+            $data['ingredients'] = $model_recipe->getAllIngredients();
+            $data['categories'] = $model_recipe->getAllCategories();
 
-        $header = new ControllerCommonHeader();
-        $footer = new ControllerCommonFooter();
+            ## session form data
+            if (isset($_SESSION['form_data'])) {
+                $data['form_data'] = $_SESSION['form_data'];
+                unset($_SESSION['form_data']);
+            }
 
-        $data['form_validation'] = [];
+            $header = new ControllerCommonHeader();
+            $footer = new ControllerCommonFooter();
+
+            $this->document->setTitle('Add Recipe');
         
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $form_data = [];
+            $data['header'] = $header->index();
+            $data['footer'] = $footer->index();
 
-            $form_data['title']       = isset($_POST['description']) ? trim(htmlspecialchars($_POST['title'])) : '';
-            $form_data['description'] = isset($_POST['description']) ? trim(htmlspecialchars($_POST['description'])) : '';
-            $form_data['ingredients'] = isset($_POST['ingredients']) && is_array($_POST['ingredients']) ? $_POST['ingredients'] : [];
-            $form_data['categories']  = isset($_POST['categories']) && is_array($_POST['categories']) ? $_POST['categories'] : [];
-            $form_data['images']      = isset($_FILES['images']) && !empty($_FILES['images']['name'][0]) ? $_FILES['images'] : [];
+            $this->response->setOutput($this->view->get('recipe/add', $data));
+        } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $model_recipe = new ModelRecipeRecipe();
+
+            $data = [];
+
+            $data['title']       = isset($_POST['description']) ? trim(htmlspecialchars($_POST['title'])) : '';
+            $data['description'] = isset($_POST['description']) ? trim(htmlspecialchars($_POST['description'])) : '';
+            $data['ingredients'] = isset($_POST['ingredients']) && is_array($_POST['ingredients']) ? $_POST['ingredients'] : [];
+            $data['categories']  = isset($_POST['categories']) && is_array($_POST['categories']) ? $_POST['categories'] : [];
+            $data['images']      = isset($_FILES['images']) && !empty($_FILES['images']['name'][0]) ? $_FILES['images'] : [];
+
+            $data['validation'] = [];
+
+            ## Validation
 
             ## Images validation
-            if (!empty($form_data['images'])) {
+            if (!empty($data['images'])) {
                 ## Errors
-                foreach ($form_data['images']['error'] as $error) {
+                foreach ($data['images']['error'] as $error) {
                     if (!($error == 4 || $error == 0)) {
-                        $data['form_error'] = 'Something went wrong.';
+                        $data['validation']['images'] = 'Something went wrong.';
                         break;
                     }
                 }
 
                 ## Size
-                foreach ($form_data['images']['size'] as $size) {
+                foreach ($data['images']['size'] as $size) {
                     if ($size > 5242880) {
-                        $data['form_validation']['images'] = 'The image must not be larger than 5 megabytes.';
+                        $data['validation']['images'] = 'The image must not be larger than 5 megabytes.';
                         break;
                     }
                 }
 
                 ## Type
-                foreach ($form_data['images']['type'] as $type) {
+                foreach ($data['images']['type'] as $type) {
                     if (!empty($type) && $type !== 'image/jpeg') {
-                        $data['form_validation']['images'] = 'Unsupported image format.';
+                        $data['validation']['images'] = 'Unsupported image format.';
                         break;
                     }
                 }
             }
 
-
             ## Ingredients Validation
-            foreach ($form_data['ingredients'] as $key => $ingredient) {
-                $form_data['ingredients'][$key] = (int)$ingredient;
+            foreach ($data['ingredients'] as $key => $ingredient) {
+                $data['ingredients'][$key] = (int)$ingredient;
             }
 
             ## Categories Validation
-            foreach ($form_data['categories'] as $key => $ingredient) {
-                $form_data['categories'][$key] = (int)$ingredient;
+            foreach ($data['categories'] as $key => $ingredient) {
+                $data['categories'][$key] = (int)$ingredient;
             }
 
             ## Descriptipn
-            if (strlen($form_data['description']) < 2) {
-                $data['form_validation']['description'] = 'Description must not be shorter than 2 characters.';
+            if (strlen($data['description']) < 2) {
+                $data['validation']['description'] = 'Description must not be shorter than 2 characters.';
             }
 
             ## Descriptipn
-            if (strlen($form_data['title']) < 2) {
-                $data['form_validation']['title'] = 'Title must not be shorter than 2 characters.';
+            if (strlen($data['title']) < 2) {
+                $data['validation']['title'] = 'Title must not be shorter than 2 characters.';
             }
 
-            if (empty($data['form_validation'])) {
-                $result = $model_recipe->add($form_data);
+            if (empty($data['validation'])) {
+                $result = $model_recipe->add($data);
 
                 if (!$result) {
-                    $data['form_error'] = 'Something went wrong.';
+                    $data['error'] = 'Something went wrong.';
                 } else {
-                    $_SESSION['recipe_adding_success'] = 'The recipe was successfully added.';
+                    $_SESSION['form_data']['success'] = 'The recipe was successfully added.';
                     $this->response->redirect($_SERVER['REQUEST_URI']);
                 }
             }
+
+            $_SESSION['form_data'] = $data;
+            $this->response->redirect($_SERVER['REQUEST_URI']);
         }
-
-        $this->document->setTitle('Add Recipe');
-        
-        $data['header'] = $header->index();
-        $data['footer'] = $footer->index();
-
-        $this->response->setOutput($this->view->get('recipe/add', $data));
     }
 }

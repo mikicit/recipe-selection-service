@@ -1,8 +1,8 @@
 <?= $header; ?>
-<main class="section container mt-xxl">
-  <h1 class="section__heading">Recipes</h1>
-  <div class="row">
-    <div class="col-3">
+<main class="page__main container pt-xxl pb-xxl">
+  <h1 class="page-heading">Recipes</h1>
+  <div class="row vgut">
+    <div class="col col-sm-4 col-lg-3">
       <div class="sidebar">
         <div class="sidebar-filter">
           <h3 class="sidebar-filter__heading">Filter</h3>
@@ -11,8 +11,8 @@
               <legend class="sidebar-filter__block-heading">Ingredients</legend>
               <?php foreach($ingredients as $ingredient): $checked = isset($_GET['ingredients']) && in_array($ingredient['ingredient_id'], $_GET['ingredients']) ? 'checked' : ''; ?>
               <div class="form-checkbox">
-                  <input class="form-checkbox__control" type="checkbox" name="ingredients[]" id="sidebar-filter-ingredient-<?= $ingredient['ingredient_id']; ?>" <?= $checked; ?> value="<?= $ingredient['ingredient_id']; ?>">
-                  <label class="form-checkbox__label" for="sidebar-filter-ingredient-<?= $ingredient['ingredient_id']; ?>"><?= $ingredient['name']; ?></label>
+                <input class="form-checkbox__control" type="checkbox" name="ingredients[]" id="sidebar-filter-ingredient-<?= $ingredient['ingredient_id']; ?>" <?= $checked; ?> value="<?= $ingredient['ingredient_id']; ?>">
+                <label class="form-checkbox__label" for="sidebar-filter-ingredient-<?= $ingredient['ingredient_id']; ?>"><?= $ingredient['name']; ?></label>
               </div>
               <?php endforeach; ?>
             </fieldset>
@@ -20,8 +20,8 @@
               <legend class="sidebar-filter__block-heading">Categories</legend>
               <?php foreach($categories as $category): $checked = isset($_GET['categories']) && in_array($category['category_id'], $_GET['categories']) ? 'checked' : ''; ?>
               <div class="form-checkbox">
-                  <input class="form-checkbox__control" type="checkbox" name="categories[]" id="sidebar-filter-category-<?= $category['category_id']; ?>" <?= $checked; ?> value="<?= $category['category_id']; ?>">
-                  <label class="form-checkbox__label" for="sidebar-filter-category-<?= $category['category_id']; ?>"><?= $category['name']; ?></label>
+                <input class="form-checkbox__control" type="checkbox" name="categories[]" id="sidebar-filter-category-<?= $category['category_id']; ?>" <?= $checked; ?> value="<?= $category['category_id']; ?>">
+                <label class="form-checkbox__label" for="sidebar-filter-category-<?= $category['category_id']; ?>"><?= $category['name']; ?></label>
               </div>
               <?php endforeach; ?>
             </fieldset>
@@ -30,10 +30,10 @@
         </div>
       </div>
     </div>
-    <div class="col-9">
+    <div class="col col-sm-8 col-lg-9">
       <div class="row vgut">
         <?php foreach ($recipes as $recipe): ?>
-        <div class="col-4">
+        <div class="col col-md-6 col-lg-4">
           <div class="recipe-card">
             <img class="recipe-card__img" src="<?= !empty($recipe['images']) ? Helper::getImage($recipe['images'][0], 304, 228) : Url::getUrl('/public/images/card-placeholder.jpg'); ?>" width="304" height="228" alt="<?= $recipe['title']; ?>">
             <div class="recipe-card__body">

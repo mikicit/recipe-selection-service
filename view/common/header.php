@@ -16,29 +16,29 @@
       </a>
       <div class="header-nav">
         <ul class="header-nav__list">
-          <li class="header-nav__item"><a class="header-nav__link" href="/">Home</a></li>
-          <li class="header-nav__item"><a class="header-nav__link" href="/recipes">Recipes</a></li>
+          <li class="header-nav__item"><a class="header-nav__link" href="<?= Url::getUrl(); ?>">Home</a></li>
+          <li class="header-nav__item"><a class="header-nav__link" href="<?= Url::getUrl('/recipes'); ?>">Recipes</a></li>
         </ul>
       </div>
       <div class="page-header__search">
         <form class="header-search" action="<?= Url::getUrl('/recipes'); ?>" method="GET">
-          <input class="header-search__input" type="search" placeholder="Search recipe..." name="search" value="<?= isset($_GET['search']) ? $_GET['search'] : ''; ?>">
+          <input class="header-search__input" type="search" placeholder="Search recipe..." name="search" value="<?= isset($_GET['search']) && is_string($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
           <button class="header-search__btn btn btn--primary" type="submit">Search</button>
         </form>
       </div>
       <div>
-        <?php if (isset($_SESSION['user'])): $user = $_SESSION['user'];?>
+        <?php if ($user): ?>
         <div class="header-auth">
-          <a class="btn btn--secondary" href="/profile"><?php echo $user['firstname'] . ' ' . $user['lastname']; ?></a>
+          <a class="btn btn--secondary" href="/profile"><?= $user['firstname'] . ' ' . $user['lastname']; ?></a>
           <?php if ($user['user_group_id'] == 1): ?>
-          <a class="btn btn--secondary ml-s" href="/recipe/add">Add Recipe</a>
+          <a class="btn btn--secondary ml-s" href="<?= Url::getUrl('/recipe/add'); ?>">Add Recipe</a>
           <?php endif; ?>
-          <a class="btn btn--secondary ml-s" href="/logout">Logout</a>
+          <a class="btn btn--secondary ml-s" href="<?= Url::getUrl('/logout'); ?>">Logout</a>
         </div>
         <?php else: ?>
         <div class="header-auth">
-          <a class="btn btn--secondary" href="/login">Login</a>
-          <a class="btn btn--secondary ml-s" href="/registration">Registration</a>
+          <a class="btn btn--secondary" href="<?= Url::getUrl('/login'); ?>">Login</a>
+          <a class="btn btn--secondary ml-s" href="<?= Url::getUrl('/registration'); ?>">Registration</a>
         </div>
         <?php endif; ?>
       </div>

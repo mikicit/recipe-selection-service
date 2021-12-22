@@ -37,6 +37,11 @@
             background-color: get-color('gray-lighter');
         }
     }
+    &--light {
+        background-color: white;
+        color: get-color('black-normal');
+        transition: background-color 200ms, box-shadow 200ms;
+    }
 }
 
 

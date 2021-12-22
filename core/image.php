@@ -1,15 +1,27 @@
 <?php
 
+/**
+ * [Description Image]
+ */
 class Image
 {
-	public static function resize($path, $to, $new_width, $new_height)
+	/**
+	 * @param string $path
+	 * @param string $to
+	 * @param int $new_width
+	 * @param int $new_height
+	 * 
+	 * @return [type]
+	 */
+	public static function resize(string $path, string $to, int $new_width, int $new_height)
 	{
 		list($width, $height, $extension) = getimagesize($path); // only jpeg :(
 
 		$image = imagecreatefromjpeg($path);
-		$scale = $width / $height;
+		$ratio = $width / $height;
+		$new_ration = $new_width / $new_height;
 
-		if ($scale >= 1) {
+		if ($ratio >= $new_ration) {
 			$image = imagescale($image, -1, $new_height);
 			$image = imagecrop($image, ['x' => (imagesx($image) - $new_width) / 2, 'y' => 0, 'height' => $new_height, 'width' => $new_width]);
 		} else {

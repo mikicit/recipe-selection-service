@@ -1,6 +1,6 @@
 <?= $header; ?>
-<main class="container-fluid auth">
-  <div class="auth__block">
+<main class="page__main page-auth container-fluid pt-xxl pb-xxl">
+  <div class="auth box">
     <h1 class="auth__heading">Registration</h1>
     <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="registration-form" novalidate>
       <?php if (isset($form_data['error'])): ?>

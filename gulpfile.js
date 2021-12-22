@@ -5,7 +5,6 @@ const sass = require('gulp-dart-sass');
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 
-
 gulp.task('processCss', function() {
   return gulp.src('./src/scss/main.scss')
     .pipe(sourcemaps.init())

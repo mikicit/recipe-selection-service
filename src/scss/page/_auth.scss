@@ -1,14 +1,12 @@
-.auth {
+.page-auth {
     display: flex;
+    align-items: center;
     justify-content: center;
-    &__block {
-        background-color: white;
-        border-radius: 4px;
-        flex: 400px 0 1;
-        width: 400px;
-        padding: get-space('l') get-space('m');
-        margin-top: get-space('xxl');
-    }
+}
+
+.auth {
+    flex: 400px 0 1;
+    width: 400px;
     &__heading {
         @include typo('preset3');
         margin: 0 0 get-space('m');

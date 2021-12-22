@@ -5,12 +5,12 @@
  */
 
 
- /**
- * Base Container
- */
-
 %container-base {
     @include make-container();
+}
+
+.container-fluid {
+    @extend %container-base;
 }
 
 .container {

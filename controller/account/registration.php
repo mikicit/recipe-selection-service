@@ -5,9 +5,8 @@ class ControllerAccountRegistration extends Controller
     public function index()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            if (isset($_SESSION['user'])) $this->response->redirect('/profile');
+            if (App::$user->isAuth()) $this->response->redirect('/profile');
 
-            $model_registration = new ModelAccountRegistration();
             $data = [];
 
             ## session form data
@@ -26,9 +25,9 @@ class ControllerAccountRegistration extends Controller
 
             $this->response->setOutput($this->view->get('account/registration', $data));
         } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (isset($_SESSION['user'])) return;
+            if (App::$user->isAuth()) return;
 
-            $model_registration = new ModelAccountRegistration();
+            $model_user = new ModelAccountUser();
             $data = [];
 
             $data['password']  = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : '';
@@ -70,14 +69,14 @@ class ControllerAccountRegistration extends Controller
 
             if (empty($data['validation'])) {
                 ## Check if email exists
-                if ($model_registration->emailExists($data['email'])) {
+                if ($model_user->getUserByEmail($data['email'])) {
                     $data['error'] = 'A user with this Email already exists.';
                 }
 
                 if (!isset($data['error'])) {
                     ## Hash with salt
                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                    $result = $model_registration->register([
+                    $result = $model_user->addUser([
                         'password'  => $data['password'],
                         'firstname' => $data['firstname'],
                         'lastname'  => $data['lastname'],

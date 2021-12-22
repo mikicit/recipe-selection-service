@@ -1,6 +1,6 @@
-<?php echo $header; ?>
-<main class="container mt-5 mb-5 text-center">
-    <h1>404</h1>
-    <h2>Page not found</h2>
+<?= $header; ?>
+<main class="page__main page-404 container">
+  <h1 class="page-404__heading">404</h1>
+  <h2 class="page-404__subheading">Page not found <span aria-hidden="true">:(</span></h2>
 </main>
-<?php echo $footer; ?>
+<?= $footer; ?>

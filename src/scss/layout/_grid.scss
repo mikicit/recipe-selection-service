@@ -4,20 +4,96 @@
  * Classes for grid layout
  */
 
+@use "sass:math";
 
-.row {
-    @include make-row();
+// Row
+%row {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.no-gutters {
-    margin-right: 0;
-    margin-left: 0;
-    > .col,
-    > [class*="col-"] {
-        padding-right: 0;
-        padding-left: 0;
+.row {
+    margin-left: math.div($grid-default-gutter, 2) * -1px;
+    margin-right: math.div($grid-default-gutter, 2) * -1px;
+    @extend %row;
+    & > .col,
+    & > [class*="col-"] {
+        padding-left: math.div($grid-default-gutter, 2) * 1px;
+        padding-right: math.div($grid-default-gutter, 2) * 1px;
     }
 }
 
-@include make-grid-columns();
-@include make-vgut();
+@each $gutter, $value in $grid-gutters {
+    .row-#{$gutter} {
+        margin-left: math.div($value, 2) * -1px;
+        margin-right: math.div($value, 2) * -1px;
+        @extend %row;
+        & > .col,
+        & > [class*="col-"] {
+            padding-left: math.div($value, 2) * 1px;
+            padding-right: math.div($value, 2) * 1px;
+        }
+    }
+}
+
+// Vertical Indent
+.vgut {
+    margin-top: $grid-default-gutter * -1px;
+    & > .col,
+    & > [class*="col-"] {
+        margin-top: $grid-default-gutter * 1px;
+    } 
+}
+
+@each $gutter, $value in $grid-gutters {
+    .vgut-#{$gutter} {
+        margin-top: $value * -1px;
+        & > .col,
+        & > [class*="col-"] {
+            margin-top: $value * 1px;
+        } 
+    }
+}
+
+// Columns
+%grid-column {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    
+    .col#{$infix},
+    .col#{$infix}-auto {
+        @extend %grid-column;
+    }
+
+    @for $i from 1 through $grid-columns {
+        .col#{$infix}-#{$i} {
+            @extend %grid-column;
+        }
+    }
+
+    @include media-breakpoint-up($breakpoint) {
+        .col#{$infix} {
+            flex-basis: 0;
+            flex-grow: 1;
+            max-width: 100%;
+        }
+
+        .col#{$infix}-auto {
+            flex: 0 0 auto;
+            width: auto;
+            max-width: none; // Reset earlier grid tiers
+        }
+
+        @for $i from 1 through $grid-columns {
+            .col#{$infix}-#{$i} {
+                flex: 0 0 percentage(math.div($i, $grid-columns));
+                max-width: percentage(math.div($i, $grid-columns));
+            }
+        }
+    }
+}

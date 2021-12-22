@@ -2,9 +2,9 @@
 
 class ControllerAccountLogout extends Controller
 {
-  public function index()
-  {
-    unset($_SESSION['user']);
-    $this->response->redirect('/login');
-  }
+    public function index()
+    {
+        App::$user->unAuth();
+        $this->response->redirect('/login');
+    }
 }

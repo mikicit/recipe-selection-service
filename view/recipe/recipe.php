@@ -1,57 +1,74 @@
 <?= $header; ?>
-<article class="recipe">
-  <header class="recipe-header">
-    <div class="recipe-header__main container-medium">
-      <h1 class="recipe-header__title"><?= $recipe['title']; ?></h1>
-      <div class="recipe-header__stars star-rating star-rating--lg">
-        <?php for ($i = 0; $i < $recipe['rating']; $i++): ?>
-        <i class="is-active fas fa-star"></i>
-        <?php endfor; ?>
-        <?php for ($i = 0; $i < 5 - $recipe['rating']; $i++): ?>
-        <i class="fas fa-star"></i>
-        <?php endfor; ?>
+<div class="page__main pb-xxl pt-xxl">
+  <div class="container-medium">
+    <article class="recipe">
+      <header class="recipe-header">
+        <h1 class="recipe-header__heading"><?= $recipe['title']; ?></h1>
+        <div class="recipe-header__rating">
+          <a class="recipe-header__reviews" href="#reviews"><?= $recipe['quantity']; ?> reviews</a>
+          <div class="recipe-header__stars star-rating">
+            <?php for ($i = 0; $i < $recipe['rating']; $i++): ?>
+            <i class="is-active fas fa-star"></i>
+            <?php endfor; ?>
+            <?php for ($i = 0; $i < 5 - $recipe['rating']; $i++): ?>
+            <i class="fas fa-star"></i>
+            <?php endfor; ?>
+          </div>
+        </div>
+      </header>
+      <?php if (!empty($recipe['images'])): ?>
+      <div class="recipe__image">
+        <img src="<?= Helper::getImage($recipe['images'][0], 976, 420);?>" alt="<?= $recipe['title']; ?>">
       </div>
-      <a class="recipe-header__reviews" href="#reviews"><?= $recipe['quantity']; ?> reviews</a>
-    </div>
-  </header>
-  <?php if (!empty($recipe['images'])): ?>
-    <div class="container mt-xl">
-      <div class="row vgut">
-        <?php foreach ($recipe['images'] as $image): ?>
+      <?php if (count($recipe['images']) > 1): ?>
+      <div class="recipe-images">
+        <div class="row-2 vgut-2">
+          <?php for($i = 1; $i < count($recipe['images']); $i++): ?>
           <div class="col-3">
-            <a href="<?= Helper::getImage($image);?>" target="_blank">
-              <img src="<?= Helper::getImage($image, 292, 204);?>" alt="<?= $recipe['title']; ?>" width="294" height="204">
+            <a class="recipe-images__link" href="<?= Helper::getImage($recipe['images'][$i]); ?>" target="_blank">
+              <img src="<?= Helper::getImage($recipe['images'][$i], 220, 126);?>" alt="<?= $recipe['title']; ?>">
             </a>
           </div>
-        <?php endforeach; ?>
+          <?php endfor; ?>
+        </div>
       </div>
-    </div>
-  <?php endif; ?>
-  <div class="container-medium">
-    <div class="recipe__content">
-      <h2>Ingredients</h2>
-      <ul class="tags">
-        <?php foreach ($ingredients as $ingredient): ?>
-        <li class="tags__tag">
-          <a class="tags__link" href="#"><?= $ingredient['name']; ?></a>
-        </li>
-        <?php endforeach; ?>
-      </ul>
-      <h2>Categories</h2>
-      <ul class="tags">
-        <?php foreach ($categories as $category): ?>
-        <li class="tags__tag">
-          <a class="tags__link" href="#"><?= $category['name']; ?></a>
-        </li>
-        <?php endforeach; ?>
-      </ul>
-      <h2>How to cook</h2>
-      <?= $recipe['description']; ?>
-    </div>
-    <section class="adding-review mt-xl">
-      <h2 class="adding-review__heading">Add Review</h2>
-      <?php if (isset($_SESSION['user'])): ?>
-      <div class="adding-review__main">
+      <?php endif; ?>
+      <?php endif; ?>
+      <?php if ($ingredients): ?>
+      <section class="recipe-section">
+        <h2 class="recipe-section__heading">Ingredients</h2>
+        <div class="recipe-section__main">
+          <ul class="tags">
+            <?php foreach ($ingredients as $ingredient): ?>
+            <li class="tags__tag"><a class="tags__link" href="#"><?= $ingredient['name']; ?></a></li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+      </section>
+      <?php endif; ?>
+      <?php if ($categories): ?>
+      <section class="recipe-section">
+        <h2 class="recipe-section__heading">Categories</h2>
+        <div class="recipe-section__main">
+          <ul class="tags">
+            <?php foreach ($categories as $categories): ?>
+            <li class="tags__tag"><a class="tags__link" href="#"><?= $categories['name']; ?></a></li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+      </section>
+      <?php endif; ?>
+      <section class="recipe-section">
+        <h2 class="recipe-section__heading">How To Cook?</h2>
+        <div class="recipe-section__main">
+          <?= $recipe['description']; ?>
+        </div>
+      </section>
+    </article>
+    <section class="section-small mt-xl">
+      <h2 class="section-small__heading">Add Review</h2>
+      <?php if (App::$user->isAuth()): ?>
+      <div class="box">
         <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="form-review" novalidate>
           <?php if (isset($form_data['success'])): ?>
           <div class="mb-m">
@@ -92,12 +109,12 @@
       <p class="reviews__empty">Please log in to leave reviews.</p>
       <?php endif; ?>
     </section>
-    <section class="reviews mt-xl" id="reviews">
-      <h2 class="reviews__heading">Reviews</h2>
-      <div class="reviews__main">
+    <section class="section-small mt-xl" id="reviews">
+      <h2 class="section-small__heading">Reviews</h2>
+      <div class="reviews">
         <?php if (!empty($reviews)): ?>
         <?php foreach ($reviews as $review): ?>
-        <article class="review-card">
+        <article class="review-card" id="review-<?= $review['review_id']; ?>">
           <div class="review-card__avatar review-card__avatar--no-avatar">
             <p aria-hidden="true"><?= substr($review['firstname'], 0, 1); ?></p>
           </div>
@@ -120,10 +137,10 @@
         <p class="reviews__empty">No reviews.</p>
         <?php endif; ?>
       </div>
-      <?php if (!empty($reviews)): ?>
-      <a href="#" class="btn btn--primary w-100 mt-m">More Reviews</a>
+      <?php if ($next_reviews): ?>
+      <a href="<?= $next_reviews; ?>" class="btn btn--primary w-100 mt-m">More Reviews</a>
       <?php endif; ?>
     </section>
   </div>
-</article>
+</div>
 <?= $footer; ?>

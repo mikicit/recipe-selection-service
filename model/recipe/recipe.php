@@ -4,12 +4,12 @@ class ModelRecipeRecipe extends Model
 {
     public function getAll($query_vars = [])
     {
-        $defaults = [
+        $default = [
             'per_page' => 12,
             'page'     => 1
         ];
         
-        $query_vars = array_merge($defaults, $query_vars);
+        $query_vars = array_merge($default, $query_vars);
 
         ## creating SQL
         $ingredient_filter_sql = 1;
@@ -90,6 +90,11 @@ class ModelRecipeRecipe extends Model
         }
     }
 
+    /**
+     * @param array $query_vars
+     * 
+     * @return [type]
+     */
     public function getQuantity($query_vars = [])
     {
         ## creating SQL
@@ -153,7 +158,12 @@ class ModelRecipeRecipe extends Model
         }
     }
 
-    public function get($id)
+    /**
+     * @param int $id
+     * 
+     * @return [type]
+     */
+    public function get(int $id)
     {
         $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.description, recipe.images, ROUND(AVG(review.rating)) as rating, COUNT(review.recipe_id) as quantity ';
         $sql .= 'FROM recipe ';
@@ -181,6 +191,9 @@ class ModelRecipeRecipe extends Model
         }
     }
 
+    /**
+     * @return [type]
+     */
     public function getFeatured()
     {
         $sql = 'SELECT recipe.recipe_id, recipe.title, ROUND(AVG(review.rating)) as rating ';
@@ -199,7 +212,12 @@ class ModelRecipeRecipe extends Model
         }
     }
 
-    public function getIngredients($id)
+    /**
+     * @param int $id
+     * 
+     * @return [type]
+     */
+    public function getIngredients(int $id)
     {
         $sql = 'SELECT ingredient_recipe.ingredient_id, ingredient.name ';
         $sql .= 'FROM ingredient_recipe ';
@@ -212,6 +230,9 @@ class ModelRecipeRecipe extends Model
         return $stmt->fetchAll();
     }
 
+    /**
+     * @return [type]
+     */
     public function getAllIngredients()
     {
         $sql = 'SELECT ingredient_id, name FROM ingredient ORDER BY name ASC';
@@ -224,7 +245,12 @@ class ModelRecipeRecipe extends Model
         }
     }
 
-    public function getCategories($id)
+    /**
+     * @param int $id
+     * 
+     * @return [type]
+     */
+    public function getCategories(int $id)
     {
         $sql = 'SELECT category_recipe.category_id, category.name ';
         $sql .= 'FROM category_recipe ';
@@ -237,6 +263,9 @@ class ModelRecipeRecipe extends Model
         return $stmt->fetchAll();
     }
 
+    /**
+     * @return [type]
+     */
     public function getAllCategories()
     {
         $sql = 'SELECT category_id, name FROM category ORDER BY name ASC';
@@ -249,23 +278,12 @@ class ModelRecipeRecipe extends Model
         }
     }
 
-    public function getReviews($recipe_id)
-    {
-        $sql = 'SELECT review.review_id, review.description, review.date_added, review.rating, user.user_id, user.firstname, user.lastname ';
-        $sql .= 'FROM review ';
-        $sql .= 'LEFT JOIN user ON review.user_id = user.user_id ';
-        $sql .= 'WHERE review.recipe_id = ? ';
-        $sql .= 'ORDER BY review.date_added DESC ';
-        $sql .= 'LIMIT 0, 2';
-
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$recipe_id]);
-        $result = $stmt->fetchAll();
-
-        return $result;
-    }
-
-    public function add($data)
+    /**
+     * @param array $data
+     * 
+     * @return [type]
+     */
+    public function add(array $data)
     {
         try {
             $this->db->beginTransaction();
@@ -320,13 +338,5 @@ class ModelRecipeRecipe extends Model
         }
 
         return true;
-    }
-
-    public function addReview($data)
-    {
-        $sql = 'INSERT INTO review (user_id, recipe_id, description, rating) VALUES (:user_id, :recipe_id, :review, :rating)';
-        $stmt = $this->db->prepare($sql);
-
-        return $stmt->execute($data);
     }
 }

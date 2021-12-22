@@ -1,6 +1,13 @@
+/**
+ * Page
+ * 
+ * The section component is used to place different content inside.
+ */
+
 .section {
     &__heading {
         margin: 0 0 get-space('xl');
+        @include typo('preset2');
     }
     &__footer {
         margin-top: get-space('l');

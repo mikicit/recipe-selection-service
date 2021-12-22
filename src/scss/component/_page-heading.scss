@@ -1,0 +1,4 @@
+.page-heading {
+    @include typo('preset1');
+    margin: 0 0 get-space('xl');
+}

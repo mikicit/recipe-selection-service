@@ -1,0 +1,20 @@
+.page-404 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 get-space('xl');
+    &__heading {
+        font-size: 96px;
+        line-height: 96px;
+        font-weight: bold;
+        margin: 0;
+        color: get-color('black-light');
+    }
+    &__subheading {
+        font-size: 48px;
+        line-height: 48px;
+        margin: get-space('m') 0 0;
+        color: get-color('black-light');
+    }
+}

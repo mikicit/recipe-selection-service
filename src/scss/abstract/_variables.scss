@@ -1,4 +1,8 @@
-// Colors
+/**
+ * Colors
+ *
+ * Basic colors in the interface
+ */
 
 $colors: (
     "black-light": #6E757B,
@@ -18,7 +22,13 @@ $colors: (
     "red-normal": #df5555
 );
 
-// Typography
+
+/**
+ * Typography
+ *
+ * Basic set of text styles
+ */
+
 $typography: (
     "preset1": (
         "font-size": 40px,
@@ -67,18 +77,28 @@ $typography: (
 );
 
 
-// Breakpoints
+/**
+ * Breakpoints
+ *
+ * Set of breakpoints for media queries
+ */
+
 $grid-breakpoints: (
-  "xs": 0,
-//   "sm": 576px,
-//   "md": 768px,
-//   "lg": 992px,
-//   "xl": 1200px,
-//   "xxl": 1400px
+    "xs": 0,
+    "sm": 576px,
+    "md": 768px,
+    "lg": 992px,
+    "xl": 1200px,
+    "xxl": 1400px
 );
 
 
-// Spaces
+/**
+ * Spaces
+ *
+ * Set of indents
+ */
+
 $spaces : (
     "xxs": 4,
     "xs": 8,
@@ -90,7 +110,13 @@ $spaces : (
     "xxxl": 96
 );
 
-// Space Prefixes
+
+/**
+ * Space Prefixes
+ *
+ * Prefixes for generating a set of indents
+ */
+
 $space-prefixes : (
     "p"  : padding,
     "pt" : padding-top,
@@ -105,26 +131,41 @@ $space-prefixes : (
 );
 
 
-// Grid
+/**
+ * Grid
+ *
+ * Settings for the main grid
+ */
+
 $grid-columns : 12;
-$grid-gutter-width: 32px;
+$grid-default-gutter: 32;
 
-
-// Vertical Gutter Spaces
-$vertical-gutters : (
-    "m": 24px,
-    "xl": 48px
+$grid-gutters : (
+    "1": 24,
+    "2": 16,
 );
 
 
-// Container Padding
+/**
+ * Container Indents
+ *
+ * Indentation of containers depending on breakpoints.
+ */
+
 $max-container-padding: 64px;
 $container-padding: (
-    "xs": $max-container-padding
+    "xs": 16px,
+    "md": 32px,
+    "lg": $max-container-padding
 );
 
 
-// Container Width
+/**
+ * Container Width
+ *
+ * A set of containers of different widths.
+ */
+
 $container-width: (
     "small": 752px,
     "medium": 976px,
@@ -132,7 +173,12 @@ $container-width: (
 );
 
 
-// Z-Layers
+/**
+ * Z-Layers
+ *
+ * List of main layout levels.
+ */
+
 $z-layers: (
     "bottomless-pit": -9999,
     "default": 1,

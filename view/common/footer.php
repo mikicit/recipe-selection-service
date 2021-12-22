@@ -5,6 +5,7 @@
       </div>
     </div>
   </footer>
+  <script src="<?= Url::getUrl('/public/js/main.js'); ?>"></script>
   <script src="https://kit.fontawesome.com/20f334d03f.js" crossorigin="anonymous"></script>
 </body>
 </html>

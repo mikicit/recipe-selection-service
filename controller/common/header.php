@@ -4,11 +4,11 @@ class ControllerCommonHeader extends Controller
 {
     public function index()
     {
-        $view = new View();
         $data = [];
 
+        $data['user'] = App::$user->getCurrentUser();
         $data['title'] = $this->document->getTitle();
         
-        return $view->get('common/header', $data);
+        return $this->view->get('common/header', $data);
     }
 }

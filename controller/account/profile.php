@@ -4,16 +4,15 @@ class ControllerAccountProfile extends Controller
 {
     public function index()
     {
-        if (!isset($_SESSION['user'])) {
-            $this->response->redirect('/login');
-        }
-
         $data = [];
+        $data['user'] = App::$user->getCurrentUser();
+
+        if (!($data['user'])) $this->response->redirect('/login');
 
         $header = new ControllerCommonHeader();
         $footer = new ControllerCommonFooter();
 
-        $this->document->setTitle($_SESSION['user']['firstname'] . ' ' . $_SESSION['user']['lastname']);
+        $this->document->setTitle($data['user']['firstname'] . ' ' . $data['user']['lastname']);
 
         $data['header'] = $header->index();
         $data['footer'] = $footer->index();

@@ -1,0 +1,31 @@
+.sidebar {
+    background-color: white;
+    border-radius: 4px;
+    padding: get-space('l') get-space('m');
+}
+
+.sidebar-filter {
+    &__heading {
+        @include typo('preset6');
+        margin: 0 0 get-space('s');
+        padding-bottom: get-space('s');
+        border-bottom: 1px solid get-color('gray-light');
+    }
+    &__block {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        & + & {
+            margin-top: get-space('s')
+        }
+    }
+    &__block-heading {
+        @include typo('preset5');
+        margin: 0 0 get-space('xs');
+        padding: 0;
+        width: 100%;
+    }
+    &__form {
+        margin: 0;
+    }
+}

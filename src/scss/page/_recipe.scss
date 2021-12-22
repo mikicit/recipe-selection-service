@@ -1,69 +1,6 @@
-.recipe {
-    &__content {
-        background-color: white;
-        padding: get-space('xl') get-space('l');
-        border-radius: 4px;
-        margin-top: get-space('xl');
-        & p {
-           margin: 0; 
-        }
-        & p + p {
-            margin-top: get-space('m');
-        }
-    }
-}
-
-.recipe-header {
-    display: flex;
-    align-items: center;
-    background-color: get-color('green-normal');
-    position: relative;
-    padding: get-space('xl') 0;
-    &__main {
-        position: relative;
-        text-align: center;
-    }
-    &__title {
-        color: white;
-        font-size: 48px;
-        line-height: 56px;
-        font-weight: bold;
-        margin: 0;
-    }
-    &__stars {
-        justify-content: center;
-        margin-top: get-space('l');
-    }
-    &__reviews {
-        color: white;
-        display: inline-block;
-        text-decoration: underline;
-        margin-top: get-space('xs');
-    }
-}
-
-.adding-review {
-    &__heading {
-        margin: 0 0 get-space('l');
-        @include typo('preset3');
-    }
-    &__main {
-        background-color: white;
-        border-radius: 4px;
-        padding: get-space('l') get-space('m');
-    }
-}
-
-
 .reviews {
-    &__heading {
-        margin: 0 0 get-space('l');
-        @include typo('preset3');
-    }
-    &__main {
-        & > * + * {
-            margin-top: get-space('m');
-        }
+    & > .review-card + .review-card {
+        margin-top: get-space('m');
     }
 }
 
@@ -110,5 +47,65 @@
     &__stars {
         color: get-color('gray-normal');
         margin-top: get-space('s');
+    }
+}
+
+
+.recipe {
+    background-color: white;
+    overflow: hidden;
+    border-radius: 4px;
+    padding-top: get-space('l');
+    padding-bottom: get-space('l');
+    &__image {
+        margin-top: get-space('l');
+    }
+}
+
+.recipe-header {
+    padding-left: get-space('m');
+    padding-right: get-space('m');
+    &__heading {
+        margin: 0;
+        @include typo('preset2');
+    }
+    &__rating {
+        display: flex;
+        align-items: center;
+        margin-top: get-space('xs');
+        flex-wrap: wrap;
+    }
+    &__reviews {
+        color: get-color('black-light');
+        text-decoration: underline;
+        margin-right: get-space('s');
+        @include typo('preset7');
+    }
+    &__stars {
+        color: get-color('gray-normal');
+    }
+}
+
+.recipe-images {
+    padding: 0 get-space('m');
+    margin-top: get-space('s');
+    &__link {
+        display: block;
+        overflow: hidden;
+        border-radius: 4px;
+        transition: opacity 200ms;
+        &:focus,
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+}
+
+.recipe-section {
+    padding: 0 get-space('m');
+    margin-top: get-space('l');
+    &__heading {
+        @include typo('preset3');
+        margin: 0 0 get-space('s');
     }
 }
