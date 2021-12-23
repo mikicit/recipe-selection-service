@@ -2,7 +2,7 @@
 
 class Document
 {
-	private $title = '';
+	private $title;
 
 	public function setTitle($title)
 	{

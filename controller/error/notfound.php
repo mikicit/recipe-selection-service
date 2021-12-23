@@ -2,15 +2,13 @@
 
 class ControllerErrorNotfound extends Controller
 {
-    public function index()
+    public function index($data = [])
     {
-        $data = [];
+        $this->document->setTitle('Page not found!');
 
         $header = new ControllerCommonHeader();
         $footer = new ControllerCommonFooter();
-
-        $this->document->setTitle('Page not found!');
-
+        
         $data['header'] = $header->index();
         $data['footer'] = $footer->index();
 

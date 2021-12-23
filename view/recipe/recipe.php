@@ -67,7 +67,7 @@
     </article>
     <section class="section-small mt-xl">
       <h2 class="section-small__heading">Add Review</h2>
-      <?php if (App::$user->isAuth()): ?>
+      <?php if ($user): ?>
       <div class="box">
         <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="form-review" novalidate>
           <?php if (isset($form_data['success'])): ?>

@@ -2,10 +2,8 @@
 
 class ControllerCommonFooter extends Controller
 {
-    public function index()
+    public function index($data = [])
     {
-        $data = [];
-
         return $this->view->get('common/footer', $data);
     }
 }

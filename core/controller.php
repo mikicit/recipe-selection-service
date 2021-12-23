@@ -6,16 +6,16 @@
 abstract class Controller 
 {
     /**
-     * @return [type]
+     * @return mixed
      */
     public abstract function index();
 
     /**
-     * @param mixed $property
+     * @param string $property
      * 
      * @return object
      */
-    public function __get($property)
+    public function __get(string $property)
     {
         switch ($property)
         {

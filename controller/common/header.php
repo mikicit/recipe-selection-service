@@ -2,12 +2,9 @@
 
 class ControllerCommonHeader extends Controller
 {
-    public function index()
+    public function index($data = [])
     {
-        $data = [];
-
-        $data['query_vars'] = $this->request->getQueryVars();
-        $data['user'] = App::$user->getCurrentUser();
+        $data['user'] = $this->user->getCurrentUser();
         $data['title'] = $this->document->getTitle();
         
         return $this->view->get('common/header', $data);

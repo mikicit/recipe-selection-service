@@ -29,7 +29,7 @@
       <div>
         <?php if ($user): ?>
         <div class="header-auth">
-          <a class="btn btn--secondary" href="/profile"><?= $user['firstname'] . ' ' . $user['lastname']; ?></a>
+          <a class="btn btn--secondary" href="<?= Url::getUrl('/profile'); ?>"><?= $user['firstname'] . ' ' . $user['lastname']; ?></a>
           <?php if ($user['user_group_id'] == 1): ?>
           <a class="btn btn--secondary ml-s" href="<?= Url::getUrl('/recipe/add'); ?>">Add Recipe</a>
           <?php endif; ?>

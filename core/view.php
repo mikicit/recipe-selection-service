@@ -7,8 +7,7 @@ class View
         $html = '';
         $path = 'view/' . $template_name . '.php';
 
-        if (!file_exists($path))
-        {
+        if (!file_exists($path)) {
             return $html;
         }
 

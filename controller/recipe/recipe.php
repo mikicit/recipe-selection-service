@@ -2,14 +2,9 @@
 
 class ControllerRecipeRecipe extends Controller
 {
-    public function index()
+    public function index($data = [])
     {  
         $model_recipe = new ModelRecipeRecipe();
-
-        $data = [];
-
-        $header = new ControllerCommonHeader();
-        $footer = new ControllerCommonFooter();
 
         ## Handling and Filtering Request Variables
 
@@ -19,6 +14,7 @@ class ControllerRecipeRecipe extends Controller
             'page'     => 1
         ];
 
+        ## Ingredients and Categories filtering
         $filter_function = function($item) {
             return filter_var($item, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);
         };
@@ -33,13 +29,16 @@ class ControllerRecipeRecipe extends Controller
             if ($filtered_categories) $query_vars['categories'] =  $filtered_categories;
         }
 
+        ## Search filtering
         if (isset($_GET['search']) && is_string($_GET['search'])) {
             $filtered_search = filter_var($_GET['search'], FILTER_SANITIZE_STRING);
             $query_vars['search'] = $filtered_search;
         }
         
+        ## Defining maximum pages for pagination
         $max_pages = ceil($model_recipe->getQuantity($query_vars) / $query_vars['per_page']);
         
+        ## Page var filtering
         if (isset($_GET['page']) && is_string($_GET['page'])) {
             $filter_page = filter_var($_GET['page'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => $max_pages]]);
             if (!$filter_page) {
@@ -48,7 +47,8 @@ class ControllerRecipeRecipe extends Controller
             }
             $query_vars['page'] = $filter_page;
         }
-        
+
+        ## Getting all data
         $data['ingredients'] = $model_recipe->getAllIngredients();
         $data['categories']  = $model_recipe->getAllCategories();
         $data['recipes']     = $model_recipe->getAll($query_vars);
@@ -75,12 +75,16 @@ class ControllerRecipeRecipe extends Controller
         }
 
         ## providing filtered query vars
-        $this->request->addQueryVars($query_vars);
-        $data['query_vars'] = $this->request->getQueryVars();
+        $data['query_vars'] = $query_vars;
 
         $this->document->setTitle('Recipes');
 
-        $data['header'] = $header->index();
+        $header = new ControllerCommonHeader();
+        $footer = new ControllerCommonFooter();
+
+        $data['header'] = $header->index([
+            'query_vars' => $data['query_vars']
+        ]);
         $data['footer'] = $footer->index();
         
         $this->response->setOutput($this->view->get('recipe/recipes', $data));
@@ -89,21 +93,20 @@ class ControllerRecipeRecipe extends Controller
     public function show($query_vars)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            $data = [];
+
             $model_recipe = new ModelRecipeRecipe();
             $model_review = new ModelRecipeReview();
 
-            $data = [];
-
-            $header = new ControllerCommonHeader();
-            $footer = new ControllerCommonFooter();
-
             $data['recipe'] = $model_recipe->get($query_vars['id']);
+            $data['user'] = $this->user->getCurrentUser();
 
             if (!$data['recipe']) {
                 $not_found = new ControllerErrorNotfound();
                 $not_found->index();
             }
 
+            ## 
             $data['review_quantity'] = $model_review->getQuantity($query_vars);
 
             ## reviews pagination
@@ -114,11 +117,11 @@ class ControllerRecipeRecipe extends Controller
                 'page' => 1
             ];
 
+            $max_pages = ceil($data['review_quantity'] / $review_pagination['per_page']);
+
             if (isset($_GET['page']) && (int)$_GET['page'] > 1) {
                 $review_pagination['page'] = (int)$_GET['page'];
             }
-
-            $max_pages = ceil($data['review_quantity'] / $review_pagination['per_page']);
 
             if ($review_pagination['page'] < $max_pages) {
                 $data['next_reviews'] = Url::setVars(Url::getCurrentUrl(), ['page' => $review_pagination['page'] + 1]) . '#reviews';
@@ -141,15 +144,19 @@ class ControllerRecipeRecipe extends Controller
 
             $this->document->setTitle($data['recipe']['title']);
 
+            $header = new ControllerCommonHeader();
+            $footer = new ControllerCommonFooter();
+
             $data['header'] = $header->index();
             $data['footer'] = $footer->index();
 
             $this->response->setOutput($this->view->get('recipe/recipe', $data));
-        } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        } 
+        elseif ($_SERVER['REQUEST_METHOD'] == 'POST') 
+        {
             if (!(App::$user->isAuth())) return false;
 
             $model_review = new ModelRecipeReview();
-            $data = [];
             $user = App::$user->getCurrentUser();
             
             ## getting POST data

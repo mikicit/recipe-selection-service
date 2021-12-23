@@ -1,8 +1,16 @@
 <?php
 
+/**
+ * [Description Model]
+ */
 abstract class Model 
 {
-    public function __get($property)
+    /**
+     * @param string $property
+     * 
+     * @return object
+     */
+    public function __get(string $property)
     {
         switch ($property)
         {
