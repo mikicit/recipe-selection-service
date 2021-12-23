@@ -5,6 +5,7 @@ class App
     public static $db;
     public static $user;
     public static $document;
+    public static $request;
     public static $response;
     public static $view;
     public static $router;
@@ -16,6 +17,7 @@ class App
         self::$db = new Db();
         self::$user = new User();
         self::$document = new Document();
+        self::$request = new Request();
         self::$response = new Response();
         self::$view = new View();
         self::$router = new Router();

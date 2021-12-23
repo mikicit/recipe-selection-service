@@ -2,7 +2,7 @@
 
 class User
 {
-    private $user = null;
+    private $user;
     private $model_user;
 
     public function __construct()
@@ -14,11 +14,6 @@ class User
     public function getCurrentUser()
     {
         return $this->user;
-    }
-
-    public function isAuth()
-    {
-        return $this->user ? true : false;
     }
 
     public function auth()

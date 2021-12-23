@@ -4,7 +4,7 @@ class ControllerAccountLogout extends Controller
 {
     public function index()
     {
-        App::$user->unAuth();
-        $this->response->redirect('/login');
+        $this->user->unAuth();
+        $this->response->redirect(Url::getUrl('/login'));
     }
 }

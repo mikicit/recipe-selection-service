@@ -106,7 +106,7 @@
         </form>
       </div>
       <?php else: ?>
-      <p class="reviews__empty">Please log in to leave reviews.</p>
+      <p class="no-margin">Please log in to leave reviews.</p>
       <?php endif; ?>
     </section>
     <section class="section-small mt-xl" id="reviews">
@@ -134,7 +134,7 @@
         </article>
         <?php endforeach; ?>
         <?php else: ?>
-        <p class="reviews__empty">No reviews.</p>
+        <p class="no-margin">No reviews.</p>
         <?php endif; ?>
       </div>
       <?php if ($next_reviews): ?>

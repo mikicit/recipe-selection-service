@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * [Description Response]
+ */
 class Response 
 {
     public function setOutput($output)
@@ -13,15 +16,8 @@ class Response
         http_response_code($code);
     }
 
-    public function setHeader()
+    public function redirect($url)
     {
-
-    }
-
-    public function redirect($diraction)
-    {
-        $url = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $diraction;
-
         header("Location: $url");
         die();
     }

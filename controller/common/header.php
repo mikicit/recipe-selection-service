@@ -6,6 +6,7 @@ class ControllerCommonHeader extends Controller
     {
         $data = [];
 
+        $data['query_vars'] = $this->request->getQueryVars();
         $data['user'] = App::$user->getCurrentUser();
         $data['title'] = $this->document->getTitle();
         

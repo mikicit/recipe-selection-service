@@ -9,7 +9,7 @@
           <form class="sidebar-filter__form" action="<?= Url::getCurrentUrl(); ?>" method="get" id="sidebar-filter">
             <fieldset class="sidebar-filter__block">
               <legend class="sidebar-filter__block-heading">Ingredients</legend>
-              <?php foreach($ingredients as $ingredient): $checked = isset($_GET['ingredients']) && in_array($ingredient['ingredient_id'], $_GET['ingredients']) ? 'checked' : ''; ?>
+              <?php foreach($ingredients as $ingredient): $checked = isset($query_vars['ingredients']) && in_array($ingredient['ingredient_id'], $query_vars['ingredients']) ? 'checked' : ''; ?>
               <div class="form-checkbox">
                 <input class="form-checkbox__control" type="checkbox" name="ingredients[]" id="sidebar-filter-ingredient-<?= $ingredient['ingredient_id']; ?>" <?= $checked; ?> value="<?= $ingredient['ingredient_id']; ?>">
                 <label class="form-checkbox__label" for="sidebar-filter-ingredient-<?= $ingredient['ingredient_id']; ?>"><?= $ingredient['name']; ?></label>
@@ -18,7 +18,7 @@
             </fieldset>
             <fieldset class="sidebar-filter__block">
               <legend class="sidebar-filter__block-heading">Categories</legend>
-              <?php foreach($categories as $category): $checked = isset($_GET['categories']) && in_array($category['category_id'], $_GET['categories']) ? 'checked' : ''; ?>
+              <?php foreach($categories as $category): $checked = isset($query_vars['categories']) && in_array($category['category_id'], $query_vars['categories']) ? 'checked' : ''; ?>
               <div class="form-checkbox">
                 <input class="form-checkbox__control" type="checkbox" name="categories[]" id="sidebar-filter-category-<?= $category['category_id']; ?>" <?= $checked; ?> value="<?= $category['category_id']; ?>">
                 <label class="form-checkbox__label" for="sidebar-filter-category-<?= $category['category_id']; ?>"><?= $category['name']; ?></label>

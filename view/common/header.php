@@ -22,7 +22,7 @@
       </div>
       <div class="page-header__search">
         <form class="header-search" action="<?= Url::getUrl('/recipes'); ?>" method="GET">
-          <input class="header-search__input" type="search" placeholder="Search recipe..." name="search" value="<?= isset($_GET['search']) && is_string($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+          <input class="header-search__input" type="search" placeholder="Search recipe..." name="search" value="<?= isset($query_vars['search']) ? $query_vars['search'] : ''; ?>">
           <button class="header-search__btn btn btn--primary" type="submit">Search</button>
         </form>
       </div>

@@ -12,6 +12,8 @@ class ControllerRecipeRecipe extends Controller
         $footer = new ControllerCommonFooter();
 
         ## Handling and Filtering Request Variables
+
+        ## Default query vars
         $query_vars = [
             'per_page' => 9,
             'page'     => 1
@@ -32,15 +34,13 @@ class ControllerRecipeRecipe extends Controller
         }
 
         if (isset($_GET['search']) && is_string($_GET['search'])) {
-            $search_length = strlen($_GET['search']);
-            if ($search_length > 2 && $search_length < 100) {
-                $query_vars['search'] = $_GET['search'];
-            }
+            $filtered_search = filter_var($_GET['search'], FILTER_SANITIZE_STRING);
+            $query_vars['search'] = $filtered_search;
         }
         
         $max_pages = ceil($model_recipe->getQuantity($query_vars) / $query_vars['per_page']);
         
-        if (isset($_GET['page'])) {
+        if (isset($_GET['page']) && is_string($_GET['page'])) {
             $filter_page = filter_var($_GET['page'], FILTER_VALIDATE_INT, ['options' => ['min_range' => 1, 'max_range' => $max_pages]]);
             if (!$filter_page) {
                 $not_found = new ControllerErrorNotfound();
@@ -74,7 +74,9 @@ class ControllerRecipeRecipe extends Controller
             }
         }
 
-        $data['query_vars'] = $query_vars;
+        ## providing filtered query vars
+        $this->request->addQueryVars($query_vars);
+        $data['query_vars'] = $this->request->getQueryVars();
 
         $this->document->setTitle('Recipes');
 
