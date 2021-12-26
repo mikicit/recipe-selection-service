@@ -36,6 +36,14 @@
         <p class="input-error"><?= $form_data['validation']['password']; ?></p>
         <?php endif; ?>
       </div>
+      <div class="mt-s">
+        <label class="form-label" for="password-repeat">Password Repeat</label>
+        <input class="form-input <?= isset($form_data['validation']['password_repeat']) ? 'is-invalid' : ''; ?>" type="password" name="password_repeat" id="password-repeat" value="" pattern=".{8,}" required>
+        <?php if (isset($form_data['validation']['password_repeat'])): ?>
+        <p class="input-error"><?= $form_data['validation']['password_repeat']; ?></p>
+        <?php endif; ?>
+      </div>
+      <input type="hidden" name="registration">
       <button class="btn btn--primary w-100 mt-s" type="submit">Register</button>
     </form>
   </div>

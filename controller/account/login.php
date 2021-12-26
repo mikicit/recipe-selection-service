@@ -2,12 +2,10 @@
 
 class ControllerAccountLogin extends Controller
 {
-	public function index()
+	public function index($data = [])
 	{   
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			if ($this->user->getCurrentUser()) $this->response->redirect(Url::getUrl('/profile'));
-
-			$data = [];
 
             $this->document->setTitle('Login');
 
@@ -25,49 +23,52 @@ class ControllerAccountLogin extends Controller
 
 			$this->response->setOutput($this->view->get('account/login', $data));
 		} elseif ($_SERVER['REQUEST_METHOD'] == 'POST') {
-			$model_user = new ModelAccountUser();
-			$data = [];
+			if (isset($_POST['login'])) {
+				if ($this->user->getCurrentUser()) $this->response->redirect(Url::getUrl('/profile'));
 
-			## getting POST data
-			$data['password'] = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : '';
-			$data['email']    = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
-			
-			## validation
-            $data['error'] = (function(& $data, $model_user) {
-                $error_msg = 'Enter the correct password and email.';
+				$model_user = new ModelAccountUser();
 
-                ## Password
-                if (strlen($data['password']) == 0) {
-                    return $error_msg;
-                }
+				## Removing html tags
+				$data['password'] = isset($_POST['password']) ? htmlspecialchars($_POST['password']) : '';
+				$data['email']    = isset($_POST['email']) ? htmlspecialchars($_POST['email']) : '';
+				
+				## validation
+				$data['error'] = (function(& $data, $model_user) {
+					$error_msg = 'Enter the correct password and email.';
 
-                ## Email
-                if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-                    return $error_msg;
-                }
+					## Password
+					if (strlen($data['password']) == 0) {
+						return $error_msg;
+					}
 
-                ## User's existence
-                $user = $model_user->getUserByEmail($data['email']);
+					## Email
+					if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+						return $error_msg;
+					}
 
-				if (empty($user)) {
-					return $error_msg;
-				} 
+					## User's existence
+					$user = $model_user->getUserByEmail($data['email']);
 
-                ## Password verification
-                $result = password_verify($data['password'], $user['password']);
+					if (empty($user)) {
+						return $error_msg;
+					} 
 
-                if (!$result) return $error_msg;
+					## Password verification
+					$result = password_verify($data['password'], $user['password']);
 
-                $_SESSION['uid'] = $user['user_id'];
-                $this->response->redirect(Url::getUrl('/profile'));
-            })($data, $model_user);
+					if (!$result) return $error_msg;
 
-			$_SESSION['form_data'] = [
-                'error' => $data['error'],
-                'email' => $data['email']
-            ];
+					$_SESSION['uid'] = $user['user_id'];
+					$this->response->redirect(Url::getUrl('/profile'));
+				})($data, $model_user);
 
-			$this->response->redirect(Url::getCurrentUrl());
+				$_SESSION['form_data'] = [
+					'error' => $data['error'],
+					'email' => $data['email']
+				];
+
+				$this->response->redirect(Url::getCurrentUrl());
+			}
 		}
 	}
 }

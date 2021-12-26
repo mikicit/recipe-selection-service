@@ -1,0 +1,40 @@
+.sorting {
+    &__heading {
+        @include typo('preset6');
+        margin: 0 0 get-space('s');
+    }
+    &__list {
+        @include list-unstyled;
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: get-space('xs') * -1;
+        margin-top: get-space('xs') * -1;
+    }
+    &__item {
+        margin-left: get-space('xs');
+        margin-top: get-space('xs');
+    }
+    &__link {
+        display: inline-block;
+        background-color: white;
+        color: inherit;
+        border-radius: 50px;
+        padding: get-space('xs') get-space('s');
+        font-size: 14px;
+        line-height: 16px;
+        transition: background-color 200ms, color 200ms;
+        &.is-active {
+            background-color: get-color('green-normal');
+            color: white;
+        }
+        &:not(.is-active):hover,
+        &:not(.is-active):hover {
+            background-color: get-color('green-normal');
+            color: white;
+        }
+        &:not(.is-active):active {
+            background-color: get-color('green-dark');
+            color: white;
+        }
+    }
+}

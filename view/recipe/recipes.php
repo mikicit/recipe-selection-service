@@ -31,6 +31,19 @@
       </div>
     </div>
     <div class="col col-sm-8 col-lg-9">
+      <?php if (isset($sorting_links)) : ?>
+      <div class="sorting mb-l">
+        <h3 class="sorting__heading">Sort by:</h3>
+        <ul class="sorting__list tags">
+          <?php foreach($sorting_links as $sorting) : ?>
+          <?php if ($sorting['active']): ?>
+          <li class="sorting__item"><span class="sorting__link is-active"><?= $sorting['name']; ?></span></li>
+          <?php else: ?>
+          <li class="sorting__item"><a class="sorting__link" href="<?= $sorting['href']; ?>"><?= $sorting['name']; ?></a></li>
+          <?php endif; endforeach; ?>
+        </ul>     
+      </div>
+      <?php endif; ?>
       <div class="row vgut">
         <?php foreach ($recipes as $recipe): ?>
         <div class="col col-md-6 col-lg-4">

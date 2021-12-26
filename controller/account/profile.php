@@ -2,9 +2,8 @@
 
 class ControllerAccountProfile extends Controller
 {
-    public function index()
+    public function index($data = [])
     {
-        $data = [];
         $data['user'] = $this->user->getCurrentUser();
 
         if (!($data['user'])) $this->response->redirect(Url::getUrl('/login'));

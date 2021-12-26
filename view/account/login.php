@@ -3,11 +3,9 @@
   <div class="auth box">
     <h1 class="auth__heading">Login</h1>
     <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="login-form" novalidate>
-      <?php if (isset($form_data['error'])): ?>
-      <div class="mb-m">
-        <p class="alert alert--error"><?= $form_data['error']; ?></p>
+      <div class="mb-m" <?= isset($form_data['error']) ? '' : 'hidden'; ?>>
+        <p class="alert alert--error"><?= isset($form_data['error']) ? $form_data['error'] : ''; ?></p>
       </div>
-      <?php endif; ?>
       <?php if (isset($form_data['registration_success'])): ?>
       <div class="mb-m">
         <p class="alert alert--success"><?= $form_data['registration_success']; ?></p>
@@ -21,6 +19,7 @@
         <label class="form-label" for="password">Password</label>
         <input class="form-input" type="password" name="password" id="password" value="" required>
       </div>
+      <input type="hidden" name="login">
       <button class="btn btn--primary w-100 mt-s" type="submit">Login</button>
     </form>
   </div>

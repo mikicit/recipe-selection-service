@@ -1,3 +1,5 @@
+import 'utility';
+
 const registrationForm = document.querySelector('#registration-form');
 
 registrationForm.addEventListener('submit', (e) => {

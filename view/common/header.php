@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="/public/css/main.css" rel="stylesheet">
+  <link rel="shortcut icon" href="<?= Url::getUrl('/public/images/favicon.png'); ?>" type="image/png">
+  <link href="<?= Url::getUrl('/public/css/main.css'); ?>" rel="stylesheet">
   <link href="http://fonts.cdnfonts.com/css/roboto" rel="stylesheet">
   <title><?= $title; ?></title>
 </head>
 <body class="page">
   <header class="page-header">
     <nav class="page-header__inner container-fluid">
-      <a href="/" class="logo">
-        <img src="/public/images/logo.svg" alt="Hrecept.cz logotype" width="160" height="40">
+      <a href="<?= Url::getUrl('/'); ?>" class="logo">
+        <img src="<?= Url::getUrl('/public/images/logo.svg'); ?>" alt="Hrecept.cz logotype" width="160" height="40">
       </a>
       <div class="header-nav">
         <ul class="header-nav__list">

@@ -4,14 +4,19 @@ class ModelRecipeRecipe extends Model
 {
     public function getAll($query_vars = [])
     {
+        ## default query vars
         $default = [
             'per_page' => 12,
-            'page'     => 1
+            'page'     => 1,
+            'sort_by'  => 'date',
+            'sort_d'   => 'desc'
         ];
         
         $query_vars = array_merge($default, $query_vars);
 
         ## creating SQL
+
+        ## ingredient filter
         $ingredient_filter_sql = 1;
 
         if (isset($query_vars['ingredients'])) {
@@ -22,6 +27,7 @@ class ModelRecipeRecipe extends Model
             $ingredient_filter_sql = "recipe.recipe_id IN (SELECT recipe_id FROM ingredient_recipe WHERE ingredient_recipe.ingredient_id IN ($placeholder))";
         }
 
+        ## category filter
         $category_filter_sql = 1;
 
         if (isset($query_vars['categories'])) {
@@ -32,6 +38,7 @@ class ModelRecipeRecipe extends Model
             $category_filter_sql = "recipe.recipe_id IN (SELECT recipe_id FROM category_recipe WHERE category_recipe.category_id IN ($placeholder))";
         }
 
+        ## search filter
         $search_filter_sql = 1;
 
         if (isset($query_vars['search'])) {
@@ -40,12 +47,38 @@ class ModelRecipeRecipe extends Model
 
         $filter_sql = "WHERE ($ingredient_filter_sql) AND ($category_filter_sql) AND ($search_filter_sql)";
 
+        ## sorting
+        $sorting_sql = 'ORDER BY ';
+
+        ## sort by
+        switch ($query_vars['sort_by']) {
+            case 'date':
+                $sorting_sql .= 'recipe.date_added ';
+                break;
+            case 'name':
+                $sorting_sql .= 'recipe.title ';
+                break;
+            case 'rating':
+                $sorting_sql .= 'rating ';
+                break;
+        }
+
+        ## sort direction
+        switch ($query_vars['sort_d']) {
+            case 'desc':
+                $sorting_sql .= 'DESC ';
+                break;
+            case 'asc':
+                $sorting_sql .= 'ASC ';
+                break;
+        }
+
         $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.images, ROUND(AVG(review.rating)) as rating ';
         $sql .= 'FROM recipe ';
         $sql .= 'LEFT JOIN review ON recipe.recipe_id = review.recipe_id ';
         $sql .= $filter_sql;
         $sql .= 'GROUP BY recipe.recipe_id ';
-        $sql .= 'ORDER BY recipe.date_added DESC ';
+        $sql .= $sorting_sql;
         $sql .= 'LIMIT :offset, :per_page';
         
         $stmt = $this->db->prepare($sql);
@@ -184,11 +217,9 @@ class ModelRecipeRecipe extends Model
                     $result['images'][$index] = BASE_URL . '/uploads/recipes/' . $result['recipe_id'] . '/' . $image;
                 }
             }
-
-            return $result;
-        } else {
-            return [];
         }
+
+        return $result;
     }
 
     /**

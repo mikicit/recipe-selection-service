@@ -96,6 +96,8 @@ class Url
 
 		foreach ($array_1 as $value) {
 			$array_2 = explode('=', $value);
+			if (count($array_2) !== 2) continue;
+
 			$var = $array_2[0];
 			$value = $array_2[1];
 

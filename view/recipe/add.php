@@ -35,6 +35,9 @@
           <label class="form-checkbox__label" for="form-ingredient-<?= $ingredient['ingredient_id']; ?>"><?= $ingredient['name']; ?></label>
         </div>
         <?php endforeach; ?>
+        <?php if (isset($form_data['validation']['ingredients'])): ?>
+        <p class="input-error"><?= $form_data['validation']['ingredients']; ?></p>
+        <?php endif; ?>
       </div>
       <div class="mt-s">
         <p class="form-label">Categories:</p>
@@ -44,6 +47,9 @@
           <label class="form-checkbox__label" for="form-category-<?= $category['category_id']; ?>"><?= $category['name']; ?></label>
         </div>
         <?php endforeach; ?>
+        <?php if (isset($form_data['validation']['categories'])): ?>
+        <p class="input-error"><?= $form_data['validation']['categories']; ?></p>
+        <?php endif; ?>
       </div>
       <div class="mt-s">
         <label class="form-label" for="form-images">Images</label>
@@ -52,6 +58,7 @@
         <p class="input-error"><?= $form_data['validation']['images']; ?></p>
         <?php endif; ?>
       </div>
+      <input type="hidden" name="add-recipe">
       <button class="btn btn--primary w-100 mt-s">Puplish</button>
     </form>
   </div>

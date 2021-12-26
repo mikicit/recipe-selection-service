@@ -65,7 +65,7 @@
         </div>
       </section>
     </article>
-    <section class="section-small mt-xl">
+    <section class="section-small mt-xl" id="review-section">
       <h2 class="section-small__heading">Add Review</h2>
       <?php if ($user): ?>
       <div class="box">
@@ -101,7 +101,7 @@
             <p class="input-error"><?= $form_data['validation']['rating']; ?></p>
             <?php endif; ?>
           </div>
-          <input type="hidden" name="recipe_id" id="form-recipe-id" value="<?= $recipe['recipe_id']; ?>">
+          <input type="hidden" name="add-review">
           <button class="btn btn--primary mt-s w-100" type="submit">Send</button>
         </form>
       </div>
