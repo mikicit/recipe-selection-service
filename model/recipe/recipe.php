@@ -73,7 +73,7 @@ class ModelRecipeRecipe extends Model
                 break;
         }
 
-        $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.images, ROUND(AVG(review.rating)) as rating ';
+        $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.images, ROUND(AVG(review.rating), 1) as rating ';
         $sql .= 'FROM recipe ';
         $sql .= 'LEFT JOIN review ON recipe.recipe_id = review.recipe_id ';
         $sql .= $filter_sql;
@@ -115,6 +115,12 @@ class ModelRecipeRecipe extends Model
                         $result[$key]['images'][$index] = BASE_URL . '/uploads/recipes/' . $recipe['recipe_id'] . '/' . $image;
                     }
                 }
+
+                if (empty($recipe['rating'])) {
+                    $result[$key]['rating'] = 0;
+                }
+
+                $result[$key]['rounded_rating'] = round($recipe['rating']);
             }
 
             return $result;
@@ -198,7 +204,7 @@ class ModelRecipeRecipe extends Model
      */
     public function get(int $id)
     {
-        $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.description, recipe.images, ROUND(AVG(review.rating)) as rating, COUNT(review.recipe_id) as quantity ';
+        $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.description, recipe.images, ROUND(AVG(review.rating), 1) as rating, COUNT(review.recipe_id) as quantity ';
         $sql .= 'FROM recipe ';
         $sql .= 'LEFT JOIN review ';
         $sql .= 'ON review.recipe_id = recipe.recipe_id ';
@@ -217,6 +223,12 @@ class ModelRecipeRecipe extends Model
                     $result['images'][$index] = BASE_URL . '/uploads/recipes/' . $result['recipe_id'] . '/' . $image;
                 }
             }
+
+            if (empty($result['rating'])) {
+                $result['rating'] = 0;
+            }
+
+            $result['rounded_rating'] = round($result['rating']);
         }
 
         return $result;
@@ -227,7 +239,7 @@ class ModelRecipeRecipe extends Model
      */
     public function getFeatured()
     {
-        $sql = 'SELECT recipe.recipe_id, recipe.title, ROUND(AVG(review.rating)) as rating ';
+        $sql = 'SELECT recipe.recipe_id, recipe.title, ROUND(AVG(review.rating), 1) as rating ';
         $sql .= 'FROM recipe ';
         $sql .= 'LEFT JOIN review ON recipe.recipe_id = review.recipe_id ';
         $sql .= 'GROUP BY recipe.recipe_id ';
@@ -237,7 +249,20 @@ class ModelRecipeRecipe extends Model
         $stmt = $this->db->query($sql);
 
         if ($stmt) {
-            return $stmt->fetchAll();
+            $result = $stmt->fetchAll();
+
+            if ($result) {
+                foreach ($result as $key => $recipe) {
+                    if (empty($recipe['rating'])) {
+                        $result[$key]['rating'] = 0;
+                    }
+    
+                    $result[$key]['rounded_rating'] = round($recipe['rating']);
+                }
+
+                return $result;
+            }
+
         } else {
             return [];
         }

@@ -1,0 +1,19 @@
+.rating {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    &__info {
+        margin: 0 get-space('xs') 0 0;
+    }
+    &__text {
+        color: get-color('black-light');
+        @include typo('preset7');
+    }
+    &__number {
+        font-weight: bold;
+        font-style: italic;
+    }
+    &__stars { 
+        color: get-color('gray-normal');
+    }
+}

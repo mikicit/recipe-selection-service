@@ -17,7 +17,7 @@
       </div>
       <div class="mt-s">
         <label class="form-label" for="password">Password</label>
-        <input class="form-input" type="password" name="password" id="password" value="" required>
+        <input class="form-input" type="password" name="password" id="password" value="" autocomplete="current-password" required>
       </div>
       <input type="hidden" name="login">
       <button class="btn btn--primary w-100 mt-s" type="submit">Login</button>

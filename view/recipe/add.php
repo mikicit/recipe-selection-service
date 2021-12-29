@@ -2,7 +2,7 @@
 <main class="page__main container-medium pt-xxl pb-xxl">
   <h1 class="page-heading">Add Recipe</h1>
   <div class="box">
-    <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="form-review" enctype='multipart/form-data' novalidate>
+    <form id="add-recipe-form" class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" enctype='multipart/form-data'>
       <?php if (isset($form_data['success'])): ?>
       <div class="mb-m">
         <p class="alert alert--success"><?= $form_data['success']; ?></p>
@@ -15,14 +15,14 @@
       <?php endif; ?>
       <div>
         <label class="form-label" for="form-title">Title</label>
-        <input id="form-title" class="form-input <?= isset($form_data['validation']['title']) ? 'is-invalid' : ''; ?>" type="text" name="title" value="<?= isset($form_data['title']) ? $form_data['title'] : ''; ?>" pattern=".{2, }" required>
+        <input id="form-title" class="form-input <?= isset($form_data['validation']['title']) ? 'is-invalid' : ''; ?>" type="text" name="title" value="<?= isset($form_data['title']) ? $form_data['title'] : ''; ?>" pattern=".{2,255}" title="2 to 255 characters" required>
         <?php if (isset($form_data['validation']['title'])): ?>
         <p class="input-error"><?= $form_data['validation']['title']; ?></p>
         <?php endif; ?>
       </div>
       <div class="mt-s">
         <label class="form-label" for="form-description">Description</label>
-        <textarea class="form-textarea <?= isset($form_data['validation']['description']) ? 'is-invalid' : ''; ?>" name="description" cols="30" rows="4" id="form-description" required><?= isset($form_data['description']) ? $form_data['description'] : ''; ?></textarea>
+        <textarea class="form-textarea <?= isset($form_data['validation']['description']) ? 'is-invalid' : ''; ?>" name="description" cols="30" rows="4" id="form-description" minlength="2" maxlength="10000" required><?= isset($form_data['description']) ? $form_data['description'] : ''; ?></textarea>
         <?php if (isset($form_data['validation']['description'])): ?>
         <p class="input-error"><?= $form_data['validation']['description']; ?></p>
         <?php endif; ?>
@@ -53,7 +53,7 @@
       </div>
       <div class="mt-s">
         <label class="form-label" for="form-images">Images</label>
-        <input id="form-images" class="form-file" type="file" name="images[]" multiple>
+        <input id="form-images" class="form-file" type="file" name="images[]" accept="image/jpeg" multiple required>
         <?php if (isset($form_data['validation']['images'])): ?>
         <p class="input-error"><?= $form_data['validation']['images']; ?></p>
         <?php endif; ?>

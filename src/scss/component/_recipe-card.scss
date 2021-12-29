@@ -10,8 +10,7 @@
         @include typo('preset5');
         margin: 0;
     }
-    &__stars {
-        color: get-color('gray-normal');
+    &__rating {
         margin-top: get-space('s');
     }
     &__btn {

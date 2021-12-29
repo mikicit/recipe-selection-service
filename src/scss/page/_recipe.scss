@@ -44,8 +44,7 @@
     &__review {
         margin: 0;
     }
-    &__stars {
-        color: get-color('gray-normal');
+    &__rating {
         margin-top: get-space('s');
     }
 }
@@ -69,20 +68,20 @@
         margin: 0;
         @include typo('preset2');
     }
-    &__rating {
+    &__meta {
         display: flex;
         align-items: center;
         margin-top: get-space('xs');
         flex-wrap: wrap;
+    }
+    &__rating {
+        margin-right: get-space('s');
     }
     &__reviews {
         color: get-color('black-light');
         text-decoration: underline;
         margin-right: get-space('s');
         @include typo('preset7');
-    }
-    &__stars {
-        color: get-color('gray-normal');
     }
 }
 
@@ -106,6 +105,16 @@
     margin-top: get-space('l');
     &__heading {
         @include typo('preset3');
+        margin: 0 0 get-space('s');
+    }
+}
+
+.recipe-characteristic {
+    padding: get-space('s');
+    border: 1px solid get-color('gray-normal');
+    border-radius: 4px;
+    &__heading {
+        @include typo('preset6');
         margin: 0 0 get-space('s');
     }
 }

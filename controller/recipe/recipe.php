@@ -222,7 +222,7 @@ class ControllerRecipeRecipe extends Controller
                 
                 ## Removing html tags and spaces
                 $data['review'] = isset($_POST['review']) ? preg_replace('/[\s]{2,}/', ' ', trim(htmlspecialchars($_POST['review']))) : '';
-                $data['rating'] = isset($_POST['rating']) ? (int)$_POST['rating'] : '';
+                $data['rating'] = isset($_POST['rating']) ? $_POST['rating'] : '';
 
                 ## Validation
                 $data['validation'] = [];
@@ -242,6 +242,11 @@ class ControllerRecipeRecipe extends Controller
                 $data['validation']['rating'] = (function(& $data) {
                     if (empty($data['rating'])) {
                         return 'Please select a rating.';
+                    }
+
+                    $is_integer = filter_var($data['rating'], FILTER_VALIDATE_INT);
+                    if (!$is_integer) {
+                        return 'The score must be an integer.';
                     }
 
                     if ($data['rating'] < 1 || $data['rating'] > 5) {

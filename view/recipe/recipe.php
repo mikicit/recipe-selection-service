@@ -4,16 +4,19 @@
     <article class="recipe">
       <header class="recipe-header">
         <h1 class="recipe-header__heading"><?= $recipe['title']; ?></h1>
-        <div class="recipe-header__rating">
-          <a class="recipe-header__reviews" href="#reviews"><?= $recipe['quantity']; ?> reviews</a>
-          <div class="recipe-header__stars star-rating">
-            <?php for ($i = 0; $i < $recipe['rating']; $i++): ?>
-            <i class="is-active fas fa-star"></i>
-            <?php endfor; ?>
-            <?php for ($i = 0; $i < 5 - $recipe['rating']; $i++): ?>
-            <i class="fas fa-star"></i>
-            <?php endfor; ?>
+        <div class="recipe-header__meta">
+          <div class="rating recipe-header__rating">
+            <p class="rating__info"><span class="rating__text">Rating: </span><span class="rating__number"><?= $recipe['rating']; ?></span></p>
+            <div class="rating__stars star-rating">
+              <?php for ($i = 0; $i < $recipe['rounded_rating']; $i++): ?>
+              <i class="is-active fas fa-star"></i>
+              <?php endfor; ?>
+              <?php for ($i = 0; $i < 5 - $recipe['rounded_rating']; $i++): ?>
+              <i class="fas fa-star"></i>
+              <?php endfor; ?>
+            </div>
           </div>
+          <a class="recipe-header__reviews" href="#reviews"><?= $recipe['quantity']; ?> reviews</a>
         </div>
       </header>
       <?php if (!empty($recipe['images'])): ?>
@@ -34,30 +37,35 @@
       </div>
       <?php endif; ?>
       <?php endif; ?>
-      <?php if ($ingredients): ?>
-      <section class="recipe-section">
-        <h2 class="recipe-section__heading">Ingredients</h2>
-        <div class="recipe-section__main">
-          <ul class="tags">
-            <?php foreach ($ingredients as $ingredient): ?>
-            <li class="tags__tag"><a class="tags__link" href="#"><?= $ingredient['name']; ?></a></li>
-            <?php endforeach; ?>
-          </ul>
+      <div class="recipe-section">
+        <h2 class="recipe-section__heading">Characteristic</h2>
+        <div class="row-2 vgut-2">
+          <?php if ($ingredients): ?>
+          <div class="col">
+            <div class="recipe-characteristic">
+              <h3 class="recipe-characteristic__heading">Ingredients</h3>
+              <ul class="tags">
+                <?php foreach ($ingredients as $ingredient): ?>
+                <li class="tags__tag"><a class="tags__link" href="#"><?= $ingredient['name']; ?></a></li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          </div>
+          <?php endif; ?>
+          <?php if ($categories): ?>
+          <div class="col">
+            <div class="recipe-characteristic">
+              <h3 class="recipe-characteristic__heading">Categories</h3>
+                <ul class="tags">
+                  <?php foreach ($categories as $category): ?>
+                  <li class="tags__tag"><a class="tags__link" href="#"><?= $category['name']; ?></a></li>
+                  <?php endforeach; ?>
+                </ul>
+            </div>
+          </div>
+          <?php endif; ?>
         </div>
-      </section>
-      <?php endif; ?>
-      <?php if ($categories): ?>
-      <section class="recipe-section">
-        <h2 class="recipe-section__heading">Categories</h2>
-        <div class="recipe-section__main">
-          <ul class="tags">
-            <?php foreach ($categories as $categories): ?>
-            <li class="tags__tag"><a class="tags__link" href="#"><?= $categories['name']; ?></a></li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-      </section>
-      <?php endif; ?>
+      </div>
       <section class="recipe-section">
         <h2 class="recipe-section__heading">How To Cook?</h2>
         <div class="recipe-section__main">
@@ -69,7 +77,7 @@
       <h2 class="section-small__heading">Add Review</h2>
       <?php if ($user): ?>
       <div class="box">
-        <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="form-review" novalidate>
+        <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="form-review">
           <?php if (isset($form_data['success'])): ?>
           <div class="mb-m">
             <p class="alert alert--success"><?= $form_data['success']; ?></p>
@@ -82,7 +90,7 @@
           <?php endif; ?>
           <div>
             <label class="form-label" for="form-comment-review">Review</label>
-            <textarea class="form-textarea <?= isset($form_data['validation']['review']) ? 'is-invalid' : ''; ?>" name="review" cols="30" rows="4" id="form-comment-review" required><?= isset($form_data['review']) ? $form_data['review'] : ''; ?></textarea>
+            <textarea class="form-textarea <?= isset($form_data['validation']['review']) ? 'is-invalid' : ''; ?>" name="review" cols="30" rows="4" id="form-comment-review" minlength="2" maxlength="500" required><?= isset($form_data['review']) ? $form_data['review'] : ''; ?></textarea>
             <?php if (isset($form_data['validation']['review'])): ?>
             <p class="input-error"><?= $form_data['validation']['review']; ?></p>
             <?php endif; ?>
@@ -122,13 +130,16 @@
             <h3 class="review-card__heading"><?= $review['firstname'] . ' ' . $review['lastname']; ?></h3>
             <p class="review-card__date"><time datetime="<?= $review['date_added']; ?>"><?= date("d F Y", strtotime($review['date_added'])); ?></time></p>
             <p class="review-card__review"><?= $review['description']; ?></p>
-            <div class="review-card__stars star-rating">
-              <?php for ($i = 0; $i < $review['rating']; $i++): ?>
-              <i class="is-active fas fa-star"></i>
-              <?php endfor; ?>
-              <?php for ($i = 0; $i < 5 - $review['rating']; $i++): ?>
-              <i class="fas fa-star"></i>
-              <?php endfor; ?>
+            <div class="rating review-card__rating">
+              <p class="rating__info"><span class="rating__text">Rating: </span><span class="rating__number"><?= $review['rating']; ?></span></p>
+              <div class="rating__stars star-rating">
+                <?php for ($i = 0; $i < $review['rating']; $i++): ?>
+                <i class="is-active fas fa-star"></i>
+                <?php endfor; ?>
+                <?php for ($i = 0; $i < 5 - $review['rating']; $i++): ?>
+                <i class="fas fa-star"></i>
+                <?php endfor; ?>
+              </div>
             </div>
           </div>
         </article>

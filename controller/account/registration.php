@@ -63,7 +63,7 @@ class ControllerAccountRegistration extends Controller
                     }
 
                     if (strlen($data['lastname']) > 50) {
-                        return 'Firstname must not be longer than 50 characters.';
+                        return 'Lastname must not be longer than 50 characters.';
                     }
         
                     if (!preg_match("/^[a-zA-Z]*$/", $data['lastname'])) {
