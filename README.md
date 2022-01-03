@@ -1,0 +1,1 @@
+Semestrální projekt z ZWA Hledání Receptů

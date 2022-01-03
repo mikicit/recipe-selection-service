@@ -12,11 +12,11 @@
       </div>
       <?php endif; ?>
       <div>
-        <label class="form-label" for="email">Email</label>
+        <label class="form-label is-required" for="email">Email</label>
         <input class="form-input" type="email" name="email" id="email" value="<?= isset($form_data['email']) ? $form_data['email'] : ''; ?>" required>
       </div>
       <div class="mt-s">
-        <label class="form-label" for="password">Password</label>
+        <label class="form-label is-required" for="password">Password</label>
         <input class="form-input" type="password" name="password" id="password" value="" autocomplete="current-password" required>
       </div>
       <input type="hidden" name="login">

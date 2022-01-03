@@ -89,14 +89,14 @@
           </div>
           <?php endif; ?>
           <div>
-            <label class="form-label" for="form-comment-review">Review</label>
+            <label class="form-label is-required" for="form-comment-review">Review</label>
             <textarea class="form-textarea <?= isset($form_data['validation']['review']) ? 'is-invalid' : ''; ?>" name="review" cols="30" rows="4" id="form-comment-review" minlength="2" maxlength="500" required><?= isset($form_data['review']) ? $form_data['review'] : ''; ?></textarea>
             <?php if (isset($form_data['validation']['review'])): ?>
             <p class="input-error"><?= $form_data['validation']['review']; ?></p>
             <?php endif; ?>
           </div>
           <div class="mt-s">
-            <p class="form-label">Please, select rating:</p>
+            <p class="form-label is-required">Please, select rating:</p>
             <div class="form-radio-row">
               <?php for ($i = 1; $i <= 5; $i++): ?>
               <div class="form-radio">
