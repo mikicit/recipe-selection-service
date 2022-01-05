@@ -1,41 +1,58 @@
 <?php
 
+/**
+ * ModelAccountUser
+ * 
+ * The model for working with the user entity.
+ */
 class ModelAccountUser extends Model
 {
 	/**
+	 * Gets a user object by ID
+	 * 
 	 * @param int $id
 	 * 
-	 * @return [type]
+	 * @return array|bool returns false on request error
 	 */
 	public function getUserById(int $id)
 	{
 		$sql = "SELECT * FROM user WHERE user_id = ?";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
-        $result = $stmt->fetch();
+        $result = $stmt->execute([$id]);
+		
+		if ($result) {
+			$result = $stmt->fetch();
+		}
 
         return $result;
 	}
 
 	/**
+	 * Gets a user object by Email
+	 * 
 	 * @param string $email
 	 * 
-	 * @return [type]
+	 * @return array|bool returns false on request error
 	 */
 	public function getUserByEmail(string $email)
 	{
         $sql = "SELECT * FROM user WHERE email = ?";
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$email]);
-        $result = $stmt->fetch();
+        $result = $stmt->execute([$email]);
+        
+		if ($result) {
+			$result = $stmt->fetch();
+		}
 
         return $result;
 	}
 
 	/**
+	 * Adding a new user
+	 * 
 	 * @param array $data
 	 * 
-	 * @return [type]
+	 * @return bool
 	 */
 	public function addUser(array $data)
 	{

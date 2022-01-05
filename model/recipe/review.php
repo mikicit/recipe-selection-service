@@ -1,8 +1,20 @@
 <?php
 
+/**
+ * ModelRecipeReview
+ * 
+ * The model for working with the review entity.
+ */
 class ModelRecipeReview extends Model
 {
-	public function add($data)
+	/**
+	 * This method adds a new review.
+	 * 
+	 * @param mixed $data
+	 * 
+	 * @return bool
+	 */
+	public function add(array $data)
 	{
 		$sql = 'INSERT INTO review (user_id, recipe_id, description, rating) VALUES (:user_id, :recipe_id, :review, :rating)';
         $stmt = $this->db->prepare($sql);
@@ -10,7 +22,14 @@ class ModelRecipeReview extends Model
         return $stmt->execute($data);
 	}
 
-	public function get($query_vars = [])
+	/**
+	 * This method returns all reviews for a specific recipe, given the query variables.
+	 * 
+	 * @param array $query_vars
+	 * 
+	 * @return array
+	 */
+	public function get(array $query_vars = [])
     {
 		$default = [
 			'id' => 1,
@@ -28,16 +47,26 @@ class ModelRecipeReview extends Model
         $sql .= 'LIMIT 0, :limit';
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([
+        $result = $stmt->execute([
             'id'   => $query_vars['id'],
             'limit' => $query_vars['per_page'] * $query_vars['page']
         ]);
-        $result = $stmt->fetchAll();
 
-        return $result;
+		if ($result) {
+			return $stmt->fetchAll();
+		} else {
+			return [];
+		}
     }
 
-	public function getQuantity($query_vars = [])
+	/**
+	 * Returns the number of reviews for a specific post based on query variables.
+	 * 
+	 * @param array $query_vars
+	 * 
+	 * @return int|bool
+	 */
+	public function getQuantity(array $query_vars = [])
 	{	
 		$default = [
 			'id' => 1
@@ -49,8 +78,11 @@ class ModelRecipeReview extends Model
 		$sql .= 'WHERE review.recipe_id = ?';
 
 		$stmt = $this->db->prepare($sql);
-		$stmt->execute([$query_vars['id']]);
-		$result = $stmt->fetchColumn();
+		$result = $stmt->execute([$query_vars['id']]);
+		
+		if ($result) {
+			$result = $stmt->fetchColumn();
+		}
 
 		return $result;
 	}

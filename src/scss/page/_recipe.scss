@@ -1,3 +1,9 @@
+/**
+ * Recipe
+ *
+ * Styles for recipe page.
+ */
+
 .reviews {
     & > .review-card + .review-card {
         margin-top: get-space('m');
@@ -113,6 +119,7 @@
     padding: get-space('s');
     border: 1px solid get-color('gray-normal');
     border-radius: 4px;
+    height: 100%;
     &__heading {
         @include typo('preset6');
         margin: 0 0 get-space('s');

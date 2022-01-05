@@ -1,7 +1,19 @@
 <?php 
 
+/**
+ * ControllerRecipeRecipe
+ * 
+ * The controller is responsible for the recipe pages.
+ */
 class ControllerRecipeRecipe extends Controller
 {
+    /**
+     * Processing get and post requests on the recipes page.
+     * 
+     * @param array $data
+     * 
+     * @return void
+     */
     public function index($data = [])
     {  
         $model_recipe = new ModelRecipeRecipe();
@@ -10,7 +22,7 @@ class ControllerRecipeRecipe extends Controller
 
         ## Default query vars
         $query_vars = [
-            'per_page' => 9,
+            'per_page' => 3,
             'page'     => 1
         ];
 
@@ -145,6 +157,13 @@ class ControllerRecipeRecipe extends Controller
         $this->response->setOutput($this->view->get('recipe/recipes', $data));
     }
 
+    /**
+     * Processing get and post requests on the recipe page.
+     * 
+     * @param mixed $query_vars
+     * 
+     * @return void
+     */
     public function show($query_vars)
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -277,6 +296,13 @@ class ControllerRecipeRecipe extends Controller
         }
     }
 
+    /**
+     * Processing get and post requests on the recipe add page.
+     * 
+     * @param array $data
+     * 
+     * @return void
+     */
     public function add($data = [])
     {
         if (!($this->user->getCurrentUser()) || $this->user->getCurrentUser()['user_group_id'] != 1) {

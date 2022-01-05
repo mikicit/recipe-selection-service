@@ -1,7 +1,19 @@
 <?php 
 
+/**
+ * ControllerErrorNotfound
+ * 
+ * The controller is responsible for the 404 page.
+ */
 class ControllerErrorNotfound extends Controller
 {
+    /**
+     * Processing get and post requests on the 404 page.
+     * 
+     * @param array $data
+     * 
+     * @return void
+     */
     public function index($data = [])
     {
         $this->document->setTitle('Page not found!');

@@ -1,10 +1,13 @@
 ((window, document) => {
     'use strict';
 
-    // Utility Functions
-    function isString($var) {
-        return (typeof $var === 'string' || $var instanceof String);
-    }
+    /**
+     * Utility Functions
+     */
+    
+    // function isString($var) {
+    //     return (typeof $var === 'string' || $var instanceof String);
+    // }
 
     function debounce(func, delay) {
         let timeoutID ;
@@ -35,7 +38,11 @@
         }
     }
 
-    // Validation Functions
+
+    /**
+     * Validation Functions
+     */
+
     function firstnameValidation(value, fields) {
         if (value.length < 2) {
             return 'Firstname must not be shorter than 2 characters.';
@@ -92,7 +99,11 @@
         return '';
     }
 
-    // Templates
+
+    /**
+     * Templates
+     */
+
     function inputErrorTemplate($text) {
         return `<p class="input-error">${$text}</p>`;
     }
@@ -103,7 +114,11 @@
                 </div>`;
     }
 
-    // Setters
+
+    /**
+     * Setters
+     */
+
     function setInputError(field, text) {
         field.insertAdjacentHTML('afterend', inputErrorTemplate(text));
         field.classList.add('is-invalid');
@@ -122,7 +137,7 @@
     }
 
     function unsetFormError(form) {
-        const error = form.querySelector('.alert--error');
+        const error = form.querySelector('.alert--error').parentNode;
         if (error) error.remove();
     }
 
@@ -356,7 +371,6 @@
      * Processing of the add recipe form. Validation of fields when printing does not make sense in this case.
      */
 
-
     const addRecipeForm = document.getElementById('add-recipe-form');
 
     if (addRecipeForm) {    
@@ -367,10 +381,10 @@
         const ingredients = document.getElementsByName('ingredients[]');
         const categories = document.getElementsByName('categories[]');
         const imagesInput = document.getElementById('form-images');
-        const images = imagesInput.files;
 
         function submitHandler(e) {
             e.preventDefault();
+            const images = imagesInput.files;
             let validationErrors = {};
 
             unsetFormErrors(addRecipeForm);
@@ -480,5 +494,6 @@
 
         addRecipeForm.addEventListener('submit', submitHandler, false);
     }
+
 
 })(window, document);

@@ -1,7 +1,19 @@
 <?php 
 
+/**
+ * ControllerAccountProfile
+ * 
+ * The controller is responsible for the profile page.
+ */
 class ControllerAccountProfile extends Controller
 {
+    /**
+     * Processing get and post requests on the profile page.
+     * 
+     * @param array $data
+     * 
+     * @return void
+     */
     public function index($data = [])
     {
         $data['user'] = $this->user->getCurrentUser();

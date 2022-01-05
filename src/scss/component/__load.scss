@@ -1,4 +1,10 @@
-@import "./tmp";
+/**
+ * Component Level
+ *
+ * The component level contains the main components.
+ * A component is an independent block that can be used separately anywhere.
+ */
+
 @import "./button";
 @import "./alert";
 @import "./form";

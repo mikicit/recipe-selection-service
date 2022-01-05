@@ -2,7 +2,7 @@
 <main class="page__main page-auth container-fluid pt-xxl pb-xxl">
   <div class="auth box">
     <h1 class="auth__heading">Login</h1>
-    <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="login-form" novalidate>
+    <form class="form" action="<?= Url::getCurrentUrl(); ?>" method="post" id="login-form">
       <div class="mb-m" <?= isset($form_data['error']) ? '' : 'hidden'; ?>>
         <p class="alert alert--error"><?= isset($form_data['error']) ? $form_data['error'] : ''; ?></p>
       </div>

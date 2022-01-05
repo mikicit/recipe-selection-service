@@ -1,7 +1,18 @@
 <?php
 
+/**
+ * Db
+ * 
+ * The class is responsible for configuring
+ * and connecting to the database.
+ */
 class Db
 {
+    /**
+     * Connection object.
+     * 
+     * @var object
+     */
     private $connection;
 
     public function __construct()
@@ -17,7 +28,13 @@ class Db
         $this->connection = new \PDO($dsn, DBUSER, DBPASSWORD, $options);
     }
 
-    public function pdo()
+    /**
+     * Gets a connection object for managing the object that is responsible 
+     * for querying the database.
+     * 
+     * @return object
+     */
+    public function connection()
     {
         return $this->connection;
     }

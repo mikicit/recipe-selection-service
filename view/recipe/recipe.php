@@ -9,10 +9,10 @@
             <p class="rating__info"><span class="rating__text">Rating: </span><span class="rating__number"><?= $recipe['rating']; ?></span></p>
             <div class="rating__stars star-rating">
               <?php for ($i = 0; $i < $recipe['rounded_rating']; $i++): ?>
-              <i class="is-active fas fa-star"></i>
+              <i class="is-active fas fa-star"><span hidden>star</span></i>
               <?php endfor; ?>
               <?php for ($i = 0; $i < 5 - $recipe['rounded_rating']; $i++): ?>
-              <i class="fas fa-star"></i>
+              <i class="fas fa-star"><span hidden>star</span></i>
               <?php endfor; ?>
             </div>
           </div>
@@ -21,22 +21,21 @@
       </header>
       <?php if (!empty($recipe['images'])): ?>
       <div class="recipe__image">
-        <img src="<?= Helper::getImage($recipe['images'][0], 976, 420);?>" alt="<?= $recipe['title']; ?>">
+        <img src="<?= Image::getImage($recipe['images'][0], 976, 420);?>" width="976" height="420" alt="<?= $recipe['title']; ?>">
       </div>
       <?php if (count($recipe['images']) > 1): ?>
       <div class="recipe-images">
         <div class="row-2 vgut-2">
           <?php for($i = 1; $i < count($recipe['images']); $i++): ?>
           <div class="col-3">
-            <a class="recipe-images__link" href="<?= Helper::getImage($recipe['images'][$i]); ?>" target="_blank">
-              <img src="<?= Helper::getImage($recipe['images'][$i], 220, 126);?>" alt="<?= $recipe['title']; ?>">
+            <a class="recipe-images__link" href="<?= Image::getImage($recipe['images'][$i]); ?>" target="_blank">
+              <img src="<?= Image::getImage($recipe['images'][$i], 220, 126);?>"  width="220" height="126" alt="<?= $recipe['title']; ?>">
             </a>
           </div>
           <?php endfor; ?>
         </div>
       </div>
-      <?php endif; ?>
-      <?php endif; ?>
+      <?php endif; endif; ?>
       <div class="recipe-section">
         <h2 class="recipe-section__heading">Characteristic</h2>
         <div class="row-2 vgut-2">
@@ -46,7 +45,7 @@
               <h3 class="recipe-characteristic__heading">Ingredients</h3>
               <ul class="tags">
                 <?php foreach ($ingredients as $ingredient): ?>
-                <li class="tags__tag"><a class="tags__link" href="#"><?= $ingredient['name']; ?></a></li>
+                <li class="tags__tag"><a class="tags__link" href="<?= Url::setVars(Url::getUrl('/recipes'), ['ingredients' => [ $ingredient['ingredient_id'] ]]); ?>"><?= $ingredient['name']; ?></a></li>
                 <?php endforeach; ?>
               </ul>
             </div>
@@ -58,7 +57,7 @@
               <h3 class="recipe-characteristic__heading">Categories</h3>
                 <ul class="tags">
                   <?php foreach ($categories as $category): ?>
-                  <li class="tags__tag"><a class="tags__link" href="#"><?= $category['name']; ?></a></li>
+                  <li class="tags__tag"><a class="tags__link" href="<?= Url::setVars(Url::getUrl('/recipes'), ['categories' => [ $category['category_id'] ]]); ?>"><?= $category['name']; ?></a></li>
                   <?php endforeach; ?>
                 </ul>
             </div>
@@ -67,9 +66,9 @@
         </div>
       </div>
       <section class="recipe-section">
-        <h2 class="recipe-section__heading">How To Cook?</h2>
+        <h2 class="recipe-section__heading">Description</h2>
         <div class="recipe-section__main">
-          <?= $recipe['description']; ?>
+          <p><?= nl2br($recipe['description']); ?></p>
         </div>
       </section>
     </article>
@@ -90,7 +89,7 @@
           <?php endif; ?>
           <div>
             <label class="form-label is-required" for="form-comment-review">Review</label>
-            <textarea class="form-textarea <?= isset($form_data['validation']['review']) ? 'is-invalid' : ''; ?>" name="review" cols="30" rows="4" id="form-comment-review" minlength="2" maxlength="500" required><?= isset($form_data['review']) ? $form_data['review'] : ''; ?></textarea>
+            <textarea class="form-textarea <?= isset($form_data['validation']['review']) ? 'is-invalid' : ''; ?>" name="review" cols="30" rows="4" id="form-comment-review" required><?= isset($form_data['review']) ? $form_data['review'] : ''; ?></textarea>
             <?php if (isset($form_data['validation']['review'])): ?>
             <p class="input-error"><?= $form_data['validation']['review']; ?></p>
             <?php endif; ?>
@@ -134,10 +133,10 @@
               <p class="rating__info"><span class="rating__text">Rating: </span><span class="rating__number"><?= $review['rating']; ?></span></p>
               <div class="rating__stars star-rating">
                 <?php for ($i = 0; $i < $review['rating']; $i++): ?>
-                <i class="is-active fas fa-star"></i>
+                <i class="is-active fas fa-star"><span hidden>star</span></i>
                 <?php endfor; ?>
                 <?php for ($i = 0; $i < 5 - $review['rating']; $i++): ?>
-                <i class="fas fa-star"></i>
+                <i class="fas fa-star"><span hidden>star</span></i>
                 <?php endfor; ?>
               </div>
             </div>

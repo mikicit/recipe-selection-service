@@ -1,7 +1,19 @@
 <?php 
 
+/**
+ * ControllerCommonHome
+ * 
+ * The controller is responsible for the home page.
+ */
 class ControllerCommonHome extends Controller
 {
+    /**
+     * Processing get and post requests on the home page.
+     * 
+     * @param array $data
+     * 
+     * @return void
+     */
     public function index($data = [])
     {   
         $model_recipe = new ModelRecipeRecipe();

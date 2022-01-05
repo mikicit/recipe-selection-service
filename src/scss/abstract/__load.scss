@@ -1,3 +1,10 @@
+/**
+ * Abstract Level
+ *
+ * The abstract layer is responsible for defining variables, functions and mixins 
+ * for subsequent generation of styles.
+ */
+
 @import "./variables";
 @import "./functions";
 @import "./mixins";

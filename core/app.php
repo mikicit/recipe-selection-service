@@ -1,15 +1,45 @@
 <?php
 
+/**
+ * App
+ * 
+ * The front controller contains links to the main objects (singletons) 
+ * for managing the state of the application. 
+ * It also initializes the session and transfers control to the router.
+ */
 class App
 {
+    /**
+     * @var Db
+     */
     public static $db;
+    /**
+     * @var User
+     */
     public static $user;
+    /**
+     * @var Document
+     */
     public static $document;
-    public static $request;
+    /**
+     * @var Response
+     */
     public static $response;
+    /**
+     * @var View
+     */
     public static $view;
+    /**
+     * @var Router
+     */
     public static $router;
 
+    /**
+     * Application initialization.
+     * 
+     * @static
+     * @return void
+     */
     public static function init()
     {
         session_start();
@@ -17,7 +47,6 @@ class App
         self::$db = new Db();
         self::$user = new User();
         self::$document = new Document();
-        self::$request = new Request();
         self::$response = new Response();
         self::$view = new View();
         self::$router = new Router();

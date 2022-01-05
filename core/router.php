@@ -1,11 +1,16 @@
 <?php
 
 /**
- * [Description Router]
+ * Router
+ * 
+ * This class is responsible for parsing the request, matching with possible routes 
+ * and transferring control to the appropriate controller.
  */
 class Router
 {
     /**
+     * Routes from config file routes.php
+     * 
      * @var array
      */
     private $routes = [];
@@ -13,31 +18,35 @@ class Router
     public function __construct()
     {
         ob_start();
-
         include('config/routes.php');
-
         $this->routes = $routes;
-
         ob_end_clean();
     }
 
     /**
+     * 
+     * 
      * @return void
      */
     public function run()
     {
+        ## getting query string
         $request_string = trim(preg_replace('/\?.*/', '', $_SERVER['REQUEST_URI']), '/');
-
         $this->resolveRoute($request_string);
     }
 
     /**
+     * This method receives a query string and parses it, if it finds a match in the routes, 
+     * transfers control to the appropriate controller and its method 
+     * with query parameters (in the form of an array), if any.
+     * 
      * @param string $request_string
      * 
      * @return void
      */
     private function resolveRoute(string $request_string)
     {   
+        ## base controller and action
         $controller_name = 'CommonHome';
         $action_name = 'index';
 
@@ -75,6 +84,8 @@ class Router
     }
 
     /**
+     * Transfer of control to the controller.
+     * 
      * @param string $controller_name
      * @param string $action_name
      * @param array $data

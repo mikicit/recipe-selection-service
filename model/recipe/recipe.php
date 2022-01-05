@@ -1,8 +1,20 @@
 <?php
 
+/**
+ * ModelRecipeRecipe
+ * 
+ * The model for working with the recipe entity.
+ */
 class ModelRecipeRecipe extends Model
 {
-    public function getAll($query_vars = [])
+    /**
+     * This method returns all recipes given the request parameters. 
+     * 
+     * @param array $query_vars
+     * 
+     * @return array|bool
+     */
+    public function getAll(array $query_vars = [])
     {
         ## default query vars
         $default = [
@@ -103,10 +115,11 @@ class ModelRecipeRecipe extends Model
         $stmt->bindValue('offset',  ($query_vars['page'] - 1) * $query_vars['per_page']);
         $stmt->bindValue('per_page', $query_vars['per_page']);
 
-        $stmt->execute();
-        $result = $stmt->fetchAll();
-        
+        $result = $stmt->execute();
+
         if ($result) {
+            $result = $stmt->fetchAll();
+        
             foreach ($result as $key => $recipe) {
                 if (!empty($recipe['images'])) {
                     $result[$key]['images'] = (array)unserialize($recipe['images']);
@@ -122,17 +135,17 @@ class ModelRecipeRecipe extends Model
 
                 $result[$key]['rounded_rating'] = round($recipe['rating']);
             }
-
-            return $result;
-        } else {
-            return [];
         }
+
+        return $result;
     }
 
     /**
+     * This method returns the number of recipes given the request parameters.
+     * 
      * @param array $query_vars
      * 
-     * @return [type]
+     * @return int
      */
     public function getQuantity($query_vars = [])
     {
@@ -187,20 +200,24 @@ class ModelRecipeRecipe extends Model
             $stmt->bindValue("search", $query_vars['search']);
         }
 
-        $stmt->execute();
-        $result = $stmt->fetch();
-
+        $result = $stmt->execute();
+        
         if ($result) {
-            return $result['quantity'];
-        } else {
-            return 0;
+            $result = $stmt->fetch();
+            if ($result) {
+                return $result['quantity'];
+            }
         }
+
+        return 0;
     }
 
     /**
+     * This method returns a recipe object by its ID.
+     * 
      * @param int $id
      * 
-     * @return [type]
+     * @return array|bool
      */
     public function get(int $id)
     {
@@ -212,34 +229,39 @@ class ModelRecipeRecipe extends Model
         $sql .= 'GROUP BY recipe.recipe_id';
 
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
-        $result = $stmt->fetch();
-
+        $result = $stmt->execute([$id]);
+        
         if ($result) {
-            if (!empty($result['images'])) {
-                $result['images'] = (array)unserialize($result['images']);
+            $result = $stmt->fetch();
 
-                foreach ($result['images'] as $index => $image) {
-                    $result['images'][$index] = BASE_URL . '/uploads/recipes/' . $result['recipe_id'] . '/' . $image;
+            if ($result) {
+                if (!empty($result['images'])) {
+                    $result['images'] = (array)unserialize($result['images']);
+    
+                    foreach ($result['images'] as $index => $image) {
+                        $result['images'][$index] = BASE_URL . '/uploads/recipes/' . $result['recipe_id'] . '/' . $image;
+                    }
                 }
+    
+                if (empty($result['rating'])) {
+                    $result['rating'] = 0;
+                }
+    
+                $result['rounded_rating'] = round($result['rating']);
             }
-
-            if (empty($result['rating'])) {
-                $result['rating'] = 0;
-            }
-
-            $result['rounded_rating'] = round($result['rating']);
         }
 
         return $result;
     }
 
     /**
-     * @return [type]
+     * This method returns an array of popular recipe objects.
+     * 
+     * @return array
      */
     public function getFeatured()
     {
-        $sql = 'SELECT recipe.recipe_id, recipe.title, ROUND(AVG(review.rating), 1) as rating ';
+        $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.images, ROUND(AVG(review.rating), 1) as rating ';
         $sql .= 'FROM recipe ';
         $sql .= 'LEFT JOIN review ON recipe.recipe_id = review.recipe_id ';
         $sql .= 'GROUP BY recipe.recipe_id ';
@@ -251,27 +273,34 @@ class ModelRecipeRecipe extends Model
         if ($stmt) {
             $result = $stmt->fetchAll();
 
-            if ($result) {
-                foreach ($result as $key => $recipe) {
-                    if (empty($recipe['rating'])) {
-                        $result[$key]['rating'] = 0;
-                    }
+            foreach ($result as $key => $recipe) {
+                if (!empty($recipe['images'])) {
+                    $result[$key]['images'] = (array)unserialize($recipe['images']);
     
-                    $result[$key]['rounded_rating'] = round($recipe['rating']);
+                    foreach ($result[$key]['images'] as $index => $image) {
+                        $result[$key]['images'][$index] = BASE_URL . '/uploads/recipes/' . $recipe['recipe_id'] . '/' . $image;
+                    }
+                }
+                
+                if (empty($recipe['rating'])) {
+                    $result[$key]['rating'] = 0;
                 }
 
-                return $result;
+                $result[$key]['rounded_rating'] = round($recipe['rating']);
             }
 
+            return $result;
         } else {
             return [];
         }
     }
 
     /**
+     * This method returns the ingredients associated with a specific recipe by ID.
+     * 
      * @param int $id
      * 
-     * @return [type]
+     * @return array
      */
     public function getIngredients(int $id)
     {
@@ -281,13 +310,19 @@ class ModelRecipeRecipe extends Model
         $sql .= 'WHERE ingredient_recipe.recipe_id = ?';
         
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
+        $result = $stmt->execute([$id]);
 
-        return $stmt->fetchAll();
+        if ($result) {
+            return $stmt->fetchAll();
+        } else {
+            return [];
+        }
     }
 
     /**
-     * @return [type]
+     * This method returns an array of all ingredients.
+     * 
+     * @return array
      */
     public function getAllIngredients()
     {
@@ -302,9 +337,11 @@ class ModelRecipeRecipe extends Model
     }
 
     /**
+     * This method returns the categories associated with a specific recipe by ID.
+     * 
      * @param int $id
      * 
-     * @return [type]
+     * @return array
      */
     public function getCategories(int $id)
     {
@@ -314,13 +351,19 @@ class ModelRecipeRecipe extends Model
         $sql .= 'WHERE category_recipe.recipe_id = ?';
         
         $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
+        $result = $stmt->execute([$id]);
 
-        return $stmt->fetchAll();
+        if ($result) {
+            return $stmt->fetchAll();
+        } else {
+            return [];
+        }
     }
 
     /**
-     * @return [type]
+     * This method returns an array of all categories.
+     * 
+     * @return array
      */
     public function getAllCategories()
     {
@@ -335,9 +378,11 @@ class ModelRecipeRecipe extends Model
     }
 
     /**
+     * This method adds a new recipe.
+     * 
      * @param array $data
      * 
-     * @return [type]
+     * @return bool
      */
     public function add(array $data)
     {

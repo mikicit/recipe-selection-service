@@ -1,7 +1,19 @@
 <?php 
 
+/**
+ * ControllerAccountRegistration
+ * 
+ * The controller is responsible for the registration page.
+ */
 class ControllerAccountRegistration extends Controller
 {
+    /**
+     * Processing get and post requests on the registration page.
+     * 
+     * @param array $data
+     * 
+     * @return void
+     */
     public function index($data = [])
     {
         if ($_SERVER['REQUEST_METHOD'] == 'GET')

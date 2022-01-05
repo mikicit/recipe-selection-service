@@ -47,18 +47,18 @@
       <div class="row vgut">
         <?php foreach ($recipes as $recipe): ?>
         <div class="col col-md-6 col-lg-4">
-          <div class="recipe-card">
-            <img class="recipe-card__img" src="<?= !empty($recipe['images']) ? Helper::getImage($recipe['images'][0], 304, 228) : Url::getUrl('/public/images/card-placeholder.jpg'); ?>" width="304" height="228" alt="<?= $recipe['title']; ?>">
+          <article class="recipe-card">
+            <img class="recipe-card__img" src="<?= !empty($recipe['images']) ? Image::getImage($recipe['images'][0], 304, 228) : Url::getUrl('/public/images/card-placeholder.jpg'); ?>" width="304" height="228" alt="<?= $recipe['title']; ?>">
             <div class="recipe-card__body">
               <h3 class="recipe-card__title"><?= $recipe['title']; ?></h3>
               <div class="rating recipe-card__rating">
                 <p class="rating__info"><span class="rating__text">Rating: </span><span class="rating__number"><?= $recipe['rating']; ?></span></p>
                 <div class="rating__stars star-rating">
                   <?php for ($i = 0; $i < $recipe['rounded_rating']; $i++): ?>
-                  <i class="is-active fas fa-star"></i>
+                  <i class="is-active fas fa-star"><span hidden>star</span></i>
                   <?php endfor; ?>
                   <?php for ($i = 0; $i < 5 - $recipe['rounded_rating']; $i++): ?>
-                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"><span hidden>star</span></i>
                   <?php endfor; ?>
                 </div>
               </div>
@@ -71,7 +71,7 @@
               <?php endif;?>
               <a class="recipe-card__btn btn btn--primary w-100" href="/recipe/<?= $recipe['recipe_id']; ?>">See recipe</a>
             </div>
-          </div>
+          </article>
         </div>
         <?php endforeach; ?>
       </div>

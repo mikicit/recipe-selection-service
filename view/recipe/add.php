@@ -22,7 +22,7 @@
       </div>
       <div class="mt-s">
         <label class="form-label is-required" for="form-description">Description</label>
-        <textarea class="form-textarea <?= isset($form_data['validation']['description']) ? 'is-invalid' : ''; ?>" name="description" cols="30" rows="4" id="form-description" minlength="2" maxlength="10000" required><?= isset($form_data['description']) ? $form_data['description'] : ''; ?></textarea>
+        <textarea class="form-textarea <?= isset($form_data['validation']['description']) ? 'is-invalid' : ''; ?>" name="description" cols="30" rows="4" id="form-description" required><?= isset($form_data['description']) ? $form_data['description'] : ''; ?></textarea>
         <?php if (isset($form_data['validation']['description'])): ?>
         <p class="input-error"><?= $form_data['validation']['description']; ?></p>
         <?php endif; ?>
