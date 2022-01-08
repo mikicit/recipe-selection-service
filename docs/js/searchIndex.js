@@ -41,6 +41,11 @@ Search.appendIndex(
             "summary": "Processing\u0020get\u0020and\u0020post\u0020requests\u0020on\u0020the\u0020registration\u0020page.",
             "url": "classes/ControllerAccountRegistration.html#method_index"
         },                {
+            "fqsen": "\\ControllerAccountRegistration\u003A\u003AisEmailExists\u0028\u0029",
+            "name": "isEmailExists",
+            "summary": "",
+            "url": "classes/ControllerAccountRegistration.html#method_isEmailExists"
+        },                {
             "fqsen": "\\ControllerCommonFooter",
             "name": "ControllerCommonFooter",
             "summary": "ControllerCommonFooter",
@@ -186,10 +191,45 @@ Search.appendIndex(
             "summary": "This\u0020method\u0020returns\u0020the\u0020actual\u0020title\u0020of\u0020the\u0020document,\ncan\u0020be\u0020called\u0020from\u0020anywhere\u0020in\u0020any\u0020controller.",
             "url": "classes/Document.html#method_getTitle"
         },                {
+            "fqsen": "\\Document\u003A\u003AaddScript\u0028\u0029",
+            "name": "addScript",
+            "summary": "Adds\u0020links\u0020to\u0020pluggable\u0020scripts\u0020with\u0020attributes.",
+            "url": "classes/Document.html#method_addScript"
+        },                {
+            "fqsen": "\\Document\u003A\u003AgetScripts\u0028\u0029",
+            "name": "getScripts",
+            "summary": "Returns\u0020an\u0020array\u0020of\u0020scripts\u0020with\u0020attributes.",
+            "url": "classes/Document.html#method_getScripts"
+        },                {
+            "fqsen": "\\Document\u003A\u003AaddStyle\u0028\u0029",
+            "name": "addStyle",
+            "summary": "Adds\u0020links\u0020to\u0020pluggable\u0020styles\u0020with\u0020attributes.",
+            "url": "classes/Document.html#method_addStyle"
+        },                {
+            "fqsen": "\\Document\u003A\u003AgetStyles\u0028\u0029",
+            "name": "getStyles",
+            "summary": "Returns\u0020an\u0020array\u0020of\u0020styles\u0020with\u0020attributes.",
+            "url": "classes/Document.html#method_getStyles"
+        },                {
+            "fqsen": "\\Document\u003A\u003AattrsToString\u0028\u0029",
+            "name": "attrsToString",
+            "summary": "Helper\u0020method\u0020for\u0020converting\u0020an\u0020array\u0020of\u0020attributes\u0020to\u0020a\u0020string.",
+            "url": "classes/Document.html#method_attrsToString"
+        },                {
             "fqsen": "\\Document\u003A\u003A\u0024title",
             "name": "title",
             "summary": "",
             "url": "classes/Document.html#property_title"
+        },                {
+            "fqsen": "\\Document\u003A\u003A\u0024scripts",
+            "name": "scripts",
+            "summary": "",
+            "url": "classes/Document.html#property_scripts"
+        },                {
+            "fqsen": "\\Document\u003A\u003A\u0024styles",
+            "name": "styles",
+            "summary": "",
+            "url": "classes/Document.html#property_styles"
         },                {
             "fqsen": "\\Image",
             "name": "Image",
@@ -240,6 +280,16 @@ Search.appendIndex(
             "name": "redirectToRef",
             "summary": "Redirects\u0020the\u0020request\u0020to\u0020the\u0020address\u0020from\u0020which\u0020the\u0020request\u0020came\u0020\u0028by\u0020the\u0020referer\u0029.",
             "url": "classes/Response.html#method_redirectToRef"
+        },                {
+            "fqsen": "\\Response\u003A\u003AsetToken\u0028\u0029",
+            "name": "setToken",
+            "summary": "Sets\u0020a\u0020token\u0020to\u0020a\u0020session\u0020and\u0020returns\u0020it.",
+            "url": "classes/Response.html#method_setToken"
+        },                {
+            "fqsen": "\\Response\u003A\u003AunsetToken\u0028\u0029",
+            "name": "unsetToken",
+            "summary": "Removes\u0020the\u0020token\u0020from\u0020the\u0020session.",
+            "url": "classes/Response.html#method_unsetToken"
         },                {
             "fqsen": "\\Router",
             "name": "Router",
@@ -440,6 +490,16 @@ Search.appendIndex(
             "name": "getQuantity",
             "summary": "Returns\u0020the\u0020number\u0020of\u0020reviews\u0020for\u0020a\u0020specific\u0020post\u0020based\u0020on\u0020query\u0020variables.",
             "url": "classes/ModelRecipeReview.html#method_getQuantity"
+        },                {
+            "fqsen": "\\ControllerModuleTheme",
+            "name": "ControllerModuleTheme",
+            "summary": "ControllerModuleTheme",
+            "url": "classes/ControllerModuleTheme.html"
+        },                {
+            "fqsen": "\\ControllerModuleTheme\u003A\u003Aindex\u0028\u0029",
+            "name": "index",
+            "summary": "Processes\u0020get\u0020parameters\u0020for\u0020changing\u0020the\u0020theme\u0020and\u0020redirects\u0020to\u0020the\u0020page\u0020from\u0020which\u0020the\u0020request\u0020was\u0020made.",
+            "url": "classes/ControllerModuleTheme.html#method_index"
         },                {
             "fqsen": "\\",
             "name": "\\",
