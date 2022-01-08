@@ -20,7 +20,8 @@ class ControllerAccountRegistration extends Controller
         {
             if ($this->user->getCurrentUser()) $this->response->redirect(Url::getUrl('/profile'));
 
-            $this->document->setTitle('Registration');
+            ## generating a token for the login form
+			$data['token'] = $this->response->setToken();
             
             ## session form data
             if (isset($_SESSION['form_data'])) {
@@ -28,6 +29,8 @@ class ControllerAccountRegistration extends Controller
                 unset($_SESSION['form_data']);
             }
             
+            $this->document->setTitle('Registration');
+
             $header = new ControllerCommonHeader();
             $footer = new ControllerCommonFooter();
             
@@ -39,7 +42,14 @@ class ControllerAccountRegistration extends Controller
         elseif ($_SERVER['REQUEST_METHOD'] == 'POST') 
         {
             if (isset($_POST['registration'])) {
-                if ($this->user->getCurrentUser()) return;
+                if ($this->user->getCurrentUser()) $this->response->redirect(Url::getUrl('/profile'));
+
+                ## Checking token
+				if (!isset($_SESSION['token']) || !isset($_POST['token']) || $_SESSION['token'] !== $_POST['token']) {
+					$this->response->redirect(Url::getCurrentUrl());
+				}
+
+                $this->response->unsetToken();
 
                 $model_user = new ModelAccountUser();
                 
@@ -139,6 +149,22 @@ class ControllerAccountRegistration extends Controller
 
                 $this->response->redirect(Url::getCurrentUrl());
             }
+        }
+    }
+
+    public function isEmailExists()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'])) {
+            $model_user = new ModelAccountUser();
+            $user = $model_user->getUserByEmail($_POST['email']);
+
+            if (!$user || empty($user)) {
+                echo 'false';
+                die();
+            }
+
+            echo 'true';
+            die();
         }
     }
 }

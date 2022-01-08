@@ -25,4 +25,6 @@ $routes = [
     '/^registration$/' => 'AccountRegistration/index',
     '/^logout$/' => 'AccountLogin/logout',
     '/^404$/' => 'ErrorNotfound/index',
+    '/^theme$/' => 'ModuleTheme/index',
+    '/^registration\/checkemail$/' => 'AccountRegistration/isEmailExists',
 ];

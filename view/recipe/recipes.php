@@ -55,10 +55,10 @@
                 <p class="rating__info"><span class="rating__text">Rating: </span><span class="rating__number"><?= $recipe['rating']; ?></span></p>
                 <div class="rating__stars star-rating">
                   <?php for ($i = 0; $i < $recipe['rounded_rating']; $i++): ?>
-                  <i class="is-active fas fa-star"><span hidden>star</span></i>
+                  <i class="is-active fas fa-star"></i>
                   <?php endfor; ?>
                   <?php for ($i = 0; $i < 5 - $recipe['rounded_rating']; $i++): ?>
-                  <i class="fas fa-star"><span hidden>star</span></i>
+                  <i class="fas fa-star"></i>
                   <?php endfor; ?>
                 </div>
               </div>

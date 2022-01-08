@@ -22,7 +22,7 @@ class ControllerRecipeRecipe extends Controller
 
         ## Default query vars
         $query_vars = [
-            'per_page' => 3,
+            'per_page' => 9,
             'page'     => 1
         ];
 
@@ -169,6 +169,9 @@ class ControllerRecipeRecipe extends Controller
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             $data = [];
 
+            ## generating a token for the login form
+			$data['token'] = $this->response->setToken();
+
             $model_recipe = new ModelRecipeRecipe();
             $model_review = new ModelRecipeReview();
 
@@ -186,7 +189,7 @@ class ControllerRecipeRecipe extends Controller
             $data['next_reviews'] = '';
             
             $review_pagination = [
-                'per_page' => 6,
+                'per_page' => 3,
                 'page' => 1
             ];
 
@@ -226,6 +229,8 @@ class ControllerRecipeRecipe extends Controller
             $header = new ControllerCommonHeader();
             $footer = new ControllerCommonFooter();
 
+            $this->document->addStyle(Url::getUrl('/public/css/print.css'), ['media' => 'print']);
+
             $data['header'] = $header->index();
             $data['footer'] = $footer->index();
 
@@ -234,7 +239,17 @@ class ControllerRecipeRecipe extends Controller
         elseif ($_SERVER['REQUEST_METHOD'] == 'POST') 
         {   
             if (isset($_POST['add-review'])) {
-                if (!($this->user->getCurrentUser())) return false;
+                if (!($this->user->getCurrentUser())) {
+                    $this->response->setResponseCode(403);
+                    die();
+                };
+
+                ## Checking token
+				if (!isset($_SESSION['token']) || !isset($_POST['token']) || $_SESSION['token'] !== $_POST['token']) {
+					$this->response->redirect(Url::getCurrentUrl());
+				}
+
+                $this->response->unsetToken();
 
                 $model_review = new ModelRecipeReview();
                 $user = $this->user->getCurrentUser();
@@ -310,6 +325,9 @@ class ControllerRecipeRecipe extends Controller
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            ## generating a token for the login form
+			$data['token'] = $this->response->setToken();
+
             $model_recipe = new ModelRecipeRecipe();
 
             $data['ingredients'] = $model_recipe->getAllIngredients();
@@ -334,6 +352,13 @@ class ControllerRecipeRecipe extends Controller
         elseif ($_SERVER['REQUEST_METHOD'] == 'POST') 
         {
             if (isset($_POST['add-recipe'])) {
+                 ## Checking token
+				if (!isset($_SESSION['token']) || !isset($_POST['token']) || $_SESSION['token'] !== $_POST['token']) {
+					$this->response->redirect(Url::getCurrentUrl());
+				}
+
+                $this->response->unsetToken();
+                
                 $model_recipe = new ModelRecipeRecipe();
 
                 ## Removing html tags and spaces

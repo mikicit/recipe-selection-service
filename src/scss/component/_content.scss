@@ -1,0 +1,14 @@
+/**
+ * Content
+ *
+ * This component is designed to format sequential content (flow) inside.
+ */
+
+ .content {
+    & > p:first-child() {
+        margin: 0;
+    }
+    & > p {
+        margin: get-space('m') 0 0;
+    }
+ }

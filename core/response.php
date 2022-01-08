@@ -56,4 +56,25 @@ class Response
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         die();
     }
+
+    /**
+     * Sets a token to a session and returns it.
+     * 
+     * @return string
+     */
+    public function setToken()
+    {
+        $_SESSION['token'] = bin2hex(random_bytes(5));
+        return $_SESSION['token'];
+    }
+
+    /**
+     * Removes the token from the session.
+     * 
+     * @return void
+     */
+    public function unsetToken()
+    {
+        unset($_SESSION['token']);
+    }
 }

@@ -11,6 +11,9 @@
     padding: get-space('xl') 0;
     background-color: get-color('green-normal');
     text-align: center;
+    .theme-purple & {
+        background-color: get-color('purple-normal');
+    }
     &__heading {
         color: white;
         font-size: 48px;

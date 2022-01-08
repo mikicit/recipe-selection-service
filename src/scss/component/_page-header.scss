@@ -49,11 +49,14 @@
         padding: get-space('xs');
         &:hover {
             color: get-color('green-normal');
+            .theme-purple & {
+                color: get-color('purple-normal');
+            }
         }
     }
 }
 
-.header-auth {
+.header-user-nav {
     display: flex;
     flex-wrap: wrap;
 }

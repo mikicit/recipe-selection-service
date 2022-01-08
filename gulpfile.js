@@ -11,7 +11,7 @@ const uglify = require('gulp-uglify');
 
 // Prod
 gulp.task('buildCss', () => {
-  return gulp.src('./src/scss/main.scss')
+  return gulp.src('./src/scss/*.scss')
   .pipe(sass().on('error', sass.logError))
   .pipe(gcmq())
   .pipe(autoprefixer())
@@ -31,7 +31,7 @@ gulp.task('buildJs', () => {
 
 // Dev
 gulp.task('processCss', () => {
-  return gulp.src('./src/scss/main.scss')
+  return gulp.src('./src/scss/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(sourcemaps.write())

@@ -22,12 +22,21 @@
         background-color: get-color('green-normal');
         color: white;
         transition: background-color 200ms;
+        .theme-purple &{
+            background-color: get-color('purple-normal');
+        }
         &:focus,
         &:hover {
             background-color: get-color('green-light');
+            .theme-purple &{
+                background-color: get-color('purple-light');
+            }
         }
         &:active {
             background-color: get-color('green-dark');
+            .theme-purple &{
+                background-color: get-color('purple-dark');
+            }
         }
     }
     &--secondary {

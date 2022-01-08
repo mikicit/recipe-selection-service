@@ -5,10 +5,6 @@
      * Utility Functions
      */
     
-    // function isString($var) {
-    //     return (typeof $var === 'string' || $var instanceof String);
-    // }
-
     function debounce(func, delay) {
         let timeoutID ;
 
@@ -99,6 +95,34 @@
         return '';
     }
 
+    function isEmailExists(email) {
+        const url = window.location.href + '/checkemail';
+        const xhr = new XMLHttpRequest();
+
+        xhr.open('POST', url);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(`email=${encodeURIComponent(email)}`);
+        
+        var result = false;
+
+        xhr.addEventListener('load', function(e) {
+            if (xhr.status !== 200) {
+                result = false; // If there was some kind of error on the server, then skip the real-time check.
+            }
+
+            if (xhr.response) {
+                result = true;
+            }
+
+            result = 'dfsa';
+        }, false);
+
+        xhr.addEventListener('error', function(e) {
+            result = false;
+        }, false);
+
+        return result;
+    }
 
     /**
      * Templates
@@ -218,23 +242,28 @@
         const inputs = {
             'firstname': {
                 'callback': firstnameValidation,
-                'elem': registrationForm.querySelector('#firstname')
+                'elem': registrationForm.querySelector('#firstname'),
+                'isValid': false
             },
             'lastname': {
                 'callback': lastnameValidation,
-                'elem': registrationForm.querySelector('#lastname')
+                'elem': registrationForm.querySelector('#lastname'),
+                'isValid': false
             },
             'email': {
                 'callback': emailValidation,
-                'elem': registrationForm.querySelector('#email')
+                'elem': registrationForm.querySelector('#email'),
+                'isValid': false
             },
             'password': {
                 'callback': passwordValidation,
-                'elem': registrationForm.querySelector('#password')
+                'elem': registrationForm.querySelector('#password'),
+                'isValid': false
             },
             'password-repeat': {
                 'callback': passwordRepeatValidation,
-                'elem': registrationForm.querySelector('#password-repeat')
+                'elem': registrationForm.querySelector('#password-repeat'),
+                'isValid': false
             }
         }
 
@@ -270,8 +299,35 @@
 
             if (message.length !== 0) {
                 setInputError(target, message);
+                inputs[target.id].isValid = false;
             } else {
                 unsetInputError(target);
+                inputs[target.id].isValid = true;
+            }
+        }
+
+        // On blur
+        function blurHandler(e) {
+            const target = e.target;
+
+            if (inputs[target.id].isValid) {
+                const url = window.location.href + '/checkemail';
+                const xhr = new XMLHttpRequest();
+
+                xhr.open('POST', url);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send(`email=${encodeURIComponent(target.value)}`);
+
+                xhr.addEventListener('load', function(e) {
+                    unsetInputError(target);
+                    if (xhr.response === 'true') {
+                        setInputError(target, 'A user with this Email already exists.');
+                    }
+                }, false);
+
+                xhr.addEventListener('error', function(e) {
+                    unsetInputError(target);
+                }, false);
             }
         }
 
@@ -282,6 +338,7 @@
             inputs[prop].elem.addEventListener('input', debouncedInputHandler, false);
         }
 
+        inputs['email'].elem.addEventListener('blur', blurHandler, false);
         registrationForm.addEventListener('submit', submitHandler, false);
     }
 

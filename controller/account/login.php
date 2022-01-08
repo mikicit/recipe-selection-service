@@ -19,6 +19,9 @@ class ControllerAccountLogin extends Controller
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			if ($this->user->getCurrentUser()) $this->response->redirect(Url::getUrl('/profile'));
 
+			## generating a token for the login form
+			$data['token'] = $this->response->setToken();
+
 			## session form data
 			if (isset($_SESSION['form_data'])) {
 				$data['form_data'] = $_SESSION['form_data'];
@@ -40,6 +43,13 @@ class ControllerAccountLogin extends Controller
 			if (isset($_POST['login'])) {
 				if ($this->user->getCurrentUser()) $this->response->redirect(Url::getUrl('/profile'));
 
+				## Checking token
+				if (!isset($_SESSION['token']) || !isset($_POST['token']) || $_SESSION['token'] !== $_POST['token']) {
+					$this->response->redirect(Url::getCurrentUrl());
+				}
+
+				$this->response->unsetToken();
+				
 				$model_user = new ModelAccountUser();
 
 				## Removing html tags

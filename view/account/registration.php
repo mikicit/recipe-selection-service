@@ -44,6 +44,7 @@
         <?php endif; ?>
       </div>
       <input type="hidden" name="registration">
+      <input type="hidden" name="token" value="<?= $token; ?>">
       <button class="btn btn--primary w-100 mt-s" type="submit">Register</button>
     </form>
   </div>

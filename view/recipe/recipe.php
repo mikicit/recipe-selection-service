@@ -9,10 +9,10 @@
             <p class="rating__info"><span class="rating__text">Rating: </span><span class="rating__number"><?= $recipe['rating']; ?></span></p>
             <div class="rating__stars star-rating">
               <?php for ($i = 0; $i < $recipe['rounded_rating']; $i++): ?>
-              <i class="is-active fas fa-star"><span hidden>star</span></i>
+              <i class="is-active fas fa-star"></i>
               <?php endfor; ?>
               <?php for ($i = 0; $i < 5 - $recipe['rounded_rating']; $i++): ?>
-              <i class="fas fa-star"><span hidden>star</span></i>
+              <i class="fas fa-star"></i>
               <?php endfor; ?>
             </div>
           </div>
@@ -67,7 +67,7 @@
       </div>
       <section class="recipe-section">
         <h2 class="recipe-section__heading">Description</h2>
-        <div class="recipe-section__main">
+        <div class="recipe-section__main content">
           <p><?= nl2br($recipe['description']); ?></p>
         </div>
       </section>
@@ -109,6 +109,7 @@
             <?php endif; ?>
           </div>
           <input type="hidden" name="add-review">
+          <input type="hidden" name="token" value="<?= $token; ?>">
           <button class="btn btn--primary mt-s w-100" type="submit">Send</button>
         </form>
       </div>
@@ -133,10 +134,10 @@
               <p class="rating__info"><span class="rating__text">Rating: </span><span class="rating__number"><?= $review['rating']; ?></span></p>
               <div class="rating__stars star-rating">
                 <?php for ($i = 0; $i < $review['rating']; $i++): ?>
-                <i class="is-active fas fa-star"><span hidden>star</span></i>
+                <i class="is-active fas fa-star"></i>
                 <?php endfor; ?>
                 <?php for ($i = 0; $i < 5 - $review['rating']; $i++): ?>
-                <i class="fas fa-star"><span hidden>star</span></i>
+                <i class="fas fa-star"></i>
                 <?php endfor; ?>
               </div>
             </div>
