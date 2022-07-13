@@ -1,1 +1,2 @@
-Semestrální projekt z ZWA Hledání Receptů
+Semester work on the subject Fundamentals of Web Development.
+
