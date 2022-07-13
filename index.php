@@ -7,9 +7,6 @@
  * are being connected, and the front controller is being launched.
  */
 
-print_r( $_ENV["DB_HOST"]);
-die();
-
 ## PHP settings
 ini_set('error_reporting', E_ALL);
 ini_set('display_errors', 1);
