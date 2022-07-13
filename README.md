@@ -11,3 +11,7 @@ The languages used for development were <b>php</b>, <b>js</b>, <b>html</b>, <b>c
 ## Design
 
 The design was developed in <b>Figma</b>.
+
+## Disclamore!
+
+This project is not a finished product, it was implemented purely for educational purposes for certain requirements and with time constraints.
