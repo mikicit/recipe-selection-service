@@ -1,4 +1,4 @@
 node_modules/
-# cache/images/*
-# uploads/recipes/*
-# .phpdoc
+cache/images/*
+uploads/recipes/*
+.phpdoc
