@@ -8,7 +8,7 @@
 
 ## PATH
 define('ROOT', __DIR__ );
-define('BASE_URL', 'http://hrecept.cz');
+define('BASE_URL', $_ENV["DOMAIN"]);
 
 # DB
 define('DBHOST', $_ENV["DB_HOST"]);
