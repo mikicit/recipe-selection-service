@@ -23,7 +23,7 @@ class Db
             \PDO::ATTR_EMULATE_PREPARES   => false,
         ];
 
-        $dsn = 'mysql:host=' . DBHOST . ';dbname=' . DBNAME . ';charset=utf8';
+        $dsn = 'pgsql:host=' . DBHOST . 'port=' . DBPORT . ';' .  ';dbname=' . DBNAME . ';charset=utf8';
 
         $this->connection = new \PDO($dsn, DBUSER, DBPASSWORD, $options);
     }

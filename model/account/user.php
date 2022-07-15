@@ -55,11 +55,9 @@ class ModelAccountUser extends Model
 	 * @return bool
 	 */
 	public function addUser(array $data)
-	{
+    {
         $sql = "INSERT INTO user (user_group_id, password, firstname, lastname, email) VALUES (2,  :password, :firstname, :lastname, :email)";
         $stmt = $this->db->prepare($sql);
-        $result = $stmt->execute($data);
-        
-        return $result;
+        return $stmt->execute($data);
 	}
 }
