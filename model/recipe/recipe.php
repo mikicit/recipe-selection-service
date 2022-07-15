@@ -54,7 +54,7 @@ class ModelRecipeRecipe extends Model
         $search_filter_sql = '1 = 1';
 
         if (isset($query_vars['search'])) {
-            $search_filter_sql = "recipe.title LIKE CONCAT('%', :search, '%')";
+            $search_filter_sql = "recipe.title LIKE CONCAT('%', :search::text, '%')";
         }
 
         $filter_sql = "WHERE ($ingredient_filter_sql) AND ($category_filter_sql) AND ($search_filter_sql)";
