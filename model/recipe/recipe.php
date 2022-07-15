@@ -91,7 +91,7 @@ class ModelRecipeRecipe extends Model
         $sql .= $filter_sql;
         $sql .= 'GROUP BY recipe.recipe_id ';
         $sql .= $sorting_sql;
-        $sql .= 'LIMIT :offset, :per_page';
+        $sql .= 'LIMIT :per_page OFFSET :offset';
         
         $stmt = $this->db->prepare($sql);
 
@@ -173,7 +173,7 @@ class ModelRecipeRecipe extends Model
         $search_filter_sql = '1 = 1';
 
         if (isset($query_vars['search'])) {
-            $search_filter_sql = "recipe.title LIKE CONCAT('%', :search, '%')";
+            $search_filter_sql = "recipe.title LIKE '%' || :search || '%'";
         }
 
         $filter_sql = "WHERE ($ingredient_filter_sql) AND ($category_filter_sql) AND ($search_filter_sql)";
