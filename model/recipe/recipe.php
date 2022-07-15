@@ -29,7 +29,7 @@ class ModelRecipeRecipe extends Model
         ## creating SQL
 
         ## ingredient filter
-        $ingredient_filter_sql = 1;
+        $ingredient_filter_sql = '1 == 1';
 
         if (isset($query_vars['ingredients'])) {
             $placeholder = '0';
@@ -40,7 +40,7 @@ class ModelRecipeRecipe extends Model
         }
 
         ## category filter
-        $category_filter_sql = 1;
+        $category_filter_sql = '1 == 1';
 
         if (isset($query_vars['categories'])) {
             $placeholder = '0';
@@ -51,7 +51,7 @@ class ModelRecipeRecipe extends Model
         }
 
         ## search filter
-        $search_filter_sql = 1;
+        $search_filter_sql = '1 == 1';
 
         if (isset($query_vars['search'])) {
             $search_filter_sql = "recipe.title LIKE CONCAT('%', :search, '%')";
@@ -150,7 +150,7 @@ class ModelRecipeRecipe extends Model
     public function getQuantity($query_vars = [])
     {
         ## creating SQL
-        $ingredient_filter_sql = 1;
+        $ingredient_filter_sql = '1 == 1';
 
         if (isset($query_vars['ingredients'])) {
             $placeholder = '0';
@@ -160,7 +160,7 @@ class ModelRecipeRecipe extends Model
             $ingredient_filter_sql = "recipe.recipe_id IN (SELECT recipe_id FROM ingredient_recipe WHERE ingredient_recipe.ingredient_id IN ($placeholder))";
         }
 
-        $category_filter_sql = 1;
+        $category_filter_sql = '1 == 1';
 
         if (isset($query_vars['categories'])) {
             $placeholder = '0';
@@ -170,7 +170,7 @@ class ModelRecipeRecipe extends Model
             $category_filter_sql = "recipe.recipe_id IN (SELECT recipe_id FROM category_recipe WHERE category_recipe.category_id IN ($placeholder))";
         }
 
-        $search_filter_sql = 1;
+        $search_filter_sql = '1 == 1';
 
         if (isset($query_vars['search'])) {
             $search_filter_sql = "recipe.title LIKE CONCAT('%', :search, '%')";
