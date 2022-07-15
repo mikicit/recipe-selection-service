@@ -326,7 +326,7 @@ class ModelRecipeRecipe extends Model
      */
     public function getAllIngredients()
     {
-        $sql = 'SELECT ingredient_id, name FROM ingredient ORDER BY name ASC';
+        $sql = 'SELECT ingredient_id, name FROM ingredient ORDER BY name';
         $stmt = $this->db->query($sql);
 
         if ($stmt) {
@@ -367,7 +367,7 @@ class ModelRecipeRecipe extends Model
      */
     public function getAllCategories()
     {
-        $sql = 'SELECT category_id, name FROM category ORDER BY name ASC';
+        $sql = 'SELECT category_id, name FROM category ORDER BY name';
         $stmt = $this->db->query($sql);
 
         if ($stmt) {
@@ -403,8 +403,8 @@ class ModelRecipeRecipe extends Model
                 $this->db->query("INSERT INTO ingredient_recipe (ingredient_id, recipe_id) VALUES ($ingredient_id, $recipe_id)");
             }
 
-            foreach ($data['categories'] as $cetegory_id) {
-                $this->db->query("INSERT INTO category_recipe (category_id, recipe_id) VALUES ($cetegory_id, $recipe_id)");
+            foreach ($data['categories'] as $category_id) {
+                $this->db->query("INSERT INTO category_recipe (category_id, recipe_id) VALUES ($category_id, $recipe_id)");
             }
 
             if (!empty($data['images'])) {

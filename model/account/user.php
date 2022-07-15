@@ -16,7 +16,7 @@ class ModelAccountUser extends Model
 	 */
 	public function getUserById(int $id)
 	{
-		$sql = "SELECT * FROM user WHERE user_id = ?";
+		$sql = "SELECT * FROM \"user\" WHERE user_id = ?";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute([$id]);
 		
@@ -36,7 +36,7 @@ class ModelAccountUser extends Model
 	 */
 	public function getUserByEmail(string $email)
 	{
-        $sql = "SELECT * FROM user WHERE email = ?";
+        $sql = "SELECT * FROM \"user\" WHERE email = ?";
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute([$email]);
         
@@ -56,7 +56,7 @@ class ModelAccountUser extends Model
 	 */
 	public function addUser(array $data)
     {
-        $sql = "INSERT INTO user (user_group_id, password, firstname, lastname, email) VALUES (2,  :password, :firstname, :lastname, :email)";
+        $sql = "INSERT INTO \"user\" (user_group_id, password, firstname, lastname, email) VALUES (2,  :password, :firstname, :lastname, :email)";
         $stmt = $this->db->prepare($sql);
         return $stmt->execute($data);
 	}
