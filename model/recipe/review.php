@@ -39,12 +39,12 @@ class ModelRecipeReview extends Model
 
 		$query_vars = array_merge($default, $query_vars);
 
-        $sql = 'SELECT review.review_id, review.description, review.date_added, review.rating, user.user_id, user.firstname, user.lastname ';
+        $sql = 'SELECT review.review_id, review.description, review.date_added, review.rating, "user".user_id, "user".firstname, "user".lastname ';
         $sql .= 'FROM review ';
-        $sql .= 'LEFT JOIN user ON review.user_id = user.user_id ';
+        $sql .= 'LEFT JOIN "user" ON review.user_id = "user".user_id ';
         $sql .= 'WHERE review.recipe_id = :id ';
         $sql .= 'ORDER BY review.date_added DESC ';
-        $sql .= 'LIMIT 0, :limit';
+        $sql .= 'OFFSET 0 LIMIT :limit';
 
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute([
