@@ -12,27 +12,27 @@ class App
     /**
      * @var Db
      */
-    public static $db;
+    public static Db $db;
     /**
      * @var User
      */
-    public static $user;
+    public static User $user;
     /**
      * @var Document
      */
-    public static $document;
+    public static Document $document;
     /**
      * @var Response
      */
-    public static $response;
+    public static Response $response;
     /**
      * @var View
      */
-    public static $view;
+    public static View $view;
     /**
      * @var Router
      */
-    public static $router;
+    public static Router $router;
 
     /**
      * Application initialization.

@@ -15,7 +15,7 @@ class View
      * 
      * @return string
      */
-    public function get(string $template_name, array $data = [])
+    public function get(string $template_name, array $data = []): string
     {
         $html = '';
         $path = 'view/' . $template_name . '.php';
@@ -29,8 +29,6 @@ class View
 
         include($path);
 
-        $html = ob_get_clean();
-
-        return $html;
+        return ob_get_clean();
     }
 }

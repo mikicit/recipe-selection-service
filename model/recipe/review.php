@@ -14,8 +14,8 @@ class ModelRecipeReview extends Model
 	 * 
 	 * @return bool
 	 */
-	public function add(array $data)
-	{
+	public function add(array $data): bool
+    {
 		$sql = 'INSERT INTO review (user_id, recipe_id, description, rating) VALUES (:user_id, :recipe_id, :review, :rating)';
         $stmt = $this->db->prepare($sql);
 

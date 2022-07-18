@@ -1,5 +1,5 @@
 node_modules/
-cache/images/*
-uploads/recipes/*
+#cache/images/*
+#uploads/recipes/*
 .phpdoc
 .idea
