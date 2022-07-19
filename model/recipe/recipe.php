@@ -2,16 +2,16 @@
 
 /**
  * ModelRecipeRecipe
- * 
+ *
  * The model for working with the recipe entity.
  */
 class ModelRecipeRecipe extends Model
 {
     /**
-     * This method returns all recipes given the request parameters. 
-     * 
+     * This method returns all recipes given the request parameters.
+     *
      * @param array $query_vars
-     * 
+     *
      * @return array|bool
      */
     public function getAll(array $query_vars = [])
@@ -23,7 +23,7 @@ class ModelRecipeRecipe extends Model
             'sort_by'  => 'date',
             'sort_d'   => 'desc'
         ];
-        
+
         $query_vars = array_merge($default, $query_vars);
 
         ## creating SQL
@@ -54,7 +54,7 @@ class ModelRecipeRecipe extends Model
         $search_filter_sql = '1 = 1';
 
         if (isset($query_vars['search'])) {
-            $search_filter_sql = "recipe.title LIKE '%' || :search || '%'";
+            $search_filter_sql = "recipe.title ILIKE  '%' || :search || '%'";
         }
 
         $filter_sql = "WHERE ($ingredient_filter_sql) AND ($category_filter_sql) AND ($search_filter_sql)";
@@ -92,7 +92,7 @@ class ModelRecipeRecipe extends Model
         $sql .= 'GROUP BY recipe.recipe_id ';
         $sql .= $sorting_sql;
         $sql .= 'LIMIT :per_page OFFSET :offset';
-        
+
         $stmt = $this->db->prepare($sql);
 
         ## binding
@@ -119,7 +119,7 @@ class ModelRecipeRecipe extends Model
 
         if ($result) {
             $result = $stmt->fetchAll();
-        
+
             foreach ($result as $key => $recipe) {
                 if (!empty($recipe['images'])) {
                     $result[$key]['images'] = (array)unserialize($recipe['images']);
@@ -142,12 +142,12 @@ class ModelRecipeRecipe extends Model
 
     /**
      * This method returns the number of recipes given the request parameters.
-     * 
+     *
      * @param array $query_vars
-     * 
+     *
      * @return int
      */
-    public function getQuantity($query_vars = [])
+    public function getQuantity(array $query_vars = []): int
     {
         ## creating SQL
         $ingredient_filter_sql = '1 = 1';
@@ -201,7 +201,7 @@ class ModelRecipeRecipe extends Model
         }
 
         $result = $stmt->execute();
-        
+
         if ($result) {
             $result = $stmt->fetch();
             if ($result) {
@@ -214,9 +214,9 @@ class ModelRecipeRecipe extends Model
 
     /**
      * This method returns a recipe object by its ID.
-     * 
+     *
      * @param int $id
-     * 
+     *
      * @return array|bool
      */
     public function get(int $id)
@@ -230,23 +230,23 @@ class ModelRecipeRecipe extends Model
 
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute([$id]);
-        
+
         if ($result) {
             $result = $stmt->fetch();
 
             if ($result) {
                 if (!empty($result['images'])) {
                     $result['images'] = (array)unserialize($result['images']);
-    
+
                     foreach ($result['images'] as $index => $image) {
                         $result['images'][$index] = BASE_URL . '/uploads/recipes/' . $result['recipe_id'] . '/' . $image;
                     }
                 }
-    
+
                 if (empty($result['rating'])) {
                     $result['rating'] = 0;
                 }
-    
+
                 $result['rounded_rating'] = round($result['rating']);
             }
         }
@@ -256,18 +256,18 @@ class ModelRecipeRecipe extends Model
 
     /**
      * This method returns an array of popular recipe objects.
-     * 
+     *
      * @return array
      */
-    public function getFeatured()
+    public function getFeatured(): array
     {
         $sql = 'SELECT recipe.recipe_id, recipe.title, recipe.images, ROUND(AVG(review.rating), 1) as rating ';
         $sql .= 'FROM recipe ';
-        $sql .= 'LEFT JOIN review ON recipe.recipe_id = review.recipe_id ';
+        $sql .= 'RIGHT JOIN review ON recipe.recipe_id = review.recipe_id ';
         $sql .= 'GROUP BY recipe.recipe_id ';
         $sql .= 'ORDER BY rating DESC LIMIT 8';
         $sql .= '';
-        
+
         $stmt = $this->db->query($sql);
 
         if ($stmt) {
@@ -276,12 +276,12 @@ class ModelRecipeRecipe extends Model
             foreach ($result as $key => $recipe) {
                 if (!empty($recipe['images'])) {
                     $result[$key]['images'] = (array)unserialize($recipe['images']);
-    
+
                     foreach ($result[$key]['images'] as $index => $image) {
                         $result[$key]['images'][$index] = BASE_URL . '/uploads/recipes/' . $recipe['recipe_id'] . '/' . $image;
                     }
                 }
-                
+
                 if (empty($recipe['rating'])) {
                     $result[$key]['rating'] = 0;
                 }
@@ -297,18 +297,18 @@ class ModelRecipeRecipe extends Model
 
     /**
      * This method returns the ingredients associated with a specific recipe by ID.
-     * 
+     *
      * @param int $id
-     * 
+     *
      * @return array
      */
-    public function getIngredients(int $id)
+    public function getIngredients(int $id): array
     {
         $sql = 'SELECT ingredient_recipe.ingredient_id, ingredient.name ';
         $sql .= 'FROM ingredient_recipe ';
         $sql .= 'LEFT JOIN ingredient ON ingredient.ingredient_id = ingredient_recipe.ingredient_id ';
         $sql .= 'WHERE ingredient_recipe.recipe_id = ?';
-        
+
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute([$id]);
 
@@ -321,10 +321,10 @@ class ModelRecipeRecipe extends Model
 
     /**
      * This method returns an array of all ingredients.
-     * 
+     *
      * @return array
      */
-    public function getAllIngredients()
+    public function getAllIngredients(): array
     {
         $sql = 'SELECT ingredient_id, name FROM ingredient ORDER BY name';
         $stmt = $this->db->query($sql);
@@ -338,18 +338,18 @@ class ModelRecipeRecipe extends Model
 
     /**
      * This method returns the categories associated with a specific recipe by ID.
-     * 
+     *
      * @param int $id
-     * 
+     *
      * @return array
      */
-    public function getCategories(int $id)
+    public function getCategories(int $id): array
     {
         $sql = 'SELECT category_recipe.category_id, category.name ';
         $sql .= 'FROM category_recipe ';
         $sql .= 'LEFT JOIN category ON category.category_id = category_recipe.category_id ';
         $sql .= 'WHERE category_recipe.recipe_id = ?';
-        
+
         $stmt = $this->db->prepare($sql);
         $result = $stmt->execute([$id]);
 
@@ -362,10 +362,10 @@ class ModelRecipeRecipe extends Model
 
     /**
      * This method returns an array of all categories.
-     * 
+     *
      * @return array
      */
-    public function getAllCategories()
+    public function getAllCategories(): array
     {
         $sql = 'SELECT category_id, name FROM category ORDER BY name';
         $stmt = $this->db->query($sql);
@@ -379,12 +379,12 @@ class ModelRecipeRecipe extends Model
 
     /**
      * This method adds a new recipe.
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return bool
      */
-    public function add(array $data)
+    public function add(array $data): bool
     {
         try {
             $this->db->beginTransaction();
@@ -414,7 +414,7 @@ class ModelRecipeRecipe extends Model
                 if (!is_dir($path)) {
                     mkdir($path, 0777, true);
                 }
-                
+
                 foreach ($data['images']['tmp_name'] as $key => $tmp_name) {
                     $name = basename($data['images']['name'][$key]);
                     $result = move_uploaded_file($tmp_name, $path . $name);

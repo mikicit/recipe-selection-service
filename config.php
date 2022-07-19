@@ -2,7 +2,7 @@
 
 /**
  * Setting basic configuration data.
- * 
+ *
  * Defining global variables for working with paths, connecting to a database, and so on.
  */
 
