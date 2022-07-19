@@ -1,6 +1,9 @@
 # Recipe site
 
 ## Basic description
+
+Link - [hrecept.mikita.dev](https://hrecept.mikita.dev/)
+
 An ordinary <b>CRUD</b> application developed from scratch as a self-shooting project in the first year of the university course <b>"Web Development Basics"</b>.
 
 ## Technical description
