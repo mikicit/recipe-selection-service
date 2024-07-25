@@ -62,7 +62,7 @@ The backend was written in PHP without using any frameworks but was inspired by 
 
 ## Screenshots
 
-![Main Page](docs/screenshots/main_page.png)
+![Main Page](https://github.com/mikicit/recipe-selection-service/main_page.png)
 ![Recipes Page](docs/screenshots/recipes_page.png)
 ![Search Page](docs/screenshots/search_page.png)
 ![Profile Page](docs/screenshots/profile_page.png)
