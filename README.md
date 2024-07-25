@@ -62,15 +62,15 @@ The backend was written in PHP without using any frameworks but was inspired by 
 
 ## Screenshots
 
-![Main Page](https://github.com/mikicit/recipe-selection-service/main_page.png)
-![Recipes Page](docs/screenshots/recipes_page.png)
-![Search Page](docs/screenshots/search_page.png)
-![Profile Page](docs/screenshots/profile_page.png)
-![Recipe Page](docs/screenshots/recipe_page.png)
-![Registration Page](docs/screenshots/registration_page.png)
-![Login Page](docs/screenshots/login_page.png)
-![Add Recipe Page](docs/screenshots/add_recipe_page.png)
-![Not Found Page](docs/screenshots/not_found_page.png)
+![Main Page](https://github.com/mikicit/recipe-selection-service/raw/images/main_page.png)
+![Recipes Page](https://github.com/mikicit/recipe-selection-service/raw/images/recipes_page.png)
+![Search Page](https://github.com/mikicit/recipe-selection-service/raw/images/search_page.png)
+![Profile Page](https://github.com/mikicit/recipe-selection-service/raw/images/profile_page.png)
+![Recipe Page](https://github.com/mikicit/recipe-selection-service/raw/images/recipe_page.png)
+![Registration Page](https://github.com/mikicit/recipe-selection-service/raw/images/registration_page.png)
+![Login Page](https://github.com/mikicit/recipe-selection-service/raw/images/login_page.png)
+![Add Recipe Page](https://github.com/mikicit/recipe-selection-service/raw/images/add_recipe_page.png)
+![Not Found Page](https://github.com/mikicit/recipe-selection-service/raw/images/not_found_page.png)
 
 ## Authors
 
