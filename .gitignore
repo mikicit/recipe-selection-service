@@ -1,5 +1,7 @@
 node_modules/
-#cache/images/*
-#uploads/recipes/*
+app/public/
+app/cache/
+app/uploads/
 .phpdoc
 .idea
+db-data/
