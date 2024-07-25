@@ -1,9 +1,5 @@
 # Recipe Selection Service
 
-## Description
-
-Recipe Selection Service is a web application that allows users to search for recipes based on available ingredients and by dish type. Users can search for recipes and leave reviews on them. Administrators can add new recipes. This project was completed as part of the semester project in the [Foundations of Web Applications](https://intranet.fel.cvut.cz/en/education/bk/predmety/31/29/p3129506.html) course at [CTU in Prague](https://www.cvut.cz/).
-
 ## Table of Contents
 
 - [Description](#description)
@@ -12,9 +8,13 @@ Recipe Selection Service is a web application that allows users to search for re
 - [Usage](#usage)
 - [Architecture and Technologies](#architecture-and-technologies)
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Authors](#authors)
 - [License](#license)
-- [Screenshots](#screenshots)
+
+## Description
+
+Recipe Selection Service is a web application that allows users to search for recipes based on available ingredients and by dish type. Users can search for recipes and leave reviews on them. Administrators can add new recipes. This project was completed as part of the semester project in the [Foundations of Web Applications](https://intranet.fel.cvut.cz/en/education/bk/predmety/31/29/p3129506.html) course at [CTU in Prague](https://www.cvut.cz/).
 
 ## Technical Requirements
 
@@ -60,6 +60,18 @@ The backend was written in PHP without using any frameworks but was inspired by 
 - Viewing detailed recipe information.
 - Posting reviews on recipes.
 
+## Screenshots
+
+![Main Page](docs/screenshots/main_page.png)
+![Recipes Page](docs/screenshots/recipes_page.png)
+![Search Page](docs/screenshots/search_page.png)
+![Profile Page](docs/screenshots/profile_page.png)
+![Recipe Page](docs/screenshots/recipe_page.png)
+![Registration Page](docs/screenshots/registration_page.png)
+![Login Page](docs/screenshots/login_page.png)
+![Add Recipe Page](docs/screenshots/add_recipe_page.png)
+![Not Found Page](docs/screenshots/not_found_page.png)
+
 ## Authors
 
 - [Mikita Citarovič](https://github.com/mikicit)
@@ -87,15 +99,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-## Screenshots
-
-![Main Page](docs/screenshots/main_page.png)
-![Recipes Page](docs/screenshots/recipes_page.png)
-![Search Page](docs/screenshots/search_page.png)
-![Profile Page](docs/screenshots/profile_page.png)
-![Recipe Page](docs/screenshots/recipe_page.png)
-![Registration Page](docs/screenshots/registration_page.png)
-![Login Page](docs/screenshots/login_page.png)
-![Add Recipe Page](docs/screenshots/add_recipe_page.png)
-![Not Found Page](docs/screenshots/not_found_page.png)
