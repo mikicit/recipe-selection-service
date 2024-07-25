@@ -16,6 +16,8 @@
 
 Recipe Selection Service is a web application that allows users to search for recipes based on available ingredients and by dish type. Users can search for recipes and leave reviews on them. Administrators can add new recipes. This project was completed as part of the semester project in the [Foundations of Web Applications](https://intranet.fel.cvut.cz/en/education/bk/predmety/31/29/p3129506.html) course at [CTU in Prague](https://www.cvut.cz/).
 
+Documentation for the project can be found [here](https://mikicit.github.io/recipe-selection-service/).
+
 ## Technical Requirements
 
 To run this project, you will need NodeJS and npm. All dependencies are listed in the `package.json` file. This is necessary to build the frontend. The tested versions were NodeJS v21.7.1 and npm 10.5.0. Additionally, you will need Docker to run the backend.
